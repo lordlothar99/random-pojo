@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.lothar.random-pojo</groupId>
+	<groupId>com.github.lordlothar99.random-pojo</groupId>
 	<artifactId>random-pojo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<description>Random POJO generator tool</description>
@@ -14,6 +14,18 @@
 		<spring.version>4.1.7.RELEASE</spring.version>
 		<github.global.server>github</github.global.server>
 	</properties>
+
+	<scm>
+		<url>https://github.com/lordlothar99/random-pojo.git</url>
+		<developerConnection>scm:git:https://github.com/lordlothar99/random-pojo.git</developerConnection>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>lordlothar99</id>
+			<name>Francois Lecomte</name>
+		</developer>
+	</developers>
 
 	<dependencies>
 		<!-- compile -->
