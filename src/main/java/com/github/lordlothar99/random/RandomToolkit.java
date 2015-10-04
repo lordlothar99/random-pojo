@@ -11,23 +11,7 @@ import org.apache.commons.lang.ClassUtils;
 import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.ObjectClassGenerator;
 import com.github.lordlothar99.random.impl.RandomEnumGenerator;
-import com.github.lordlothar99.random.impl.RandomStringGenerator;
 import com.github.lordlothar99.random.impl.collections.RandomArrayGenerator;
-import com.github.lordlothar99.random.impl.date.RandomCalendarGenerator;
-import com.github.lordlothar99.random.impl.date.RandomDateGenerator;
-import com.github.lordlothar99.random.impl.date.RandomDateTimeGenerator;
-import com.github.lordlothar99.random.impl.date.RandomLocalDateGenerator;
-import com.github.lordlothar99.random.impl.date.RandomLocalDateTimeGenerator;
-import com.github.lordlothar99.random.impl.date.RandomXMLGregorianCalendarGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomBigDecimalGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomBigIntegerGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomBooleanGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomByteGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomDoubleGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomFloatGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomLongGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomShortGenerator;
 
 /**
  * Outils pour les {@link Generator} aleatoires.
@@ -36,88 +20,7 @@ import com.github.lordlothar99.random.impl.numeric.RandomShortGenerator;
  */
 public final class RandomToolkit {
 
-    /**
-     * {@link RandomBigDecimalGenerator}
-     */
-    public static final RandomBigDecimalGenerator BIG_DECIMAL = new RandomBigDecimalGenerator();
-
-    /**
-     * {@link RandomBooleanGenerator}
-     */
-    public static final RandomBooleanGenerator BOOLEAN = new RandomBooleanGenerator();
-
-    /**
-     * {@link RandomCalendarGenerator}
-     */
-    public static final RandomCalendarGenerator CALENDAR = new RandomCalendarGenerator();
-
-    /**
-     * {@link RandomDateGenerator}
-     */
-    public static final RandomDateGenerator DATE = new RandomDateGenerator();
-
-    /**
-     * {@link RandomBigIntegerGenerator}
-     */
-    public static final RandomBigIntegerGenerator BIG_INTEGER = new RandomBigIntegerGenerator();
-
-    /**
-     * {@link RandomIntegerGenerator}
-     */
-    public static final RandomIntegerGenerator INTEGER = new RandomIntegerGenerator();
-
-    /**
-     * {@link RandomLongGenerator}
-     */
-    public static final RandomLongGenerator LONG = new RandomLongGenerator();
-
-    /**
-     * {@link RandomShortGenerator}
-     */
-    public static final RandomShortGenerator SHORT = new RandomShortGenerator();
-
-    /**
-     * {@link RandomByteGenerator}
-     */
-    public static final RandomByteGenerator BYTE = new RandomByteGenerator();
-
-    /**
-     * {@link RandomFloatGenerator}
-     */
-    public static final RandomFloatGenerator FLOAT = new RandomFloatGenerator();
-
-    /**
-     * {@link RandomDoubleGenerator}
-     */
-    public static final RandomDoubleGenerator DOUBLE = new RandomDoubleGenerator();
-
-    /**
-     * {@link RandomStringGenerator}
-     */
-    public static final RandomStringGenerator STRING = new RandomStringGenerator();
-
-    /**
-     * {@link RandomLocalDateGenerator}
-     */
-    public static final RandomLocalDateGenerator LOCAL_DATE = new RandomLocalDateGenerator();
-
-    /**
-     * {@link RandomLocalDateTimeGenerator}
-     */
-    public static final RandomLocalDateTimeGenerator LOCAL_DATE_TIME = new RandomLocalDateTimeGenerator();
-
-    /**
-     * {@link RandomDateTimeGenerator}
-     */
-    public static final RandomDateTimeGenerator DATE_TIME = new RandomDateTimeGenerator();
-
-    /**
-     * {@link RandomXMLGregorianCalendarGenerator}
-     */
-    public static final RandomXMLGregorianCalendarGenerator XMLGREGORIANCALENDAR =
-                    new RandomXMLGregorianCalendarGenerator();
-
-	private static final RandomToolkit INSTANCE = new RandomToolkit();
+    private static final RandomToolkit INSTANCE = new RandomToolkit();
 
 	private RandomGenerators registry = new RandomGenerators();
 

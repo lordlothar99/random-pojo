@@ -10,7 +10,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import com.github.lordlothar99.random.RandomToolkit;
+import com.github.lordlothar99.random.RandomGenerators;
 import com.github.lordlothar99.random.api.Generator;
 
 /**
@@ -25,7 +25,7 @@ public class RandomXMLGregorianCalendarGenerator implements Generator<XMLGregori
      */
     public XMLGregorianCalendar create() {
         try {
-            final Calendar calendar = RandomToolkit.get().CALENDAR.create();
+            final Calendar calendar = RandomGenerators.CALENDAR.create();
             return DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar ) calendar);
         } catch (DatatypeConfigurationException e) {
             throw new RuntimeException(e);
