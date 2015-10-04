@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.support.AopUtils;
 
-import com.github.lordlothar99.random.RandomFactoryToolkit;
+import com.github.lordlothar99.random.RandomToolkit;
 
 /**
  * Un {@link InvocationHandler} qui renvoie des objets aleatoires.
@@ -99,7 +99,7 @@ public class RandomInvocationHandler implements InvocationHandler {
      * @return objet aleatoire
      */
     private Object generate(Class< ? > returnType) {
-        Object result = RandomFactoryToolkit.generate(returnType);
+        Object result = RandomToolkit.generate(returnType);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Random result generated");
         }
