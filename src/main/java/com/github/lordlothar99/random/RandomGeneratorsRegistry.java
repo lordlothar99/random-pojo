@@ -43,7 +43,7 @@ import com.github.lordlothar99.random.impl.numeric.RandomShortGenerator;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class RandomGeneratorsRegistry {
 
-	private Map<Class<?>, Object> registry = new HashMap<Class<?>, Object>();
+	private Map<Class<?>, Class<? extends Generator>> registry = new HashMap<Class<?>, Class<? extends Generator>>();
 
 	public RandomGeneratorsRegistry() {
 		registry.put(BigDecimal.class, RandomBigDecimalGenerator.class);
@@ -81,11 +81,7 @@ public class RandomGeneratorsRegistry {
 		registry.put(Object.class, RandomObjectGenerator.class);
 	}
 
-	public void put(Class<?> type, Generator<?> generator) {
-		registry.put(type, generator);
-	}
-
-	public void put(Class<?> type, Class<?> generatorClass) {
+	public <T> void put(Class<?> type, Class<? extends Generator> generatorClass) {
 		registry.put(type, generatorClass);
 	}
 
