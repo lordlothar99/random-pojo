@@ -7,10 +7,7 @@ package com.github.lordlothar99.random.api;
  * @author Francois Lecomte
  * @param <T>
  */
-public interface Generator<T> extends org.apache.commons.collections.Factory {
+public interface Generator<T> {
 
-    /**
-     * {@inheritDoc}
-     */
-    T create();
+	T create();
 }

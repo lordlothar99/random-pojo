@@ -18,6 +18,7 @@ import org.apache.commons.lang.ClassUtils;
 
 import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.ObjectClassGenerator;
+import com.github.lordlothar99.random.api.RegistryAware;
 import com.github.lordlothar99.random.impl.RandomBooleanGenerator;
 import com.github.lordlothar99.random.impl.RandomEnumGenerator;
 import com.github.lordlothar99.random.impl.RandomObjectGenerator;
@@ -97,6 +98,10 @@ public class RandomGeneratorsRegistry {
 		if (generator instanceof ObjectClassGenerator) {
 			ObjectClassGenerator objectClassGenerator = (ObjectClassGenerator) generator;
 			objectClassGenerator.setObjectClass(type);
+		}
+		if (generator instanceof RegistryAware) {
+			RegistryAware registryAware = (RegistryAware) generator;
+			registryAware.setRegistry(this);
 		}
 		return generator;
 	}

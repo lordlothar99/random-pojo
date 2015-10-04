@@ -18,8 +18,9 @@ import com.github.lordlothar99.random.RandomGenerators;
  * @author Francois Lecomte
  */
 public class RandomArrayGeneratorTest {
-	
+
 	private RandomGenerators generators = new RandomGenerators();
+
 	@Test
 	public void should_array_be_specified_length() {
 		RandomArrayGenerator<Integer[]> generator = new RandomArrayGenerator<Integer[]>(Integer[].class);
@@ -42,32 +43,32 @@ public class RandomArrayGeneratorTest {
 
 	@Test
 	public void testPrimitiveBoolean() {
-		RandomArrayGenerator<boolean[]> factory = new RandomArrayGenerator<boolean[]>(boolean[].class);
-		boolean[] results = factory.create();
+		RandomArrayGenerator<boolean[]> generator = new RandomArrayGenerator<boolean[]>(boolean[].class);
+		boolean[] results = generator.create();
 		Assert.assertNotNull("null array", results);
 		Assert.assertFalse("empty array", results.length == 0);
 	}
 
 	@Test
 	public void testBoolean() {
-		RandomArrayGenerator<Boolean[]> factory = new RandomArrayGenerator<Boolean[]>(Boolean[].class);
-		Boolean[] results = factory.create();
+		RandomArrayGenerator<Boolean[]> generator = new RandomArrayGenerator<Boolean[]>(Boolean[].class);
+		Boolean[] results = generator.create();
 		Assert.assertNotNull("null array", results);
 		Assert.assertFalse("empty array", results.length == 0);
 	}
 
 	@Test
 	public void testString() {
-		RandomArrayGenerator<String[]> factory = new RandomArrayGenerator<String[]>(String[].class);
-		String[] results = factory.create();
+		RandomArrayGenerator<String[]> generator = new RandomArrayGenerator<String[]>(String[].class);
+		String[] results = generator.create();
 		Assert.assertNotNull("null array", results);
 		Assert.assertFalse("empty array", results.length == 0);
 	}
 
 	@Test
 	public void testFoo() {
-		RandomArrayGenerator<Foo[]> factory = new RandomArrayGenerator<Foo[]>(Foo[].class);
-		Foo[] results = factory.create();
+		RandomArrayGenerator<Foo[]> generator = new RandomArrayGenerator<Foo[]>(Foo[].class);
+		Foo[] results = generator.create();
 		Assert.assertNotNull("null array", results);
 		Assert.assertFalse("empty array", results.length == 0);
 	}

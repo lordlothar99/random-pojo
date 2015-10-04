@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.lordlothar99.random.Foo;
-import com.github.lordlothar99.random.impl.RandomObjectGenerator;
 
 /**
  * @author Francois Lecomte

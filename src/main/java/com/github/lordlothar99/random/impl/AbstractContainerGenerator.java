@@ -6,7 +6,6 @@ package com.github.lordlothar99.random.impl;
 import static org.apache.commons.lang.ArrayUtils.getLength;
 import static org.apache.commons.lang.ArrayUtils.isEmpty;
 
-import com.github.lordlothar99.random.RandomToolkit;
 import com.github.lordlothar99.random.api.ContainerGenerator;
 import com.github.lordlothar99.random.api.Generator;
 
@@ -23,8 +22,6 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 	private Generator<?>[] elementsGenerators;
 	private int minSize = 2;
 	private int maxSize = 10;
-	// TODO
-	private RandomToolkit toolkit = new RandomToolkit();
 	private int maxGenerationRetryCount = 10;
 	private boolean errorOnNotEnoughDifferentElements = false;
 
@@ -143,7 +140,7 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 		}
 		if (generator == null && getLength(elementsTypes) > index) {
 			Class<?> elementType = elementsTypes[index];
-			generator = toolkit.getRegistry().getGenerator(elementType);
+			generator = getRegistry().getGenerator(elementType);
 			logger.debug("Generator found in registry : {}", generator);
 		}
 		return generator;
@@ -163,7 +160,7 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 		if (minSize == maxSize) {
 			return minSize;
 		}
-		int size = toolkit.integer(minSize, maxSize);
+		int size = toolkit().integer(minSize, maxSize);
 		return size;
 	}
 
@@ -173,13 +170,5 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 
 	public boolean isErrorOnNotEnoughDifferentElements() {
 		return errorOnNotEnoughDifferentElements;
-	}
-
-	public RandomToolkit getToolkit() {
-		return toolkit;
-	}
-
-	public void setToolkit(RandomToolkit toolkit) {
-		this.toolkit = toolkit;
 	}
 }

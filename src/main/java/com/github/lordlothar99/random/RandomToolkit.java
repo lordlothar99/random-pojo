@@ -45,11 +45,11 @@ public final class RandomToolkit {
 		return values;
 	}
 
-	public RandomGenerators getGenerators() {
+	public RandomGenerators generators() {
 		return generators;
 	}
 
-	public RandomGeneratorsRegistry getRegistry() {
+	public RandomGeneratorsRegistry registry() {
 		return registry;
 	}
 
