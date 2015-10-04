@@ -3,22 +3,21 @@
  */
 package com.github.lordlothar99.random.impl.numeric;
 
-import org.apache.commons.lang.math.RandomUtils;
-
-import com.github.lordlothar99.random.api.Generator;
+import java.math.BigDecimal;
 
 /**
  * Random {@link Double} generator
  * 
  * @author Francois Lecomte
  */
-public class RandomDoubleGenerator implements Generator<Double> {
+public class RandomDoubleGenerator extends AbstractRandomNumericGenerator<Double> {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Double create() {
-        return RandomUtils.nextDouble();
-    }
+	public RandomDoubleGenerator() {
+		super(0d, 1d);
+	}
 
+	@Override
+	protected Double fromBigDecimal(BigDecimal bigDecimal) {
+		return bigDecimal.doubleValue();
+	}
 }
