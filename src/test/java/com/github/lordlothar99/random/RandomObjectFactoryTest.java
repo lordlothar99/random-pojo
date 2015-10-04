@@ -6,6 +6,8 @@ package com.github.lordlothar99.random;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.lordlothar99.random.impl.RandomObjectFactory;
+
 /**
  * @author Francois Lecomte
  *

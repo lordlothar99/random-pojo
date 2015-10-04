@@ -17,6 +17,30 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.apache.commons.lang.ClassUtils;
 
+import com.github.lordlothar99.random.api.Factory;
+import com.github.lordlothar99.random.api.ObjectClassFactory;
+import com.github.lordlothar99.random.impl.RandomEnumFactory;
+import com.github.lordlothar99.random.impl.RandomObjectFactory;
+import com.github.lordlothar99.random.impl.RandomStringFactory;
+import com.github.lordlothar99.random.impl.collections.RandomArrayFactory;
+import com.github.lordlothar99.random.impl.collections.RandomCollectionFactory;
+import com.github.lordlothar99.random.impl.collections.RandomMapFactory;
+import com.github.lordlothar99.random.impl.date.RandomCalendarFactory;
+import com.github.lordlothar99.random.impl.date.RandomDateFactory;
+import com.github.lordlothar99.random.impl.date.RandomDateTimeFactory;
+import com.github.lordlothar99.random.impl.date.RandomLocalDateFactory;
+import com.github.lordlothar99.random.impl.date.RandomLocalDateTimeFactory;
+import com.github.lordlothar99.random.impl.date.RandomXMLGregorianCalendarFactory;
+import com.github.lordlothar99.random.impl.numeric.RandomBigDecimalFactory;
+import com.github.lordlothar99.random.impl.numeric.RandomBigIntegerFactory;
+import com.github.lordlothar99.random.impl.numeric.RandomBooleanFactory;
+import com.github.lordlothar99.random.impl.numeric.RandomByteFactory;
+import com.github.lordlothar99.random.impl.numeric.RandomDoubleFactory;
+import com.github.lordlothar99.random.impl.numeric.RandomFloatFactory;
+import com.github.lordlothar99.random.impl.numeric.RandomIntegerFactory;
+import com.github.lordlothar99.random.impl.numeric.RandomLongFactory;
+import com.github.lordlothar99.random.impl.numeric.RandomShortFactory;
+
 /**
  * Outils pour les {@link Factory} aleatoires.
  * 
