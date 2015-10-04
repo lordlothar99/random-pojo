@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -175,23 +176,30 @@ public class RandomGenerators {
 		return cast(listGenerator);
 	}
 
+	public <T> ContainerGenerator<Set<Integer>> setGenerator(Class<T> elementsType) {
+		ContainerGenerator<Set> setGenerator = (ContainerGenerator<Set>) registry.getGenerator(Set.class);
+		setGenerator.setElementsTypes(elementsType);
+		return cast(setGenerator);
+	}
+
 	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Class<K> keyType, Class<V> valueType) {
 		ContainerGenerator<Map> listGenerator = (ContainerGenerator<Map>) registry.getGenerator(Map.class);
 		listGenerator.setElementsTypes(keyType, valueType);
 		return cast(listGenerator);
 	}
 
-	public <M, K, V> ContainerGenerator<M> mapGenerator(Class<M> class1, Class<K> keyType, Class<V> valueType3) {
-		// TODO Auto-generated method stub
-		return null;
+	public <K, V> ContainerGenerator<TreeMap<K, V>> treemapGenerator(Class<K> keyType, Class<V> valueType) {
+		ContainerGenerator<TreeMap> listGenerator = (ContainerGenerator<TreeMap>) registry.getGenerator(TreeMap.class);
+		listGenerator.setElementsTypes(keyType, valueType);
+		return cast(listGenerator);
 	}
 
 	public <E extends Enum<E>> Generator<E> enumGenerator(Class<E> enumClass) {
-		return (Generator<E>) registry.getGenerator(enumClass);
+		return registry.getGenerator(enumClass);
 	}
 
 	public <T> Generator<T> arrayGenerator(Class<T> arrayClass) {
-		return (Generator<T>) registry.getGenerator(arrayClass);
+		return registry.getGenerator(arrayClass);
 	}
 
 	private <T> T cast(Object object) {
