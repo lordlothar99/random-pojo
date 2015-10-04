@@ -3,24 +3,24 @@
  */
 package com.github.lordlothar99.random.impl.numeric;
 
+import static java.math.BigDecimal.ZERO;
+
 import java.math.BigDecimal;
-
-import org.apache.commons.lang.math.RandomUtils;
-
-import com.github.lordlothar99.random.api.Generator;
 
 /**
  * Random {@link BigDecimal} generator
  * 
  * @author Francois Lecomte
  */
-public class RandomBigDecimalGenerator implements Generator<BigDecimal> {
+public class RandomBigDecimalGenerator extends AbstractRandomNumericGenerator<BigDecimal> {
 
-    /**
-     * {@inheritDoc}
-     */
-    public BigDecimal create() {
-        return new BigDecimal(String.valueOf(RandomUtils.nextInt(100) + RandomUtils.nextDouble()));
-    }
+	public RandomBigDecimalGenerator() {
+		super(ZERO, new BigDecimal("100"));
+	}
+
+	@Override
+	protected BigDecimal fromBigDecimal(BigDecimal bigDecimal) {
+		return bigDecimal;
+	}
 
 }
