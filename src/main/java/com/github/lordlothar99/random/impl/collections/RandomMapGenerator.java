@@ -71,7 +71,7 @@ public class RandomMapGenerator<O extends Map> extends AbstractGenericGenerator<
             final int elementsCount = randomIntegerGenerator.create() + 2;
             // random fill
             for (int i = 0; i < elementsCount; i++) {
-                map.put(RandomToolkit.generate(genericTypeKey), RandomToolkit.generate(genericTypeValue));
+                map.put(RandomToolkit.get().generate(genericTypeKey), RandomToolkit.get().generate(genericTypeValue));
             }
         }
         return map;

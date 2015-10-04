@@ -99,7 +99,7 @@ public class RandomInvocationHandler implements InvocationHandler {
      * @return objet aleatoire
      */
     private Object generate(Class< ? > returnType) {
-        Object result = RandomToolkit.generate(returnType);
+        Object result = RandomToolkit.get().generate(returnType);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Random result generated");
         }

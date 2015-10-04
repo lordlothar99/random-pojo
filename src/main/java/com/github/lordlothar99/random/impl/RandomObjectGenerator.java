@@ -189,7 +189,7 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
      * @return un {@link Generator} pour le champs <code>field</code>
      */
     protected Generator< ? > getGenerateur(Field field) {
-        final Generator< ? > generateur = RandomToolkit.getInstance(field.getType());
+        final Generator< ? > generateur = RandomToolkit.get().getInstance(field.getType());
         if (generateur instanceof GenericGenerator< ? >) {
             final Class< ? >[] genericTypes = getGenericTypes(field);
             ((GenericGenerator< ? > ) generateur).setGenericTypes(genericTypes);
@@ -224,7 +224,7 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
             for (final Constructor constructor : constructors) {
 
                 final Class< ? >[] parametreTypes = constructor.getParameterTypes();
-                final Object[] parametres = RandomToolkit.generate(parametreTypes);
+                final Object[] parametres = RandomToolkit.get().generate(parametreTypes);
 
                 try {
                     instance = (O ) constructor.newInstance(parametres);

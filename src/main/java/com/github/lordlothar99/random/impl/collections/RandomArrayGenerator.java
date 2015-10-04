@@ -46,7 +46,7 @@ public class RandomArrayGenerator<O> extends AbstractGenerator<O> {
         final Object array = Array.newInstance(getObjectClass().getComponentType(), elementsCount);
         // random fill
         for (int i = 0; i < elementsCount; i++) {
-            Array.set(array, i, RandomToolkit.generate(getObjectClass().getComponentType()));
+            Array.set(array, i, RandomToolkit.get().generate(getObjectClass().getComponentType()));
         }
         return (O ) array;
     }

@@ -3,16 +3,7 @@
  */
 package com.github.lordlothar99.random;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.apache.commons.lang.ClassUtils;
@@ -20,11 +11,8 @@ import org.apache.commons.lang.ClassUtils;
 import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.ObjectClassGenerator;
 import com.github.lordlothar99.random.impl.RandomEnumGenerator;
-import com.github.lordlothar99.random.impl.RandomObjectGenerator;
 import com.github.lordlothar99.random.impl.RandomStringGenerator;
 import com.github.lordlothar99.random.impl.collections.RandomArrayGenerator;
-import com.github.lordlothar99.random.impl.collections.RandomCollectionGenerator;
-import com.github.lordlothar99.random.impl.collections.RandomMapGenerator;
 import com.github.lordlothar99.random.impl.date.RandomCalendarGenerator;
 import com.github.lordlothar99.random.impl.date.RandomDateGenerator;
 import com.github.lordlothar99.random.impl.date.RandomDateTimeGenerator;
@@ -129,62 +117,24 @@ public final class RandomToolkit {
     public static final RandomXMLGregorianCalendarGenerator XMLGREGORIANCALENDAR =
                     new RandomXMLGregorianCalendarGenerator();
 
-    /**
-     * User-defined factories (or factory classes)
-     */
-    private static final Map<Class< ? >, Object> registry = new HashMap<Class< ? >, Object>();
-    static {
-        initRegistry();
+	private static final RandomToolkit INSTANCE = new RandomToolkit();
+
+	private RandomGenerators registry = new RandomGenerators();
+
+    public RandomToolkit() {
     }
 
-    private static void initRegistry() {
-        registry.put(BigDecimal.class, BIG_DECIMAL);
-        registry.put(Boolean.class, BOOLEAN);
-        registry.put(boolean.class, BOOLEAN);
-        registry.put(Calendar.class, CALENDAR);
-        registry.put(Date.class, DATE);
-        registry.put(BigInteger.class, BIG_INTEGER);
-        registry.put(Integer.class, INTEGER);
-        registry.put(int.class, INTEGER);
-        registry.put(Long.class, LONG);
-        registry.put(long.class, LONG);
-        registry.put(Short.class, SHORT);
-        registry.put(short.class, SHORT);
-        registry.put(Byte.class, BYTE);
-        registry.put(byte.class, BYTE);
-        registry.put(Double.class, DOUBLE);
-        registry.put(double.class, DOUBLE);
-        registry.put(Float.class, FLOAT);
-        registry.put(float.class, FLOAT);
-        registry.put(String.class, STRING);
-        try {
-            registry.put(Class.forName("org.joda.time.LocalDate"), LOCAL_DATE);
-            registry.put(Class.forName("org.joda.time.LocalDateTime"), LOCAL_DATE_TIME);
-            registry.put(Class.forName("org.joda.time.DateTime"), DATE_TIME);
-        } catch (ClassNotFoundException e) {
-            // joda unavailable
-        }
-        registry.put(XMLGregorianCalendar.class, XMLGREGORIANCALENDAR);
-
-        registry.put(Enum.class, RandomEnumGenerator.class);
-        registry.put(Collection.class, RandomCollectionGenerator.class);
-        registry.put(Map.class, RandomMapGenerator.class);
-        registry.put(Object.class, RandomObjectGenerator.class);
+    public static RandomToolkit get() {
+    	return INSTANCE;
     }
-
-    /**
-     * Constructeur
-     */
-    private RandomToolkit() {
-    }
-
+    
     /**
      * @param <O> Type de la donnee e generer
      * @param type Type de la donnee e generer
      * @return un {@link Generator} pour le type de donnees specifie
      */
     @SuppressWarnings({"unchecked", "rawtypes" })
-    public static <O> Generator<O> getInstance(Class<O> type) {
+    public <O> Generator<O> getInstance(Class<O> type) {
 
         Generator<O> factory = null;
 
@@ -218,7 +168,7 @@ public final class RandomToolkit {
      * @return
      */
     @SuppressWarnings("unchecked")
-    private static <O> Generator<O> getFromRegistry(Generator<O> factory, Class< ? > type) {
+    private <O> Generator<O> getFromRegistry(Generator<O> factory, Class< ? > type) {
         int i = 0;
         List<Class< ? >> interfaces = ClassUtils.getAllInterfaces(type);
         // exploration par les interfaces
@@ -254,7 +204,7 @@ public final class RandomToolkit {
      * @param type
      * @param factory
      */
-    public static <O> void register(Class<O> type, Generator<O> factory) {
+    public <O> void register(Class<O> type, Generator<O> factory) {
         registry.put(type, factory);
     }
 
@@ -264,7 +214,7 @@ public final class RandomToolkit {
      * @param type
      * @param factoryClass
      */
-    public static <O> void register(Class<O> type, Class< ? > factoryClass) {
+    public <O> void register(Class<O> type, Class< ? > factoryClass) {
         registry.put(type, factoryClass);
     }
 
@@ -273,7 +223,7 @@ public final class RandomToolkit {
      * @param type {@link Class}
      * @return {@link Object}
      */
-    public static <O> O generate(Class<O> type) {
+    public <O> O generate(Class<O> type) {
         try {
             final Generator<O> generateur = getInstance(type);
             return generateur.create();
@@ -286,7 +236,7 @@ public final class RandomToolkit {
      * @param types tableau de {@link Class}
      * @return tableau d'{@link Object}
      */
-    public static Object[] generate(Class< ? >[] types) {
+    public Object[] generate(Class< ? >[] types) {
 
         final Object[] values = new Object[types.length];
 

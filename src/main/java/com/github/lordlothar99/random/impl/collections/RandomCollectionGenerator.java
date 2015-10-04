@@ -66,7 +66,7 @@ public class RandomCollectionGenerator<O extends Collection> extends AbstractGen
             final int elementsCount = Math.max(randomIntegerGenerator.create(), 2);
             // random fill
             for (int i = 0; i < elementsCount; i++) {
-                collection.add(RandomToolkit.generate(genericType));
+                collection.add(RandomToolkit.get().generate(genericType));
             }
         }
         return collection;

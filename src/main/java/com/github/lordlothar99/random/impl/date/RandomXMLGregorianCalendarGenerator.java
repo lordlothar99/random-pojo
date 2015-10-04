@@ -25,7 +25,7 @@ public class RandomXMLGregorianCalendarGenerator implements Generator<XMLGregori
      */
     public XMLGregorianCalendar create() {
         try {
-            final Calendar calendar = RandomToolkit.CALENDAR.create();
+            final Calendar calendar = RandomToolkit.get().CALENDAR.create();
             return DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar ) calendar);
         } catch (DatatypeConfigurationException e) {
             throw new RuntimeException(e);
