@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import com.github.lordlothar99.random.RandomGeneratorsRegistry;
 import com.github.lordlothar99.random.RandomToolkit;
 import com.github.lordlothar99.random.api.Generator;
-import com.github.lordlothar99.random.api.ObjectClassGenerator;
 import com.github.lordlothar99.random.api.RegistryAware;
 
 /**
@@ -19,7 +18,7 @@ import com.github.lordlothar99.random.api.RegistryAware;
  * @param <T>
  *            generated object type
  */
-public abstract class AbstractGenerator<T> implements ObjectClassGenerator<T>, RegistryAware {
+public abstract class AbstractGenerator<T> implements Generator<T>, RegistryAware {
 
 	private Class<? extends T> objectClass;
 	private RandomGeneratorsRegistry registry;

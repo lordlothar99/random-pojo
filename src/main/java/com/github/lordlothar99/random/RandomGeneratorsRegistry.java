@@ -17,7 +17,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.commons.lang.ClassUtils;
 
 import com.github.lordlothar99.random.api.Generator;
-import com.github.lordlothar99.random.api.ObjectClassGenerator;
 import com.github.lordlothar99.random.api.RegistryAware;
 import com.github.lordlothar99.random.impl.RandomBooleanGenerator;
 import com.github.lordlothar99.random.impl.RandomEnumGenerator;
@@ -92,13 +91,9 @@ public class RandomGeneratorsRegistry {
 
 		// exploration par les superclass
 		for (Class<?> theClass = type; generator == null && theClass != null; theClass = theClass.getSuperclass()) {
-			generator = lookupGenerator(theClass);
+			generator = lookupGenerator(type, theClass);
 		}
 
-		if (generator instanceof ObjectClassGenerator) {
-			ObjectClassGenerator objectClassGenerator = (ObjectClassGenerator) generator;
-			objectClassGenerator.setObjectClass(type);
-		}
 		if (generator instanceof RegistryAware) {
 			RegistryAware registryAware = (RegistryAware) generator;
 			registryAware.setRegistry(this);
@@ -106,10 +101,10 @@ public class RandomGeneratorsRegistry {
 		return generator;
 	}
 
-	private <T> Generator<T> lookupGenerator(Class<?> type) {
+	private <T> Generator<T> lookupGenerator(Class<?> type, Class<?> classInRegistry) {
 
 		// class lookup
-		Generator<T> generator = getFromRegistry(type, type);
+		Generator<T> generator = getFromRegistry(type, classInRegistry);
 		if (generator != null) {
 			return generator;
 		}
@@ -126,7 +121,7 @@ public class RandomGeneratorsRegistry {
 		return generator;
 	}
 
-	private <T> Generator<T> getFromRegistry(Class<?> generatedObjectClass, Class<?> classInRegistry) {
+	private <T> Generator<T> getFromRegistry(Class<?> type, Class<?> classInRegistry) {
 		if (classInRegistry.isArray()) {
 			classInRegistry = Array.class;
 		}
@@ -138,7 +133,7 @@ public class RandomGeneratorsRegistry {
 			Class<T> generatorClass = (Class<T>) registeredObject;
 			try {
 				try {
-					generator = (Generator<T>) invokeConstructor(generatorClass, generatedObjectClass);
+					generator = (Generator<T>) invokeConstructor(generatorClass, type);
 				} catch (NoSuchMethodException e) {
 					generator = (Generator<T>) invokeConstructor(generatorClass, null);
 				}

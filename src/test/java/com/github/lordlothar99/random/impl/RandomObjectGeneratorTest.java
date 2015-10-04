@@ -15,7 +15,7 @@ import com.github.lordlothar99.random.Foo;
 public class RandomObjectGeneratorTest {
 
 	@Test
-	public void testFoo() {
+	public void should_list_contain_several_elements() {
 		RandomObjectGenerator<Foo> generator = new RandomObjectGenerator<Foo>(Foo.class);
 		Foo result = generator.create();
 		Assert.assertNotNull("null objet", result);
@@ -27,6 +27,13 @@ public class RandomObjectGeneratorTest {
 		RandomObjectGenerator<RecursiveFoo> generator = new RandomObjectGenerator<RecursiveFoo>(RecursiveFoo.class);
 		RecursiveFoo result = generator.create();
 		Assert.assertNotNull("null objet", result);
+	}
+	@Test
+	public void should_integer_be_between_bounds() {
+		RandomObjectGenerator<Foo> generator = new RandomObjectGenerator<Foo>(Foo.class);
+		Foo result = generator.create();
+		Assert.assertNotNull("null objet", result);
+		Assert.assertFalse("empty collection within generated object", result.getBars().isEmpty());
 	}
 
 }
