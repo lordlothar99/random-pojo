@@ -3,22 +3,22 @@
  */
 package com.github.lordlothar99.random.impl.numeric;
 
-import org.apache.commons.lang.math.RandomUtils;
-
-import com.github.lordlothar99.random.api.Generator;
+import java.math.BigDecimal;
 
 /**
  * Random {@link Byte} generator
  * 
  * @author Francois Lecomte
  */
-public class RandomByteGenerator implements Generator<Byte> {
+public class RandomByteGenerator extends AbstractRandomNumericGenerator<Byte> {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Byte create() {
-        return (byte ) RandomUtils.nextInt(Byte.MAX_VALUE);
-    }
+	public RandomByteGenerator() {
+		super((byte) 0, (byte) 100);
+	}
+
+	@Override
+	protected Byte fromBigDecimal(BigDecimal bigDecimal) {
+		return bigDecimal.byteValue();
+	}
 
 }
