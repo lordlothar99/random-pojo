@@ -3,6 +3,8 @@
  */
 package com.github.lordlothar99.random.impl;
 
+import static org.apache.commons.lang.ArrayUtils.isEmpty;
+
 import com.github.lordlothar99.random.RandomToolkit;
 import com.github.lordlothar99.random.api.ContainerGenerator;
 import com.github.lordlothar99.random.api.Generator;
@@ -20,6 +22,7 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 	private Generator<?>[] elementsGenerators;
 	private int minSize = 2;
 	private int maxSize = 10;
+	// TODO
 	private RandomToolkit toolkit = new RandomToolkit();
 	private int maxGenerationRetryCount = 10;
 	private boolean errorOnNotEnoughDifferentElements = false;
@@ -33,12 +36,25 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 		this.elementsTypes = elementTypes;
 	}
 
+	public AbstractContainerGenerator(Class<T> clazz, Generator<?>... elementsGenerators) {
+		super(clazz);
+		this.elementsGenerators = elementsGenerators;
+	}
+
 	public Class<?>[] getElementsTypes() {
 		return elementsTypes;
 	}
 
 	public void setElementsTypes(Class<?>... elementTypes) {
 		this.elementsTypes = elementTypes;
+	}
+
+	public void setElementsGenerators(Generator<?>... elementsGenerators) {
+		this.elementsGenerators = elementsGenerators;
+	}
+
+	public Generator<?>[] getElementsGenerators() {
+		return elementsGenerators;
 	}
 
 	public int getMinSize() {
@@ -60,14 +76,6 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 	public void setSize(int size) {
 		this.setMinSize(size);
 		this.setMaxSize(size);
-	}
-
-	public void setElementsGenerators(Generator<?>... elementsGenerators) {
-		this.elementsGenerators = elementsGenerators;
-	}
-
-	public Generator<?>[] getElementsGenerators() {
-		return elementsGenerators;
 	}
 
 	public void setMaxGenerationRetryCount(int maxGenerationRetryCount) {
@@ -146,6 +154,10 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 	protected abstract int size(T container);
 
 	protected int generateSize() {
+		if (isEmpty(elementsGenerators) && isEmpty(elementsTypes)) {
+			logger.error("Unable to generate elements when neither elementsGenerators nor elementsTypes are specified");
+			return 0;
+		}
 		if (minSize == maxSize) {
 			return minSize;
 		}

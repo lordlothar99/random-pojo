@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.lordlothar99.random.Foo;
+import com.github.lordlothar99.random.RandomGenerators;
 
 /**
  * Test for {@link RandomArrayGenerator}.
@@ -17,6 +18,8 @@ import com.github.lordlothar99.random.Foo;
  * @author Francois Lecomte
  */
 public class RandomArrayGeneratorTest {
+	
+	private RandomGenerators generators = new RandomGenerators();
 	@Test
 	public void should_array_be_specified_length() {
 		RandomArrayGenerator<Integer[]> generator = new RandomArrayGenerator<Integer[]>(Integer[].class);
@@ -29,6 +32,7 @@ public class RandomArrayGeneratorTest {
 	public void should_array_contain_specified_integers() {
 		RandomArrayGenerator<Integer[]> generator = new RandomArrayGenerator<Integer[]>(Integer[].class);
 		generator.setSize(20);
+		generator.setElementsGenerators(generators.integer(50, 100));
 		Integer[] array = generator.create();
 		assertEquals(20, array.length);
 		for (Integer integer : array) {
