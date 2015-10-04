@@ -39,7 +39,7 @@ public abstract class AbstractRandomNumericGeneratorTest<T extends Comparable<T>
 		assertThat("Less than " + max, randomValue, new LessOrEqual<T>(max));
 	}
 
-	protected G newGenerator();
+	protected abstract G newGenerator();
 
 	protected abstract T min();
 
