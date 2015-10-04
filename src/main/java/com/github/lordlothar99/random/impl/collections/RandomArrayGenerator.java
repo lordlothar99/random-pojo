@@ -6,55 +6,41 @@ package com.github.lordlothar99.random.impl.collections;
 import java.lang.reflect.Array;
 import java.util.Collection;
 
-import com.github.lordlothar99.random.RandomToolkit;
-import com.github.lordlothar99.random.impl.AbstractGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
+import com.github.lordlothar99.random.impl.AbstractContainerGenerator;
 
 /**
  * Random {@link Collection} generator
  * 
  * @author Francois Lecomte
- * @param <O> Type du tableau
+ * @param <T>
+ *            array type
  */
-public class RandomArrayGenerator<O> extends AbstractGenerator<O> {
+@SuppressWarnings("unchecked")
+public class RandomArrayGenerator<T> extends AbstractContainerGenerator<T> {
 
-    /**
-     * max elements count in array ; default is 5
-     */
-    private int maxElementsCount = 5;
+	public RandomArrayGenerator(Class<T> arrayClass) {
+		super(arrayClass, arrayClass.getComponentType());
+		if (!arrayClass.isArray()) {
+			throw new IllegalArgumentException("Class must be array-class : " + arrayClass);
+		}
+	}
 
-    /**
-     * Constructeur
-     * 
-     * @param arrayClass Type du tableau
-     */
-    public RandomArrayGenerator(Class<O> arrayClass) {
-        super(arrayClass);
-        if (!arrayClass.isArray()) {
-            throw new IllegalArgumentException("Class must be array-class : " + arrayClass);
-        }
-    }
+	@Override
+	protected boolean append(T container, int elementIndex, Object element) {
+		Array.set(container, elementIndex, element);
+		return true;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    public O create() {
-        // random size
-        final RandomIntegerGenerator randomIntegerGenerator = new RandomIntegerGenerator(maxElementsCount);
-        final int elementsCount = Math.max(randomIntegerGenerator.create(), 2);
-        final Object array = Array.newInstance(getObjectClass().getComponentType(), elementsCount);
-        // random fill
-        for (int i = 0; i < elementsCount; i++) {
-            Array.set(array, i, RandomToolkit.get().generate(getObjectClass().getComponentType()));
-        }
-        return (O ) array;
-    }
+	@Override
+	protected T newContainer(int size) {
+		T array = (T) Array.newInstance(getElementsTypes()[0], size);
+		return array;
+	}
 
-    /**
-     * @param maxElementsCount the maxElementsCount to set
-     */
-    public void setMaxElementsCount(int maxElementsCount) {
-        this.maxElementsCount = maxElementsCount;
-    }
+	@Override
+	protected int size(T container) {
+		int size = Array.getLength(container);
+		return size;
+	}
+
 }

@@ -34,35 +34,37 @@ public class RandomCollectionGenerator<T extends Collection> extends AbstractCon
 	}
 
 	@Override
-	protected boolean append(T container, int elementIndex) {
-		Object element = getToolkit().generate(getElementTypes()[0]);
+	protected boolean append(T container, int elementIndex, Object element) {
 		boolean success = container.add(element);
 		return success;
 	}
 
 	@Override
 	protected T newContainer(int size) {
-		if (!getObjectClass().isInterface()) {
+		Class<T> containerClass = getObjectClass();
+		logger.debug("Instantiating a new container for type '{}' for {} elements", containerClass, size);
+		if (!containerClass.isInterface()) {
 			try {
-				return getObjectClass().getConstructor().newInstance();
+				return containerClass.getConstructor().newInstance();
 			} catch (final Exception e) {
-				throw new RuntimeException("Unable to instantiate container type '" + getObjectClass().getName() + "'",
+				throw new RuntimeException("Unable to instantiate container type '" + containerClass.getName() + "'",
 						e);
 			}
 		}
 		Object instance = null;
-		if (SortedSet.class.isAssignableFrom(getObjectClass())) {
+		if (SortedSet.class.isAssignableFrom(containerClass)) {
 			instance = new TreeSet<Object>();
-		} else if (Set.class.isAssignableFrom(getObjectClass())) {
+		} else if (Set.class.isAssignableFrom(containerClass)) {
 			instance = new HashSet<Object>(size);
-		} else if (List.class.isAssignableFrom(getObjectClass())) {
+		} else if (List.class.isAssignableFrom(containerClass)) {
 			instance = new ArrayList<Object>(size);
-		} else if (Queue.class.isAssignableFrom(getObjectClass())) {
+		} else if (Queue.class.isAssignableFrom(containerClass)) {
 			instance = new LinkedList<Object>();
 		} else {
 			// default
 			instance = new ArrayList<Object>(size);
 		}
+		logger.debug("Instantiated container : {}", instance);
 
 		return (T) instance;
 	}

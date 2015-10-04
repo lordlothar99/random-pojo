@@ -5,6 +5,7 @@ package com.github.lordlothar99.random.impl;
 
 import com.github.lordlothar99.random.RandomToolkit;
 import com.github.lordlothar99.random.api.ContainerGenerator;
+import com.github.lordlothar99.random.api.Generator;
 
 /**
  * Abstract {@link ContainerGenerator}.
@@ -15,7 +16,8 @@ import com.github.lordlothar99.random.api.ContainerGenerator;
  */
 public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>implements ContainerGenerator<T> {
 
-	private Class<?>[] elementTypes;
+	private Class<?>[] elementsTypes;
+	private Generator<?>[] elementsGenerators;
 	private int minSize = 2;
 	private int maxSize = 10;
 	private RandomToolkit toolkit = new RandomToolkit();
@@ -28,15 +30,15 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 
 	public AbstractContainerGenerator(Class<T> clazz, Class<?>... elementTypes) {
 		super(clazz);
-		this.elementTypes = elementTypes;
+		this.elementsTypes = elementTypes;
 	}
 
-	public Class<?>[] getElementTypes() {
-		return elementTypes;
+	public Class<?>[] getElementsTypes() {
+		return elementsTypes;
 	}
 
-	public void setElementTypes(Class<?>... elementTypes) {
-		this.elementTypes = elementTypes;
+	public void setElementsTypes(Class<?>... elementTypes) {
+		this.elementsTypes = elementTypes;
 	}
 
 	public int getMinSize() {
@@ -55,19 +57,47 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 		this.maxSize = maxSize;
 	}
 
+	public void setSize(int size) {
+		this.setMinSize(size);
+		this.setMaxSize(size);
+	}
+
+	public void setElementsGenerators(Generator<?>... elementsGenerators) {
+		this.elementsGenerators = elementsGenerators;
+	}
+
+	public Generator<?>[] getElementsGenerators() {
+		return elementsGenerators;
+	}
+
+	public void setMaxGenerationRetryCount(int maxGenerationRetryCount) {
+		this.maxGenerationRetryCount = maxGenerationRetryCount;
+	}
+
+	public int getMaxGenerationRetryCount() {
+		return maxGenerationRetryCount;
+	}
+
 	public T create() {
+		logger.debug("Generating a container...");
 		int size = generateSize();
+
+		logger.debug("Instantiating a new container for {} elements", size);
 		T container = newContainer(size);
 		for (int i = 0; i < size; i++) {
 			appendWithRetry(container, i);
 		}
+		logger.debug("Container generated : {}", container);
 		return container;
 	}
 
 	protected void appendWithRetry(T container, int index) {
 		int retryCount = 0;
-		boolean success;
+		boolean success = true;
 		do {
+			if (!success) {
+				logger.debug("Retrying...");
+			}
 			success = append(container, index);
 			retryCount++;
 		} while (!success && retryCount < maxGenerationRetryCount);
@@ -84,7 +114,32 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 		}
 	}
 
-	protected abstract boolean append(T container, int elementIndex);
+	protected boolean append(T container, int elementIndex) {
+		logger.debug("Appending a element at position {} : ", elementIndex);
+		Generator<?> generator = elementGenerator(0);
+		logger.debug("Using element generator : {}", generator);
+		Object element = generator.create();
+		logger.debug("Generated element is : {}", element);
+		boolean success = append(container, elementIndex, element);
+		logger.debug("Append status : {}", success);
+		return success;
+	}
+
+	protected Generator<?> elementGenerator(int index) {
+		Generator<?> generator;
+		logger.debug("Looking for generator for elements of index " + index + "..");
+		if (elementsGenerators != null && elementsGenerators.length > index) {
+			generator = elementsGenerators[index];
+			logger.debug("Generator found within : {}", generator);
+		} else {
+			Class<?> elementType = elementsTypes[index];
+			generator = toolkit.getRegistry().getGenerator(elementType);
+			logger.debug("Generator found in registry : {}", generator);
+		}
+		return generator;
+	}
+
+	protected abstract boolean append(T container, int elementIndex, Object element);
 
 	protected abstract T newContainer(int size);
 

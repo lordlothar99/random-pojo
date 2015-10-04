@@ -45,6 +45,14 @@ public final class RandomToolkit {
 		return values;
 	}
 
+	public RandomGenerators getGenerators() {
+		return generators;
+	}
+
+	public RandomGeneratorsRegistry getRegistry() {
+		return registry;
+	}
+
 	public int integer() {
 		return generators.integer().create();
 	}

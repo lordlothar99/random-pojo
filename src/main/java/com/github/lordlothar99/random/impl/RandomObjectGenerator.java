@@ -195,7 +195,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
         final Generator< ? > generateur = registry.getGenerator(field.getType());
         if (generateur instanceof ContainerGenerator< ? >) {
             final Class< ? >[] genericTypes = getGenericTypes(field);
-            ((ContainerGenerator< ? > ) generateur).setElementTypes(genericTypes);
+            ((ContainerGenerator< ? > ) generateur).setElementsTypes(genericTypes);
         }
         return generateur;
     }

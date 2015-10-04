@@ -17,9 +17,21 @@ import java.util.Map;
  */
 public interface ContainerGenerator<T> extends Generator<T> {
 
-	void setElementTypes(Class<?>... elementTypes);
+	void setElementsTypes(Class<?>... elementsTypes);
+
+	Class<?>[] getElementsTypes();
+
+	void setElementsGenerators(Generator<?>... elementsGenerators);
+
+	Generator<?>[] getElementsGenerators();
 
 	void setMinSize(int minSize);
 
 	void setMaxSize(int minSize);
+
+	void setSize(int size);
+
+	int getMinSize();
+
+	int getMaxSize();
 }
