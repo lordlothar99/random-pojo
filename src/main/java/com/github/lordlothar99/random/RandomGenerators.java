@@ -9,15 +9,9 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
-import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.RangedGenerator;
+import com.github.lordlothar99.random.impl.RandomObjectGenerator;
 import com.github.lordlothar99.random.impl.RandomStringGenerator;
-import com.github.lordlothar99.random.impl.date.RandomCalendarGenerator;
-import com.github.lordlothar99.random.impl.date.RandomDateGenerator;
-import com.github.lordlothar99.random.impl.date.RandomDateTimeGenerator;
-import com.github.lordlothar99.random.impl.date.RandomLocalDateGenerator;
-import com.github.lordlothar99.random.impl.date.RandomLocalDateTimeGenerator;
-import com.github.lordlothar99.random.impl.date.RandomXMLGregorianCalendarGenerator;
 
 public class RandomGenerators {
 
@@ -163,5 +157,9 @@ public class RandomGenerators {
 		RandomStringGenerator stringGenerator = stringGenerator(length);
 		stringGenerator.setChars(chars);
 		return stringGenerator;
+	}
+
+	public <T> RandomObjectGenerator<T> objectGenerator(Class<T> objectClass) {
+		return (RandomObjectGenerator<T>) registry.getGenerator(objectClass);
 	}
 }

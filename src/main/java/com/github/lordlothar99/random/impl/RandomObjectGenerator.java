@@ -17,11 +17,8 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.reflect.FieldUtils;
 
-import com.github.lordlothar99.random.RandomGeneratorsRegistry;
-import com.github.lordlothar99.random.RandomToolkit;
 import com.github.lordlothar99.random.api.ContainerGenerator;
 import com.github.lordlothar99.random.api.Generator;
-import com.github.lordlothar99.random.impl.numeric.RandomLongGenerator;
 
 /**
  * Generateur aleatoire d'objets.
@@ -42,7 +39,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 	 */
 	private static final ThreadLocal<Map<Class<?>, Object>> GENERATED_OBJECTS = new ThreadLocal<Map<Class<?>, Object>>();
 
-	private RandomGeneratorsRegistry registry = new RandomGeneratorsRegistry();
+	private Map<String, Generator<?>> fieldGenerators = new HashMap<String, Generator<?>>();
 
 	public RandomObjectGenerator(Class<T> objectClass) {
 		this(objectClass, true);
@@ -88,7 +85,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 				}
 
 				// generation
-				generate(generatedObject, field);
+				generateFieldValue(generatedObject, field);
 			}
 		} finally {
 			// remove this object to stack
@@ -101,30 +98,22 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		return generatedObject;
 	}
 
-	/**
-	 * Generation de la valeur d'un champ.
-	 * 
-	 * @param object
-	 *            {@link Object}
-	 * @param field
-	 *            {@link Field}
-	 */
-	protected void generate(Object object, Field field) {
+	protected void generateFieldValue(Object object, Field field) {
 		if (Modifier.isFinal(field.getModifiers())) {
 			// impossible d'initialiser un champ final
 			return;
 		}
 
 		// on recupere un generateur pour la propriete
-		final Generator<?> generateur = getGenerateur(field);
+		final Generator<?> generator = getGenerator(field);
 
-		if (!recursive && generateur instanceof RandomObjectGenerator<?>) {
+		if (!recursive && generator instanceof RandomObjectGenerator<?>) {
 			// pas de generation des objets imbriques
 			return;
 		}
 
-		// on genere une valeur aleatoire
-		final Object propertyValue = generateur.create();
+		// random value generation
+		final Object propertyValue = generator.create();
 
 		Exception exception = null;
 		try {
@@ -150,23 +139,18 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		}
 	}
 
-	/**
-	 * @param field
-	 *            {@link Field}
-	 * @return un {@link Generator} pour le champs <code>field</code>
-	 */
-	protected Generator<?> getGenerateur(Field field) {
-		final Generator<?> generateur = registry.getGenerator(field.getType());
-		if (generateur instanceof ContainerGenerator<?>) {
-			final Class<?>[] genericTypes = getGenericTypes(field);
-			((ContainerGenerator<?>) generateur).setElementsTypes(genericTypes);
+	protected Generator<?> getGenerator(Field field) {
+		Generator<?> generator = fieldGenerators.get(field.getName());
+		if (generator == null) {
+			generator = toolkit().registry().getGenerator(field.getType());
 		}
-		return generateur;
+		if (generator instanceof ContainerGenerator<?>) {
+			final Class<?>[] genericTypes = getGenericTypes(field);
+			((ContainerGenerator<?>) generator).setElementsTypes(genericTypes);
+		}
+		return generator;
 	}
 
-	/**
-	 * @return une nouvelle instance
-	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected T newInstance() {
 		T instance = null;
@@ -216,13 +200,6 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		return instance;
 	}
 
-	/**
-	 * Types generiques
-	 * 
-	 * @param field
-	 *            {@link Field}
-	 * @return tableau de {@link Class}
-	 */
 	protected Class<?>[] getGenericTypes(Field field) {
 		if (!(field.getGenericType() instanceof ParameterizedType)) {
 			return null;
@@ -239,23 +216,11 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		return classes;
 	}
 
-	/**
-	 * @param bean
-	 *            {@link Object}
-	 * @return Tous les {@link Field} de l'objet, y compris ceux des classes
-	 *         meres.
-	 */
 	private static Field[] getAllFields(Object bean) {
 		final Class<? extends Object> beanClass = bean.getClass();
 		return getAllFields(beanClass);
 	}
 
-	/**
-	 * @param beanClass
-	 *            {@link Class}
-	 * @return Tous les {@link Field} de la classe, y compris ceux des classes
-	 *         meres.
-	 */
 	private static Field[] getAllFields(Class<? extends Object> beanClass) {
 		final Field[] fields = beanClass.getDeclaredFields();
 		final Class<?> superclass = beanClass.getSuperclass();
@@ -266,7 +231,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		}
 	}
 
-	public void setFieldGenerator(String string, RandomLongGenerator longGenerator) {
-
+	public void setFieldGenerator(String propertyName, Generator<?> longGenerator) {
+		fieldGenerators.put(propertyName, longGenerator);
 	}
 }
