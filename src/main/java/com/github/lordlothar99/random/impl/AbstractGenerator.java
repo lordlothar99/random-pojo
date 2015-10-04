@@ -38,7 +38,6 @@ public abstract class AbstractGenerator<T> implements Generator<T>, RegistryAwar
 		return objectClass;
 	}
 
-
 	public RandomGeneratorsRegistry getRegistry() {
 		if (registry == null) {
 			registry = new RandomGeneratorsRegistry();

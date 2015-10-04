@@ -3,57 +3,68 @@
  */
 package com.github.lordlothar99.random.impl;
 
-import org.apache.commons.lang.RandomStringUtils;
+import static org.apache.commons.lang.RandomStringUtils.random;
 
-import com.github.lordlothar99.random.api.Generator;
+import org.apache.commons.lang.ArrayUtils;
 
 /**
  * Random {@link String} generator
  * 
  * @author Francois Lecomte
  */
-public class RandomStringGenerator implements Generator<String> {
+public class RandomStringGenerator extends AbstractGenerator<String> {
 
-    /**
-     * length
-     */
-    private int length;
+	private int length;
+	private boolean letters;
+	private boolean numbers;
+	private char[] chars;
 
-    /**
-     * Constructeur
-     */
-    public RandomStringGenerator() {
-        this(10);
-    }
+	public RandomStringGenerator() {
+		this(10, true, true);
+	}
 
-    /**
-     * Constructeur
-     * 
-     * @param length
-     */
-    public RandomStringGenerator(int length) {
-        super();
-        this.length = length;
-    }
+	public RandomStringGenerator(int length) {
+		this(length, true, true);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String create() {
-        return RandomStringUtils.random(length, true, true);
-    }
+	public RandomStringGenerator(int length, boolean letters, boolean numbers) {
+		this.length = length;
+		this.letters = letters;
+		this.numbers = numbers;
+	}
 
-    /**
-     * @param length the length to set
-     */
-    public void setLength(int length) {
-        this.length = length;
-    }
+	public RandomStringGenerator(int length, char[] chars) {
+		this(length, true, true);
+		this.chars = chars;
+	}
 
-    /**
-     * @return the length
-     */
-    public int getLength() {
-        return length;
-    }
+	public int length() {
+		return length;
+	}
+
+	public boolean letters() {
+		return letters;
+	}
+
+	public boolean numbers() {
+		return numbers;
+	}
+
+	public char[] chars() {
+		return chars;
+	}
+
+	public String create() {
+		String randomString = random(length, 0, chars == null ? 0 : chars.length, letters, numbers, chars);
+		logger.info("Generated string '{}' under constraints : ", randomString, constraints());
+		return randomString;
+	}
+
+	private String constraints() {
+		String string = "length=" + length + " ; letters=" + letters + " ; numbers=" + numbers;
+		if (chars != null) {
+			string += " ; chars=" + ArrayUtils.toString(chars);
+		}
+		return string;
+	}
 }
