@@ -33,7 +33,7 @@ public class RandomArrayGeneratorTest {
 	public void should_array_contain_specified_integers() {
 		RandomArrayGenerator<Integer[]> generator = new RandomArrayGenerator<Integer[]>(Integer[].class);
 		generator.setSize(20);
-		generator.setElementsGenerators(generators.integer(50, 100));
+		generator.setElementsGenerators(generators.integerGenerator(50, 100));
 		Integer[] array = generator.create();
 		assertEquals(20, array.length);
 		for (Integer integer : array) {

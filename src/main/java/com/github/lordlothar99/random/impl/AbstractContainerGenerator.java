@@ -160,7 +160,7 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 		if (minSize == maxSize) {
 			return minSize;
 		}
-		int size = toolkit().integer(minSize, maxSize);
+		int size = toolkit().integerValue(minSize, maxSize);
 		return size;
 	}
 

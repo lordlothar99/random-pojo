@@ -53,11 +53,19 @@ public final class RandomToolkit {
 		return registry;
 	}
 
-	public int integer() {
-		return generators.integer().create();
+	public int integerValue() {
+		return generators.integerGenerator().create();
 	}
 
-	public int integer(int min, int max) {
-		return generators.integer(min, max).create();
+	public int integerValue(int min, int max) {
+		return generators.integerGenerator(min, max).create();
+	}
+
+	public long longValue() {
+		return generators.longGenerator().create();
+	}
+
+	public long longValue(long min, long max) {
+		return generators.longGenerator(min, max).create();
 	}
 }

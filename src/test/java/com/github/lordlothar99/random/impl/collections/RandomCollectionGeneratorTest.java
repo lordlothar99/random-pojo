@@ -36,7 +36,7 @@ public class RandomCollectionGeneratorTest {
 	public void should_list_contain_specified_integers() {
 		RandomCollectionGenerator<List> generator = new RandomCollectionGenerator<List>(List.class, Integer.class);
 		generator.setSize(20);
-		generator.setElementsGenerators(generators.integer(50, 100));
+		generator.setElementsGenerators(generators.integerGenerator(50, 100));
 		List<Integer> list = generator.create();
 		assertEquals(20, list.size());
 		for (Integer integer : list) {

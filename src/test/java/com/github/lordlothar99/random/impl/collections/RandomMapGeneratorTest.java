@@ -32,7 +32,7 @@ public class RandomMapGeneratorTest {
 				(Class<? extends Map<String, Integer>>) HashMap.class);
 		generator.setSize(20);
 		generator.setElementsTypes(String.class, null);
-		generator.setElementsGenerators(null, generators.integer(50, 100));
+		generator.setElementsGenerators(null, generators.integerGenerator(50, 100));
 		Map<String, Integer> map = generator.create();
 		assertEquals(20, map.size());
 		for (Entry<String, Integer> entry : map.entrySet()) {
