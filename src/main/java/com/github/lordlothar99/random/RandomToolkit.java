@@ -14,17 +14,21 @@ public final class RandomToolkit {
 
 	private static final RandomToolkit INSTANCE = new RandomToolkit();
 
-	private RandomGeneratorsRegistry registry = new RandomGeneratorsRegistry();
+	private RandomGeneratorsRegistry registry;
+	private RandomGenerators generators;
 
 	public RandomToolkit() {
+		this(new RandomGeneratorsRegistry());
+	}
+
+	public RandomToolkit(RandomGeneratorsRegistry registry) {
+		super();
+		this.registry = registry;
+		this.generators = new RandomGenerators(registry);
 	}
 
 	public static RandomToolkit get() {
 		return INSTANCE;
-	}
-
-	public void setRegistry(RandomGeneratorsRegistry registry) {
-		this.registry = registry;
 	}
 
 	public <T> T generate(Class<T> type) {
@@ -39,5 +43,13 @@ public final class RandomToolkit {
 			values[i] = generate(type);
 		}
 		return values;
+	}
+
+	public int integer() {
+		return generators.integer().create();
+	}
+
+	public int integer(int min, int max) {
+		return generators.integer(min, max).create();
 	}
 }

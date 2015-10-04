@@ -6,7 +6,7 @@ package com.github.lordlothar99.random.impl.collections;
 import org.apache.commons.collections.map.MultiKeyMap;
 
 import com.github.lordlothar99.random.RandomToolkit;
-import com.github.lordlothar99.random.impl.AbstractGenericGenerator;
+import com.github.lordlothar99.random.impl.AbstractContainerGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
 
 /**
@@ -14,7 +14,7 @@ import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
  * 
  * @author Francois Lecomte
  */
-public class RandomMultiKeyMapGenerator extends AbstractGenericGenerator<MultiKeyMap> {
+public class RandomMultiKeyMapGenerator extends AbstractContainerGenerator<MultiKeyMap> {
 
     /**
      * type des valeurs
@@ -46,25 +46,25 @@ public class RandomMultiKeyMapGenerator extends AbstractGenericGenerator<MultiKe
 
         // random fill
         for (int i = 0; i < elementsCount; i++) {
-            if (getGenericTypes().length == 1) {
-                map.put(RandomToolkit.get().generate(getGenericTypes()[0]), RandomToolkit.get().generate(valueType));
-            } else if (getGenericTypes().length == 2) {
-                map.put(RandomToolkit.get().generate(getGenericTypes()[0]), RandomToolkit.get()
-                                .generate(getGenericTypes()[1]), RandomToolkit.get().generate(valueType));
-            } else if (getGenericTypes().length == 3) {
-                map.put(RandomToolkit.get().generate(getGenericTypes()[0]), RandomToolkit.get()
-                                .generate(getGenericTypes()[1]), RandomToolkit.get().generate(getGenericTypes()[2]),
+            if (getElementTypes().length == 1) {
+                map.put(RandomToolkit.get().generate(getElementTypes()[0]), RandomToolkit.get().generate(valueType));
+            } else if (getElementTypes().length == 2) {
+                map.put(RandomToolkit.get().generate(getElementTypes()[0]), RandomToolkit.get()
+                                .generate(getElementTypes()[1]), RandomToolkit.get().generate(valueType));
+            } else if (getElementTypes().length == 3) {
+                map.put(RandomToolkit.get().generate(getElementTypes()[0]), RandomToolkit.get()
+                                .generate(getElementTypes()[1]), RandomToolkit.get().generate(getElementTypes()[2]),
                                 RandomToolkit.get().generate(valueType));
-            } else if (getGenericTypes().length == 4) {
-                map.put(RandomToolkit.get().generate(getGenericTypes()[0]), RandomToolkit.get()
-                                .generate(getGenericTypes()[1]), RandomToolkit.get().generate(getGenericTypes()[2]),
-                                RandomToolkit.get().generate(getGenericTypes()[3]), RandomToolkit.get()
+            } else if (getElementTypes().length == 4) {
+                map.put(RandomToolkit.get().generate(getElementTypes()[0]), RandomToolkit.get()
+                                .generate(getElementTypes()[1]), RandomToolkit.get().generate(getElementTypes()[2]),
+                                RandomToolkit.get().generate(getElementTypes()[3]), RandomToolkit.get()
                                                 .generate(valueType));
-            } else if (getGenericTypes().length == 5) {
-                map.put(RandomToolkit.get().generate(getGenericTypes()[0]), RandomToolkit.get()
-                                .generate(getGenericTypes()[1]), RandomToolkit.get().generate(getGenericTypes()[2]),
-                                RandomToolkit.get().generate(getGenericTypes()[3]), RandomToolkit.get()
-                                                .generate(getGenericTypes()[4]), RandomToolkit.get()
+            } else if (getElementTypes().length == 5) {
+                map.put(RandomToolkit.get().generate(getElementTypes()[0]), RandomToolkit.get()
+                                .generate(getElementTypes()[1]), RandomToolkit.get().generate(getElementTypes()[2]),
+                                RandomToolkit.get().generate(getElementTypes()[3]), RandomToolkit.get()
+                                                .generate(getElementTypes()[4]), RandomToolkit.get()
                                                 .generate(valueType));
             }
         }

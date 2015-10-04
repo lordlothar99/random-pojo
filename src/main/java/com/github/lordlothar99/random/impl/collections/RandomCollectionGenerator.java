@@ -13,98 +13,62 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.github.lordlothar99.random.RandomToolkit;
-import com.github.lordlothar99.random.impl.AbstractGenericGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
+import com.github.lordlothar99.random.impl.AbstractContainerGenerator;
 
 /**
  * Random {@link Collection} generator
  * 
  * @author Francois Lecomte
- * @param <O> {@link Collection}
+ * @param <T>
+ *            {@link Collection}
  */
-@SuppressWarnings({"unchecked", "rawtypes" })
-public class RandomCollectionGenerator<O extends Collection> extends AbstractGenericGenerator<O> {
+@SuppressWarnings({ "unchecked", "rawtypes" })
+public class RandomCollectionGenerator<T extends Collection> extends AbstractContainerGenerator<T> {
 
-    /**
-     * max elements count in collection ; default is 5
-     */
-    private int maxElementsCount = 5;
+	public RandomCollectionGenerator(Class<T> collectionType) {
+		super(collectionType);
+	}
 
-    /**
-     * Constructeur
-     * 
-     * @param theClazz {@link Class} de {@link Collection}
-     */
-    public RandomCollectionGenerator(Class<O> theClazz) {
-        super(theClazz);
-    }
+	public RandomCollectionGenerator(Class<T> collectionType, Class<?> elementsType) {
+		super(collectionType, elementsType);
+	}
 
-    /**
-     * Constructeur
-     * 
-     * @param clazz {@link Class} de {@link Collection}
-     * @param genericType Type generique des donnees de la {@link Collection}.
-     */
-    public RandomCollectionGenerator(Class<O> clazz, Class< ? > genericType) {
-        super(clazz, genericType);
-    }
+	@Override
+	protected boolean append(T container, int elementIndex) {
+		Object element = getToolkit().generate(getElementTypes()[0]);
+		boolean success = container.add(element);
+		return success;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public O create() {
-        // new instance
-        final O collection = newInstance();
+	@Override
+	protected T newContainer(int size) {
+		if (!getObjectClass().isInterface()) {
+			try {
+				return getObjectClass().getConstructor().newInstance();
+			} catch (final Exception e) {
+				throw new RuntimeException("Unable to instantiate container type '" + getObjectClass().getName() + "'",
+						e);
+			}
+		}
+		Object instance = null;
+		if (SortedSet.class.isAssignableFrom(getObjectClass())) {
+			instance = new TreeSet<Object>();
+		} else if (Set.class.isAssignableFrom(getObjectClass())) {
+			instance = new HashSet<Object>(size);
+		} else if (List.class.isAssignableFrom(getObjectClass())) {
+			instance = new ArrayList<Object>(size);
+		} else if (Queue.class.isAssignableFrom(getObjectClass())) {
+			instance = new LinkedList<Object>();
+		} else {
+			// default
+			instance = new ArrayList<Object>(size);
+		}
 
-        // generate values if possible
-        final Class< ? >[] genericTypes = getGenericTypes();
-        if (genericTypes != null && genericTypes.length > 0) {
-            final Class< ? > genericType = genericTypes[0];
-            // random size
-            final RandomIntegerGenerator randomIntegerGenerator = new RandomIntegerGenerator(maxElementsCount);
-            final int elementsCount = Math.max(randomIntegerGenerator.create(), 2);
-            // random fill
-            for (int i = 0; i < elementsCount; i++) {
-                collection.add(RandomToolkit.get().generate(genericType));
-            }
-        }
-        return collection;
-    }
+		return (T) instance;
+	}
 
-    /**
-     * @return new instance of {@link O}
-     */
-    protected O newInstance() {
-        if (!getObjectClass().isInterface()) {
-            try {
-                return getObjectClass().getConstructor().newInstance();
-            } catch (final Exception e) {
-                throw new RuntimeException("Impossible d'instantier un objet de type '" + getObjectClass().getName()
-                                + "'", e);
-            }
-        }
-        Object instance = null;
-        if (SortedSet.class.isAssignableFrom(getObjectClass())) {
-            instance = new TreeSet<Object>();
-        } else if (Set.class.isAssignableFrom(getObjectClass())) {
-            instance = new HashSet<Object>();
-        } else if (List.class.isAssignableFrom(getObjectClass())) {
-            instance = new ArrayList<Object>();
-        } else if (Queue.class.isAssignableFrom(getObjectClass())) {
-            instance = new LinkedList<Object>();
-        } else {
-            // default
-            instance = new ArrayList<Object>();
-        }
-
-        return (O ) instance;
-    }
-
-    /**
-     * @param maxElementsCount the maxElementsCount to set
-     */
-    public void setMaxElementsCount(int maxElementsCount) {
-        this.maxElementsCount = maxElementsCount;
-    }
+	@Override
+	protected int size(T container) {
+		return container.size();
+	}
 }

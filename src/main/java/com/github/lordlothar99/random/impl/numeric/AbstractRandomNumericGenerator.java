@@ -10,15 +10,15 @@ import java.math.BigDecimal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.lordlothar99.random.api.Generator;
+import com.github.lordlothar99.random.api.RangedGenerator;
 
-public abstract class AbstractRandomNumericGenerator<T> implements Generator<T> {
+public abstract class AbstractRandomNumericGenerator<T> implements RangedGenerator<T> {
 
 	private int defaultDecimalScale = 2;
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	private T min;
 	private T max;
-	
+
 	public AbstractRandomNumericGenerator(T min, T max) {
 		this.min = min;
 		this.max = max;

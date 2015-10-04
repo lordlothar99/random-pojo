@@ -12,7 +12,7 @@ import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.map.LinkedMap;
 
 import com.github.lordlothar99.random.RandomToolkit;
-import com.github.lordlothar99.random.impl.AbstractGenericGenerator;
+import com.github.lordlothar99.random.impl.AbstractContainerGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
 
 /**
@@ -22,7 +22,7 @@ import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
  * @param <O> {@link Map}
  */
 @SuppressWarnings({"unchecked", "rawtypes" })
-public class RandomMapGenerator<O extends Map> extends AbstractGenericGenerator<O> {
+public class RandomMapGenerator<O extends Map> extends AbstractContainerGenerator<O> {
 
     /**
      * Constructeur
@@ -62,7 +62,7 @@ public class RandomMapGenerator<O extends Map> extends AbstractGenericGenerator<
         final O map = newInstance();
 
         // generate values if possible
-        final Class< ? >[] genericTypes = getGenericTypes();
+        final Class< ? >[] genericTypes = getElementTypes();
         if (genericTypes != null && genericTypes.length > 1) {
             final Class< ? > genericTypeKey = genericTypes[0];
             final Class< ? > genericTypeValue = genericTypes[1];

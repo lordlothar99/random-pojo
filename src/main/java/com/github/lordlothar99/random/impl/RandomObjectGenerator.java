@@ -20,20 +20,20 @@ import org.apache.commons.lang.reflect.FieldUtils;
 import com.github.lordlothar99.random.RandomGeneratorsRegistry;
 import com.github.lordlothar99.random.RandomToolkit;
 import com.github.lordlothar99.random.api.Generator;
-import com.github.lordlothar99.random.api.GenericGenerator;
+import com.github.lordlothar99.random.api.ContainerGenerator;
 
 /**
  * Generateur aleatoire d'objets.
  * 
  * @author Francois Lecomte
- * @param <O> {@link Object}
+ * @param <T> {@link Object}
  */
-public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
+public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 
     /**
      * {@link Generator}
      */
-    private Generator<O> generator;
+    private Generator<T> generator;
 
     /**
      * recursive
@@ -53,7 +53,7 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
      * 
      * @param clazz {@link Class}
      */
-    public RandomObjectGenerator(Class<O> clazz) {
+    public RandomObjectGenerator(Class<T> clazz) {
         this(clazz, true);
     }
 
@@ -63,7 +63,7 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
      * @param clazz {@link Class}
      * @param generator {@link Generator}
      */
-    public RandomObjectGenerator(Class<O> clazz, Generator<O> factory) {
+    public RandomObjectGenerator(Class<T> clazz, Generator<T> factory) {
         this(clazz, factory, true);
     }
 
@@ -73,7 +73,7 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
      * @param clazz {@link Class}
      * @param recursive recursive
      */
-    public RandomObjectGenerator(Class<O> clazz, boolean recursive) {
+    public RandomObjectGenerator(Class<T> clazz, boolean recursive) {
         super(clazz);
         this.recursive = recursive;
     }
@@ -84,7 +84,7 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
      * @param generator {@link Generator}
      * @param recursive recursive
      */
-    public RandomObjectGenerator(Class<O> clazz, Generator<O> factory, boolean recursive) {
+    public RandomObjectGenerator(Class<T> clazz, Generator<T> factory, boolean recursive) {
         this(clazz, recursive);
         this.generator = factory;
     }
@@ -93,13 +93,13 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public O create() {
+    public T create() {
         // recursive check
-        Class<O> objectClass = getObjectClass();
+        Class<T> objectClass = getObjectClass();
         Map<Class< ? >, Object> generatedObjects = GENERATED_OBJECTS.get();
-        O generatedObject;
+        T generatedObject;
         if (generatedObjects != null) {
-            generatedObject = (O ) generatedObjects.get(objectClass);
+            generatedObject = (T ) generatedObjects.get(objectClass);
             if (generatedObject != null) {
                 return generatedObject;
             }
@@ -193,9 +193,9 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
      */
     protected Generator< ? > getGenerateur(Field field) {
         final Generator< ? > generateur = registry.getGenerator(field.getType());
-        if (generateur instanceof GenericGenerator< ? >) {
+        if (generateur instanceof ContainerGenerator< ? >) {
             final Class< ? >[] genericTypes = getGenericTypes(field);
-            ((GenericGenerator< ? > ) generateur).setGenericTypes(genericTypes);
+            ((ContainerGenerator< ? > ) generateur).setElementTypes(genericTypes);
         }
         return generateur;
     }
@@ -204,8 +204,8 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
      * @return une nouvelle instance
      */
     @SuppressWarnings({"rawtypes", "unchecked" })
-    protected O newInstance() {
-        O instance = null;
+    protected T newInstance() {
+        T instance = null;
         if (this.generator != null) {
             instance = this.generator.create();
         }
@@ -230,7 +230,7 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
                 final Object[] parametres = RandomToolkit.get().generate(parametreTypes);
 
                 try {
-                    instance = (O ) constructor.newInstance(parametres);
+                    instance = (T ) constructor.newInstance(parametres);
                     break;
                 } catch (final IllegalArgumentException e) {
                     // no op

@@ -3,6 +3,9 @@
  */
 package com.github.lordlothar99.random.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.ObjectClassGenerator;
 
@@ -15,10 +18,8 @@ import com.github.lordlothar99.random.api.ObjectClassGenerator;
  */
 public abstract class AbstractGenerator<T> implements ObjectClassGenerator<T> {
 
-	/**
-	 * {@link Class} de l'objet genere
-	 */
 	private Class<T> objectClass;
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public AbstractGenerator() {
 		super();
