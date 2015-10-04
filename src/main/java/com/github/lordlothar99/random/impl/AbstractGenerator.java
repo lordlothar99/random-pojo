@@ -18,23 +18,23 @@ import com.github.lordlothar99.random.api.ObjectClassGenerator;
  */
 public abstract class AbstractGenerator<T> implements ObjectClassGenerator<T> {
 
-	private Class<T> objectClass;
+	private Class<? extends T> objectClass;
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	public AbstractGenerator() {
 		super();
 	}
 
-	public AbstractGenerator(Class<T> clazz) {
+	public AbstractGenerator(Class<? extends T> clazz) {
 		super();
 		this.objectClass = clazz;
 	}
 
-	public Class<T> getObjectClass() {
+	public Class<? extends T> getObjectClass() {
 		return objectClass;
 	}
 
-	public void setObjectClass(Class<T> objectClass) {
+	public void setObjectClass(Class<? extends T> objectClass) {
 		this.objectClass = objectClass;
 	}
 }

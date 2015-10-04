@@ -27,16 +27,16 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 	private int maxGenerationRetryCount = 10;
 	private boolean errorOnNotEnoughDifferentElements = false;
 
-	public AbstractContainerGenerator(Class<T> clazz) {
+	public AbstractContainerGenerator(Class<? extends T> clazz) {
 		super(clazz);
 	}
 
-	public AbstractContainerGenerator(Class<T> clazz, Class<?>... elementTypes) {
+	public AbstractContainerGenerator(Class<? extends T> clazz, Class<?>... elementTypes) {
 		super(clazz);
 		this.elementsTypes = elementTypes;
 	}
 
-	public AbstractContainerGenerator(Class<T> clazz, Generator<?>... elementsGenerators) {
+	public AbstractContainerGenerator(Class<? extends T> clazz, Generator<?>... elementsGenerators) {
 		super(clazz);
 		this.elementsGenerators = elementsGenerators;
 	}

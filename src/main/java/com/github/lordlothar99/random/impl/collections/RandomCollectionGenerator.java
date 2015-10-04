@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.impl.AbstractContainerGenerator;
 
 /**
@@ -25,12 +26,16 @@ import com.github.lordlothar99.random.impl.AbstractContainerGenerator;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class RandomCollectionGenerator<T extends Collection> extends AbstractContainerGenerator<T> {
 
-	public RandomCollectionGenerator(Class<T> collectionType) {
+	public RandomCollectionGenerator(Class<? extends T> collectionType) {
 		super(collectionType);
 	}
 
-	public RandomCollectionGenerator(Class<T> collectionType, Class<?> elementsType) {
+	public RandomCollectionGenerator(Class<? extends T> collectionType, Class<?> elementsType) {
 		super(collectionType, elementsType);
+	}
+
+	public RandomCollectionGenerator(Class<? extends T> collectionType, Generator<?> elementsGenerators) {
+		super(collectionType, elementsGenerators);
 	}
 
 	@Override
@@ -41,7 +46,7 @@ public class RandomCollectionGenerator<T extends Collection> extends AbstractCon
 
 	@Override
 	protected T newContainer(int size) {
-		Class<T> containerClass = getObjectClass();
+		Class<? extends T> containerClass = getObjectClass();
 		logger.debug("Instantiating a new container for type '{}' for {} elements", containerClass, size);
 		if (!containerClass.isInterface()) {
 			try {

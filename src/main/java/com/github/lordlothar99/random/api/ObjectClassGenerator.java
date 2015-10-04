@@ -8,5 +8,5 @@ package com.github.lordlothar99.random.api;
  */
 public interface ObjectClassGenerator<T> extends Generator<T> {
 
-    void setObjectClass(Class<T> objectClass);
+    void setObjectClass(Class<? extends T> objectClass);
 }
