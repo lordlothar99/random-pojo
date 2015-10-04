@@ -1,5 +1,8 @@
 package com.github.lordlothar99.random;
 
+import static org.apache.commons.beanutils.ConstructorUtils.invokeConstructor;
+
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -11,7 +14,6 @@ import java.util.Map;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.commons.beanutils.ConstructorUtils;
 import org.apache.commons.lang.ClassUtils;
 
 import com.github.lordlothar99.random.api.Generator;
@@ -38,6 +40,7 @@ import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomLongGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomShortGenerator;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class RandomGeneratorsRegistry {
 
 	public static final RandomBigDecimalGenerator BIG_DECIMAL = new RandomBigDecimalGenerator();
@@ -91,6 +94,7 @@ public class RandomGeneratorsRegistry {
 		registry.put(Enum.class, RandomEnumGenerator.class);
 		registry.put(Collection.class, RandomCollectionGenerator.class);
 		registry.put(Map.class, RandomMapGenerator.class);
+		registry.put(Array.class, RandomArrayGenerator.class);
 		registry.put(Object.class, RandomObjectGenerator.class);
 	}
 
@@ -102,26 +106,17 @@ public class RandomGeneratorsRegistry {
 		registry.put(type, generatorClass);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public <T> Generator<T> getGenerator(Class<T> type) {
 
 		Generator<T> generator = null;
 
-		if (Enum.class.isAssignableFrom(type)) {
-			generator = new RandomEnumGenerator(type);
-		} else if (type.isArray()) {
+		if (type.isArray()) {
 			generator = new RandomArrayGenerator(type);
-			// } else if (Collection.class.isAssignableFrom(type)) {
-			// factory = new RandomCollectionGenerator(type);
-			// } else if (Map.class.isAssignableFrom(type)) {
-			// factory = new RandomMapGenerator(type);
-			// } else {
-			// factory = new RandomObjectGenerator<O>(type);
 		}
 
 		// exploration par les superclass
 		for (Class<?> theClass = type; generator == null && theClass != null; theClass = theClass.getSuperclass()) {
-			generator = getFromRegistry(theClass);
+			generator = lookupGenerator(theClass);
 		}
 
 		if (generator instanceof ObjectClassGenerator) {
@@ -131,35 +126,43 @@ public class RandomGeneratorsRegistry {
 		return generator;
 	}
 
-	@SuppressWarnings("unchecked")
-	private <T> Generator<T> getFromRegistry( Class<?> type) {
-		Generator<T> generator = null;
-		int i = 0;
-		List<Class<?>> interfaces = ClassUtils.getAllInterfaces(type);
-		// exploration par les interfaces
-		Class<?> theClass = type;
-		do {
-			Object registeredObject = registry.get(theClass);
-			if (registeredObject instanceof Generator) {
-				generator = (Generator<T>) registeredObject;
-			} else if (registeredObject != null) {
-				Class<T> factoryClass = (Class<T>) registeredObject;
-				try {
-					try {
-						generator = (Generator<T>) ConstructorUtils.invokeConstructor(factoryClass, type);
-					} catch (NoSuchMethodException e) {
-						generator = (Generator<T>) ConstructorUtils.invokeConstructor(factoryClass, null);
-					}
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
-			}
+	private <T> Generator<T> lookupGenerator(Class<?> type) {
 
-			if (generator == null && theClass != null && i < interfaces.size()) {
-				theClass = interfaces.get(i);
-				i++;
+		// class lookup
+		Generator<T> generator = getFromRegistry(type, type);
+		if (generator != null) {
+			return generator;
+		}
+
+		// interfaces lookup
+		List<Class<?>> interfaces = ClassUtils.getAllInterfaces(type);
+		for (Class<?> interfaceClass : interfaces) {
+			generator = getFromRegistry(type, interfaceClass);
+			if (generator != null) {
+				return generator;
 			}
-		} while (generator == null && theClass != null && i < interfaces.size());
+		}
+
+		return generator;
+	}
+
+	private <T> Generator<T> getFromRegistry(Class<?> generatedObjectClass, Class<?> classInRegistry) {
+		Generator<T> generator = null;
+		Object registeredObject = registry.get(classInRegistry);
+		if (registeredObject instanceof Generator) {
+			generator = (Generator<T>) registeredObject;
+		} else if (registeredObject != null) {
+			Class<T> generatorClass = (Class<T>) registeredObject;
+			try {
+				try {
+					generator = (Generator<T>) invokeConstructor(generatorClass, generatedObjectClass);
+				} catch (NoSuchMethodException e) {
+					generator = (Generator<T>) invokeConstructor(generatorClass, null);
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
 		return generator;
 	}
 
