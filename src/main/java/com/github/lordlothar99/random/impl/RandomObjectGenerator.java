@@ -17,6 +17,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.reflect.FieldUtils;
 
+import com.github.lordlothar99.random.RandomGenerators;
 import com.github.lordlothar99.random.RandomToolkit;
 import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.GenericGenerator;
@@ -44,6 +45,8 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
      */
     private static final ThreadLocal<Map<Class< ? >, Object>> GENERATED_OBJECTS =
                     new ThreadLocal<Map<Class< ? >, Object>>();
+    
+    private RandomGenerators registry = new RandomGenerators();
 
     /**
      * Constructeur
@@ -189,7 +192,7 @@ public class RandomObjectGenerator<O> extends AbstractGenerator<O> {
      * @return un {@link Generator} pour le champs <code>field</code>
      */
     protected Generator< ? > getGenerateur(Field field) {
-        final Generator< ? > generateur = RandomToolkit.get().getInstance(field.getType());
+        final Generator< ? > generateur = registry.getInstance(field.getType());
         if (generateur instanceof GenericGenerator< ? >) {
             final Class< ? >[] genericTypes = getGenericTypes(field);
             ((GenericGenerator< ? > ) generateur).setGenericTypes(genericTypes);
