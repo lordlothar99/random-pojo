@@ -20,12 +20,10 @@ import com.github.lordlothar99.random.api.Generator;
  */
 public class RandomXMLGregorianCalendarGenerator implements Generator<XMLGregorianCalendar> {
 
-    /**
-     * {@inheritDoc}
-     */
     public XMLGregorianCalendar create() {
         try {
-            final Calendar calendar = RandomGeneratorsRegistry.CALENDAR.create();
+        	RandomGeneratorsRegistry registry = new RandomGeneratorsRegistry();
+            final Calendar calendar = registry.getGenerator(Calendar.class).create();
             return DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar ) calendar);
         } catch (DatatypeConfigurationException e) {
             throw new RuntimeException(e);

@@ -43,53 +43,36 @@ import com.github.lordlothar99.random.impl.numeric.RandomShortGenerator;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class RandomGeneratorsRegistry {
 
-	public static final RandomBigDecimalGenerator BIG_DECIMAL = new RandomBigDecimalGenerator();
-	public static final RandomBooleanGenerator BOOLEAN = new RandomBooleanGenerator();
-	public static final RandomCalendarGenerator CALENDAR = new RandomCalendarGenerator();
-	public static final RandomDateGenerator DATE = new RandomDateGenerator();
-	public static final RandomBigIntegerGenerator BIG_INTEGER = new RandomBigIntegerGenerator();
-	public static final RandomIntegerGenerator INTEGER = new RandomIntegerGenerator();
-	public static final RandomLongGenerator LONG = new RandomLongGenerator();
-	public static final RandomShortGenerator SHORT = new RandomShortGenerator();
-	public static final RandomByteGenerator BYTE = new RandomByteGenerator();
-	public static final RandomFloatGenerator FLOAT = new RandomFloatGenerator();
-	public static final RandomDoubleGenerator DOUBLE = new RandomDoubleGenerator();
-	public static final RandomStringGenerator STRING = new RandomStringGenerator();
-	public static final RandomLocalDateGenerator LOCAL_DATE = new RandomLocalDateGenerator();
-	public static final RandomLocalDateTimeGenerator LOCAL_DATE_TIME = new RandomLocalDateTimeGenerator();
-	public static final RandomDateTimeGenerator DATE_TIME = new RandomDateTimeGenerator();
-	public static final RandomXMLGregorianCalendarGenerator XMLGREGORIANCALENDAR = new RandomXMLGregorianCalendarGenerator();
-
 	private Map<Class<?>, Object> registry = new HashMap<Class<?>, Object>();
 
 	public RandomGeneratorsRegistry() {
-		registry.put(BigDecimal.class, BIG_DECIMAL);
-		registry.put(Boolean.class, BOOLEAN);
-		registry.put(boolean.class, BOOLEAN);
-		registry.put(Calendar.class, CALENDAR);
-		registry.put(Date.class, DATE);
-		registry.put(BigInteger.class, BIG_INTEGER);
-		registry.put(Integer.class, INTEGER);
-		registry.put(int.class, INTEGER);
-		registry.put(Long.class, LONG);
-		registry.put(long.class, LONG);
-		registry.put(Short.class, SHORT);
-		registry.put(short.class, SHORT);
-		registry.put(Byte.class, BYTE);
-		registry.put(byte.class, BYTE);
-		registry.put(Double.class, DOUBLE);
-		registry.put(double.class, DOUBLE);
-		registry.put(Float.class, FLOAT);
-		registry.put(float.class, FLOAT);
-		registry.put(String.class, STRING);
+		registry.put(BigDecimal.class, RandomBigDecimalGenerator.class);
+		registry.put(Boolean.class, RandomBooleanGenerator.class);
+		registry.put(boolean.class, RandomBooleanGenerator.class);
+		registry.put(Calendar.class, RandomCalendarGenerator.class);
+		registry.put(Date.class, RandomDateGenerator.class);
+		registry.put(BigInteger.class, RandomBigIntegerGenerator.class);
+		registry.put(Integer.class, RandomIntegerGenerator.class);
+		registry.put(int.class, RandomIntegerGenerator.class);
+		registry.put(Long.class, RandomLongGenerator.class);
+		registry.put(long.class, RandomLongGenerator.class);
+		registry.put(Short.class, RandomShortGenerator.class);
+		registry.put(short.class, RandomShortGenerator.class);
+		registry.put(Byte.class, RandomByteGenerator.class);
+		registry.put(byte.class, RandomByteGenerator.class);
+		registry.put(Double.class, RandomDoubleGenerator.class);
+		registry.put(double.class, RandomDoubleGenerator.class);
+		registry.put(Float.class, RandomFloatGenerator.class);
+		registry.put(float.class, RandomFloatGenerator.class);
+		registry.put(String.class, RandomStringGenerator.class);
 		try {
-			registry.put(Class.forName("org.joda.time.LocalDate"), LOCAL_DATE);
-			registry.put(Class.forName("org.joda.time.LocalDateTime"), LOCAL_DATE_TIME);
-			registry.put(Class.forName("org.joda.time.DateTime"), DATE_TIME);
+			registry.put(Class.forName("org.joda.time.LocalDate"), RandomLocalDateGenerator.class);
+			registry.put(Class.forName("org.joda.time.LocalDateTime"), RandomLocalDateTimeGenerator.class);
+			registry.put(Class.forName("org.joda.time.DateTime"), RandomDateTimeGenerator.class);
 		} catch (ClassNotFoundException e) {
 			// joda unavailable
 		}
-		registry.put(XMLGregorianCalendar.class, XMLGREGORIANCALENDAR);
+		registry.put(XMLGregorianCalendar.class, RandomXMLGregorianCalendarGenerator.class);
 
 		registry.put(Enum.class, RandomEnumGenerator.class);
 		registry.put(Collection.class, RandomCollectionGenerator.class);
@@ -109,10 +92,6 @@ public class RandomGeneratorsRegistry {
 	public <T> Generator<T> getGenerator(Class<T> type) {
 
 		Generator<T> generator = null;
-
-		if (type.isArray()) {
-			generator = new RandomArrayGenerator(type);
-		}
 
 		// exploration par les superclass
 		for (Class<?> theClass = type; generator == null && theClass != null; theClass = theClass.getSuperclass()) {
@@ -147,8 +126,11 @@ public class RandomGeneratorsRegistry {
 	}
 
 	private <T> Generator<T> getFromRegistry(Class<?> generatedObjectClass, Class<?> classInRegistry) {
-		Generator<T> generator = null;
+		if (classInRegistry.isArray()) {
+			classInRegistry = Array.class;
+		}
 		Object registeredObject = registry.get(classInRegistry);
+		Generator<T> generator = null;
 		if (registeredObject instanceof Generator) {
 			generator = (Generator<T>) registeredObject;
 		} else if (registeredObject != null) {
