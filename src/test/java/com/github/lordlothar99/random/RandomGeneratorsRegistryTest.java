@@ -33,6 +33,11 @@ public class RandomGeneratorsRegistryTest {
 	}
 
 	@Test
+	public void should_return_int_generator() {
+		assertGeneratorOk(int.class, RandomIntegerGenerator.class);
+	}
+
+	@Test
 	public void should_return_string_generator() {
 		assertGeneratorOk(String.class, RandomStringGenerator.class);
 	}
