@@ -8,7 +8,7 @@ import org.apache.commons.lang.math.RandomUtils;
 import com.github.lordlothar99.random.api.Generator;
 
 /**
- * Generateur aleatoire de {@link Boolean}.
+ * Random {@link Boolean} generator
  * 
  * @author Francois Lecomte
  */

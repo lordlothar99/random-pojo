@@ -8,7 +8,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import com.github.lordlothar99.random.api.Generator;
 
 /**
- * Generateur aleatoire de {@link String}.
+ * Random {@link String} generator
  * 
  * @author Francois Lecomte
  */

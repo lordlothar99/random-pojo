@@ -16,7 +16,7 @@ import com.github.lordlothar99.random.impl.AbstractGenericGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
 
 /**
- * Generateur aleatoire de {@link Map}.
+ * Random {@link Map} generator
  * 
  * @author Francois Lecomte
  * @param <O> {@link Map}

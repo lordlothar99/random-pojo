@@ -136,12 +136,12 @@ public final class RandomToolkit {
     @SuppressWarnings({"unchecked", "rawtypes" })
     public <O> Generator<O> getInstance(Class<O> type) {
 
-        Generator<O> factory = null;
+        Generator<O> generator = null;
 
         if (Enum.class.isAssignableFrom(type)) {
-            factory = new RandomEnumGenerator(type);
+            generator = new RandomEnumGenerator(type);
         } else if (type.isArray()) {
-            factory = new RandomArrayGenerator(type);
+            generator = new RandomArrayGenerator(type);
             // } else if (Collection.class.isAssignableFrom(type)) {
             // factory = new RandomCollectionGenerator(type);
             // } else if (Map.class.isAssignableFrom(type)) {
@@ -151,15 +151,15 @@ public final class RandomToolkit {
         }
 
         // exploration par les superclass
-        for (Class< ? > theClass = type; factory == null && theClass != null; theClass = theClass.getSuperclass()) {
-            factory = getFromRegistry(factory, theClass);
+        for (Class< ? > theClass = type; generator == null && theClass != null; theClass = theClass.getSuperclass()) {
+            generator = getFromRegistry(generator, theClass);
         }
 
-        if (factory instanceof ObjectClassGenerator) {
-            ObjectClassGenerator objectClassGenerator = (ObjectClassGenerator ) factory;
+        if (generator instanceof ObjectClassGenerator) {
+            ObjectClassGenerator objectClassGenerator = (ObjectClassGenerator ) generator;
             objectClassGenerator.setObjectClass(type);
         }
-        return factory;
+        return generator;
     }
 
     /**

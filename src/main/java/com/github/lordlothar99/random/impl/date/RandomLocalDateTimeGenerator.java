@@ -9,7 +9,7 @@ import org.joda.time.LocalDateTime;
 import com.github.lordlothar99.random.api.Generator;
 
 /**
- * Generateur aleatoire de {@link LocalDateTime}.
+ * Random {@link LocalDateTime} generator
  * 
  * @author Francois Lecomte
  */

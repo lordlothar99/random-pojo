@@ -14,7 +14,7 @@ import com.github.lordlothar99.random.RandomToolkit;
 import com.github.lordlothar99.random.api.Generator;
 
 /**
- * Generateur aleatoire de {@link XMLGregorianCalendar}.
+ * Random {@link XMLGregorianCalendar} generator
  * 
  * @author Francois Lecomte
  */

@@ -10,7 +10,7 @@ import org.apache.commons.lang.math.RandomUtils;
 import com.github.lordlothar99.random.api.Generator;
 
 /**
- * Generateur aleatoire de {@link BigInteger}.
+ * Random {@link BigInteger} generator
  * 
  * @author Francois Lecomte
  */
