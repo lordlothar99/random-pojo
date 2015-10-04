@@ -8,7 +8,7 @@ package com.github.lordlothar99.random.impl.numeric;
  * 
  * @author Francois Lecomte
  */
-public class RandomFloatGeneratorTest  extends AbstractRandomNumericGeneratorTest<Float, RandomFloatGenerator> {
+public class RandomFloatGeneratorTest extends AbstractRandomNumericGeneratorTest<Float, RandomFloatGenerator> {
 
 	@Override
 	protected RandomFloatGenerator newGenerator() {
