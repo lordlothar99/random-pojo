@@ -21,7 +21,7 @@ import com.github.lordlothar99.random.api.ContainerGenerator;
 import com.github.lordlothar99.random.api.Generator;
 
 /**
- * Generateur aleatoire d'objets.
+ * Random {@link Object} generator
  * 
  * @author Francois Lecomte
  * @param <T>
@@ -30,9 +30,9 @@ import com.github.lordlothar99.random.api.Generator;
 public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 
 	/**
-	 * recursive
+	 * Generate fields handled by a {@link Generator<Object>}
 	 */
-	private boolean recursive;
+	private boolean generateObjectFields;
 
 	/**
 	 * Generation stack (prevent from {@link StackOverflowError})
@@ -45,14 +45,14 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		this(objectClass, true);
 	}
 
-	public RandomObjectGenerator(Class<T> objectClass, boolean recursive) {
+	public RandomObjectGenerator(Class<T> objectClass, boolean generateObjectFields) {
 		super(objectClass);
-		this.recursive = recursive;
+		this.generateObjectFields = generateObjectFields;
 	}
 
 	@SuppressWarnings("unchecked")
 	public T create() {
-		// recursive check
+		// generateObjectFields check
 		Class<? extends T> objectClass = getObjectClass();
 		Map<Class<?>, Object> generatedObjects = GENERATED_OBJECTS.get();
 		T generatedObject;
@@ -107,8 +107,8 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		// on recupere un generateur pour la propriete
 		final Generator<?> generator = getGenerator(field);
 
-		if (!recursive && generator instanceof RandomObjectGenerator<?>) {
-			// pas de generation des objets imbriques
+		if (!generateObjectFields && generator instanceof RandomObjectGenerator<?>) {
+			logger.info("Skipping field '{}' cause generateObjectFields is true", field.getName());
 			return;
 		}
 
@@ -148,6 +148,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 			final Class<?>[] genericTypes = getGenericTypes(field);
 			((ContainerGenerator<?>) generator).setElementsTypes(genericTypes);
 		}
+		fieldGenerators.put(field.getName(), generator);
 		return generator;
 	}
 

@@ -47,7 +47,7 @@ public abstract class AbstractGenerator<T> implements Generator<T>, RegistryAwar
 
 	public void setRegistry(RandomGeneratorsRegistry registry) {
 		this.registry = registry;
-		toolkit = null;
+		this.toolkit = null;
 	}
 
 	protected RandomToolkit toolkit() {

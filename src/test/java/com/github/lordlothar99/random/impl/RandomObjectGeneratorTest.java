@@ -3,7 +3,6 @@
  */
 package com.github.lordlothar99.random.impl;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Assert;
@@ -14,8 +13,6 @@ import org.mockito.internal.matchers.LessOrEqual;
 import com.github.lordlothar99.random.Foo;
 import com.github.lordlothar99.random.RandomGenerators;
 import com.github.lordlothar99.random.api.RangedGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomLongGenerator;
 
 /**
  * @author Francois Lecomte
@@ -55,4 +52,12 @@ public class RandomObjectGeneratorTest {
 
 	}
 
+	@Test
+	public void should_several_generated_objects_be_different() {
+		RandomObjectGenerator<Foo> generator = new RandomObjectGenerator<Foo>(Foo.class);
+		Foo foo1 = generator.create();
+		Foo foo2 = generator.create();
+		Assert.assertNotNull("null objet", foo1);
+		Assert.assertNotEquals("objects shouldn't be equal", foo1, foo2);
+	}
 }

@@ -27,15 +27,16 @@ public class RandomStringGenerator extends AbstractGenerator<String> {
 		this(length, true, true);
 	}
 
-	public RandomStringGenerator(int length, boolean letters, boolean numbers) {
-		this.length = length;
-		this.letters = letters;
-		this.numbers = numbers;
-	}
-
 	public RandomStringGenerator(int length, char[] chars) {
 		this(length, true, true);
 		this.chars = chars;
+	}
+
+	public RandomStringGenerator(int length, boolean letters, boolean numbers) {
+		super(String.class);
+		this.length = length;
+		this.letters = letters;
+		this.numbers = numbers;
 	}
 
 	public int getLength() {
