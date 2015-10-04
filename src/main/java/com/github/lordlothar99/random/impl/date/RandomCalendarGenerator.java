@@ -12,12 +12,12 @@ import java.util.Calendar;
  */
 public class RandomCalendarGenerator extends AbstractRandomDateGenerator<Calendar> {
 
-	public RandomCalendarGenerator(Calendar min, Calendar max) {
-		super(min, max, Calendar.class);
+	public RandomCalendarGenerator() {
+		super();
 	}
 
-	public RandomCalendarGenerator() {
-		super(Calendar.class);
+	public RandomCalendarGenerator(Calendar min, Calendar max) {
+		super(min, max);
 	}
 
 	@Override
