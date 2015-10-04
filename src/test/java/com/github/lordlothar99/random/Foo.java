@@ -8,49 +8,59 @@ import java.util.List;
 
 public class Foo {
 
-    private long id;
+	private long id;
 
-    private String name;
+	private String name;
 
-    private String surname;
+	private String surname;
 
-    private List<String> bars = new ArrayList<String>();
+	private List<String> bars = new ArrayList<String>();
 
-    public Foo(long id, String name, String surname) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-    }
+	private MyEnum myEnum;
 
-    public List<String> getBars() {
-        return bars;
-    }
+	public Foo(long id, String name, String surname) {
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+	}
 
-    public void setBars(List<String> bars) {
-        this.bars = bars;
-    }
+	public List<String> getBars() {
+		return bars;
+	}
 
-    public long getId() {
-        return id;
-    }
+	public void setBars(List<String> bars) {
+		this.bars = bars;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getSurname() {
-        return surname;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public void setMyEnum(MyEnum myEnum) {
+		this.myEnum = myEnum;
+	}
+
+	public MyEnum getMyEnum() {
+		return myEnum;
+	}
 }

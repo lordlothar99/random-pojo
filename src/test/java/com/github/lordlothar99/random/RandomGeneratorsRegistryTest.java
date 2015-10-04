@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.lordlothar99.random.api.Generator;
-import com.github.lordlothar99.random.api.GenericGenerator;
+import com.github.lordlothar99.random.impl.RandomObjectGenerator;
 
 public class RandomGeneratorsRegistryTest {
 
@@ -30,6 +30,7 @@ public class RandomGeneratorsRegistryTest {
 	public void should_return_foo_generator() {
 		Generator<Foo> generator = registry.getGenerator(Foo.class);
 		assertNotNull("generator not found for type '" + Foo.class.getName() + "'", generator);
+		Assert.assertTrue(generator instanceof RandomObjectGenerator);
 	}
 
 	@Test

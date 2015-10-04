@@ -121,7 +121,7 @@ public class RandomGeneratorsRegistry {
 
 		// exploration par les superclass
 		for (Class<?> theClass = type; generator == null && theClass != null; theClass = theClass.getSuperclass()) {
-			generator = getFromRegistry(generator, theClass);
+			generator = getFromRegistry(theClass);
 		}
 
 		if (generator instanceof ObjectClassGenerator) {
@@ -132,7 +132,8 @@ public class RandomGeneratorsRegistry {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T> Generator<T> getFromRegistry(Generator<T> generator, Class<?> type) {
+	private <T> Generator<T> getFromRegistry( Class<?> type) {
+		Generator<T> generator = null;
 		int i = 0;
 		List<Class<?>> interfaces = ClassUtils.getAllInterfaces(type);
 		// exploration par les interfaces
