@@ -3,6 +3,7 @@
  */
 package com.github.lordlothar99.random.impl;
 
+import static org.apache.commons.lang.ArrayUtils.getLength;
 import static org.apache.commons.lang.ArrayUtils.isEmpty;
 
 import com.github.lordlothar99.random.RandomToolkit;
@@ -134,12 +135,13 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 	}
 
 	protected Generator<?> elementGenerator(int index) {
-		Generator<?> generator;
+		Generator<?> generator = null;
 		logger.debug("Looking for generator for elements of index " + index + "..");
-		if (elementsGenerators != null && elementsGenerators.length > index) {
+		if (getLength(elementsGenerators) > index) {
 			generator = elementsGenerators[index];
 			logger.debug("Generator found within : {}", generator);
-		} else {
+		}
+		if (generator == null && getLength(elementsTypes) > index) {
 			Class<?> elementType = elementsTypes[index];
 			generator = toolkit.getRegistry().getGenerator(elementType);
 			logger.debug("Generator found in registry : {}", generator);

@@ -11,95 +11,87 @@ import java.util.TreeMap;
 import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.map.LinkedMap;
 
-import com.github.lordlothar99.random.RandomToolkit;
+import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.impl.AbstractContainerGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
 
 /**
  * Random {@link Map} generator
  * 
  * @author Francois Lecomte
- * @param <O> {@link Map}
+ * @param <T>
+ *            {@link Map}
  */
-@SuppressWarnings({"unchecked", "rawtypes" })
-public class RandomMapGenerator<O extends Map> extends AbstractContainerGenerator<O> {
+@SuppressWarnings({ "unchecked", "rawtypes" })
+public class RandomMapGenerator<T extends Map> extends AbstractContainerGenerator<T> {
 
-    /**
-     * Constructeur
-     * 
-     * @param theClazz {@link Class} de {@link Map}
-     */
-    public RandomMapGenerator(Class<O> theClazz) {
-        super(theClazz);
-    }
+	public RandomMapGenerator(Class<? extends T> mapClass) {
+		super(mapClass);
+	}
 
-    /**
-     * Constructeur
-     * 
-     * @param clazz {@link Class} de {@link Map}
-     * @param genericTypeKey Type generique pour les cles de la {@link Map}
-     * @param genericTypeValue Type generique pour les valeurs de la {@link Map}
-     */
-    public RandomMapGenerator(Class<O> clazz, Class< ? > genericTypeKey, Class< ? > genericTypeValue) {
-        super(clazz, genericTypeKey, genericTypeValue);
-    }
+	public RandomMapGenerator(Class<? extends T> mapClass, Class<?> keyType, Class<?> valueType) {
+		super(mapClass, keyType, valueType);
+	}
 
-    /**
-     * Constructeur
-     * 
-     * @param clazz {@link Class} de {@link Map}
-     * @param genericTypes Types generiques
-     */
-    protected RandomMapGenerator(Class<O> clazz, Class< ? >... genericTypes) {
-        super(clazz, genericTypes);
-    }
+	protected RandomMapGenerator(Class<? extends T> mapClass, Generator<?> keyGenerator, Generator<?> valueGenerator) {
+		super(mapClass, keyGenerator, valueGenerator);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public O create() {
-        // new instance
-        final O map = newInstance();
+	@Override
+	protected boolean append(T container, int elementIndex, Object element) {
+		Object key = elementGenerator(0).create();
+		Object value = elementGenerator(1).create();
+		container.put(key, value);
+		return true;
+	}
 
-        // generate values if possible
-        final Class< ? >[] genericTypes = getElementTypes();
-        if (genericTypes != null && genericTypes.length > 1) {
-            final Class< ? > genericTypeKey = genericTypes[0];
-            final Class< ? > genericTypeValue = genericTypes[1];
-            // random size
-            final RandomIntegerGenerator randomIntegerGenerator = new RandomIntegerGenerator(5);
-            final int elementsCount = randomIntegerGenerator.create() + 2;
-            // random fill
-            for (int i = 0; i < elementsCount; i++) {
-                map.put(RandomToolkit.get().generate(genericTypeKey), RandomToolkit.get().generate(genericTypeValue));
-            }
-        }
-        return map;
-    }
+	@Override
+	protected T newContainer(int size) {
+		Class<? extends T> mapClass = getObjectClass();
+		if (!mapClass.isInterface()) {
+			try {
+				return mapClass.getConstructor().newInstance();
+			} catch (final Exception e) {
+				throw new RuntimeException("Unable to instantiate container type  '" + mapClass.getName() + "'", e);
+			}
+		}
+		Object instance = null;
+		if (SortedMap.class.isAssignableFrom(mapClass)) {
+			instance = new TreeMap<Object, Object>();
+		} else if (IterableMap.class.isAssignableFrom(mapClass)) {
+			instance = new LinkedMap();
+		} else {
+			// default
+			instance = new HashMap<Object, Object>();
+		}
 
-    /**
-     * @return new instance of {@link O}
-     */
-    protected O newInstance() {
-        if (!getObjectClass().isInterface()) {
-            try {
-                return getObjectClass().getConstructor().newInstance();
-            } catch (final Exception e) {
-                throw new RuntimeException("Impossible d'instantier un objet de type '" + getObjectClass().getName()
-                                + "'", e);
-            }
-        }
-        Object instance = null;
-        if (SortedMap.class.isAssignableFrom(getObjectClass())) {
-            instance = new TreeMap<Object, Object>();
-        } else if (IterableMap.class.isAssignableFrom(getObjectClass())) {
-            instance = new LinkedMap();
-        } else {
-            // default
-            instance = new HashMap<Object, Object>();
-        }
+		return (T) instance;
+	}
 
-        return (O ) instance;
-    }
+	@Override
+	protected int size(T container) {
+		return container.size();
+	}
+
+	// public T create() {
+	// // new instance
+	// final T map = newInstance();
+	//
+	// // generate values if possible
+	// final Class<?>[] genericTypes = getElementTypes();
+	// if (genericTypes != null && genericTypes.length > 1) {
+	// final Class<?> genericTypeKey = genericTypes[0];
+	// final Class<?> genericTypeValue = genericTypes[1];
+	// // random size
+	// final RandomIntegerGenerator randomIntegerGenerator = new
+	// RandomIntegerGenerator(5);
+	// final int elementsCount = randomIntegerGenerator.create() + 2;
+	// // random fill
+	// for (int i = 0; i < elementsCount; i++) {
+	// map.put(RandomToolkit.get().generate(genericTypeKey),
+	// RandomToolkit.get().generate(genericTypeValue));
+	// }
+	// }
+	// return map;
+	// }
 
 }

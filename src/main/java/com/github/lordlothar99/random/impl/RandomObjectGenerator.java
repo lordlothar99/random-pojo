@@ -19,8 +19,8 @@ import org.apache.commons.lang.reflect.FieldUtils;
 
 import com.github.lordlothar99.random.RandomGeneratorsRegistry;
 import com.github.lordlothar99.random.RandomToolkit;
-import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.ContainerGenerator;
+import com.github.lordlothar99.random.api.Generator;
 
 /**
  * Generateur aleatoire d'objets.
@@ -95,7 +95,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
     @SuppressWarnings("unchecked")
     public T create() {
         // recursive check
-        Class<T> objectClass = getObjectClass();
+        Class<? extends T> objectClass = getObjectClass();
         Map<Class< ? >, Object> generatedObjects = GENERATED_OBJECTS.get();
         T generatedObject;
         if (generatedObjects != null) {
