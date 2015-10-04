@@ -182,16 +182,63 @@ public class RandomGenerators {
 		return cast(setGenerator);
 	}
 
+	public <T> ContainerGenerator<Set<Integer>> setGenerator(Class<T> elementsType, int size) {
+		ContainerGenerator<Set<Integer>> setGenerator = setGenerator(elementsType);
+		setGenerator.setSize(size);
+		return setGenerator;
+	}
+
+	public <T> ContainerGenerator<Set<Integer>> setGenerator(Class<T> elementsType, int minSize, int maxSize) {
+		ContainerGenerator<Set<Integer>> setGenerator = setGenerator(elementsType);
+		setGenerator.setMinSize(minSize);
+		setGenerator.setMaxSize(maxSize);
+		return setGenerator;
+	}
+
 	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Class<K> keyType, Class<V> valueType) {
-		ContainerGenerator<Map> listGenerator = (ContainerGenerator<Map>) registry.getGenerator(Map.class);
-		listGenerator.setElementsTypes(keyType, valueType);
-		return cast(listGenerator);
+		ContainerGenerator<Map> mapGenerator = (ContainerGenerator<Map>) registry.getGenerator(Map.class);
+		mapGenerator.setElementsTypes(keyType, valueType);
+		return cast(mapGenerator);
+	}
+
+	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Class<K> keyType, Class<V> valueType, int size) {
+		ContainerGenerator<Map<K, V>> mapGenerator = mapGenerator(keyType, valueType);
+		mapGenerator.setSize(size);
+		return mapGenerator;
+	}
+
+	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Class<K> keyType, Class<V> valueType, int minSize,
+			int maxSize) {
+		ContainerGenerator<Map<K, V>> mapGenerator = mapGenerator(keyType, valueType);
+		mapGenerator.setMinSize(minSize);
+		mapGenerator.setMaxSize(maxSize);
+		return cast(mapGenerator);
+	}
+
+	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator) {
+		ContainerGenerator<Map> mapGenerator = (ContainerGenerator<Map>) registry.getGenerator(Map.class);
+		mapGenerator.setElementsGenerators(keyGenerator, valueGenerator);
+		return cast(mapGenerator);
+	}
+
+	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator, int size) {
+		ContainerGenerator<Map<K, V>> mapGenerator = mapGenerator(keyGenerator, valueGenerator);
+		mapGenerator.setSize(size);
+		return mapGenerator;
+	}
+
+	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator, int minSize,
+			int maxSize) {
+		ContainerGenerator<Map<K, V>> mapGenerator = mapGenerator(keyGenerator, valueGenerator);
+		mapGenerator.setMinSize(minSize);
+		mapGenerator.setMaxSize(maxSize);
+		return cast(mapGenerator);
 	}
 
 	public <K, V> ContainerGenerator<TreeMap<K, V>> treemapGenerator(Class<K> keyType, Class<V> valueType) {
-		ContainerGenerator<TreeMap> listGenerator = (ContainerGenerator<TreeMap>) registry.getGenerator(TreeMap.class);
-		listGenerator.setElementsTypes(keyType, valueType);
-		return cast(listGenerator);
+		ContainerGenerator<TreeMap> mapGenerator = (ContainerGenerator<TreeMap>) registry.getGenerator(TreeMap.class);
+		mapGenerator.setElementsTypes(keyType, valueType);
+		return cast(mapGenerator);
 	}
 
 	public <E extends Enum<E>> Generator<E> enumGenerator(Class<E> enumClass) {

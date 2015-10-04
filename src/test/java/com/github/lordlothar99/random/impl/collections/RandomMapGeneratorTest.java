@@ -3,7 +3,6 @@ package com.github.lordlothar99.random.impl.collections;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -11,6 +10,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.lordlothar99.random.RandomGenerators;
+import com.github.lordlothar99.random.api.ContainerGenerator;
+import com.github.lordlothar99.random.api.Generator;
+import com.github.lordlothar99.random.api.RangedGenerator;
 
 public class RandomMapGeneratorTest {
 
@@ -18,21 +20,17 @@ public class RandomMapGeneratorTest {
 
 	@Test
 	public void should_map_be_specified_length() {
-		RandomMapGenerator<Map<String, Integer>> generator = new RandomMapGenerator<Map<String, Integer>>(
-				(Class<? extends Map<String, Integer>>) HashMap.class);
-		generator.setSize(20);
-		generator.setElementsTypes(String.class, Integer.class);
+		ContainerGenerator<Map<String, Integer>> generator = generators.mapGenerator(String.class, Integer.class, 20);
 		Map<String, Integer> map = generator.create();
 		assertEquals(20, map.size());
 	}
 
 	@Test
 	public void should_map_contain_specified_integers() {
-		RandomMapGenerator<Map<String, Integer>> generator = new RandomMapGenerator<Map<String, Integer>>(
-				(Class<? extends Map<String, Integer>>) HashMap.class);
-		generator.setSize(20);
-		generator.setElementsTypes(String.class, null);
-		generator.setElementsGenerators(null, generators.integerGenerator(50, 100));
+		RangedGenerator<Integer> integerGenerator = generators.integerGenerator(50, 100);
+		Generator<String> stringGenerator = generators.stringGenerator();
+		ContainerGenerator<Map<String, Integer>> generator = generators.mapGenerator(stringGenerator, integerGenerator,
+				20);
 		Map<String, Integer> map = generator.create();
 		assertEquals(20, map.size());
 		for (Entry<String, Integer> entry : map.entrySet()) {
@@ -43,8 +41,7 @@ public class RandomMapGeneratorTest {
 
 	@Test
 	public void testBoolean() {
-		RandomMapGenerator<Map<String, Boolean>> generator = new RandomMapGenerator<Map<String, Boolean>>(
-				(Class<? extends Map<String, Boolean>>) HashMap.class, String.class, Boolean.class);
+		ContainerGenerator<Map<String, Boolean>> generator = generators.mapGenerator(String.class, Boolean.class);
 		Map<String, Boolean> results = generator.create();
 		Assert.assertNotNull("null map", results);
 		Assert.assertFalse("empty map", results.size() == 0);
@@ -52,8 +49,7 @@ public class RandomMapGeneratorTest {
 
 	@Test
 	public void testString() {
-		RandomMapGenerator<Map<String, String>> generator = new RandomMapGenerator<Map<String, String>>(
-				(Class<? extends Map<String, String>>) HashMap.class, String.class, String.class);
+		ContainerGenerator<Map<String, String>> generator = generators.mapGenerator(String.class, String.class);
 		Map<String, String> results = generator.create();
 		Assert.assertNotNull("null map", results);
 		Assert.assertFalse("empty map", results.size() == 0);
