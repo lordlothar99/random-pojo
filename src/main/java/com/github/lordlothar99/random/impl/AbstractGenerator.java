@@ -7,46 +7,33 @@ import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.ObjectClassGenerator;
 
 /**
- * Implementation abstraite de {@link Generator}.
+ * Abstract {@link Generator} with type of generated object
  * 
  * @author Francois Lecomte
- * @param <O> Type de l'objet genere
+ * @param <T>
+ *            generated object type
  */
-public abstract class AbstractGenerator<O> implements ObjectClassGenerator<O> {
+public abstract class AbstractGenerator<T> implements ObjectClassGenerator<T> {
 
-    /**
-     * {@link Class} de l'objet genere
-     */
-    private Class<O> objectClass;
+	/**
+	 * {@link Class} de l'objet genere
+	 */
+	private Class<T> objectClass;
 
-    /**
-     * Constructeur
-     */
-    public AbstractGenerator() {
-        super();
-    }
+	public AbstractGenerator() {
+		super();
+	}
 
-    /**
-     * Constructeur
-     * 
-     * @param objectClass Type de l'objet genere
-     */
-    public AbstractGenerator(Class<O> clazz) {
-        super();
-        this.objectClass = clazz;
-    }
+	public AbstractGenerator(Class<T> clazz) {
+		super();
+		this.objectClass = clazz;
+	}
 
-    /**
-     * @return the objectClass
-     */
-    public Class<O> getObjectClass() {
-        return objectClass;
-    }
+	public Class<T> getObjectClass() {
+		return objectClass;
+	}
 
-    /**
-     * @param objectClass the objectClass to set
-     */
-    public void setObjectClass(Class<O> objectClass) {
-        this.objectClass = objectClass;
-    }
+	public void setObjectClass(Class<T> objectClass) {
+		this.objectClass = objectClass;
+	}
 }

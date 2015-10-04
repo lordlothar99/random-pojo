@@ -2,9 +2,13 @@ package com.github.lordlothar99.random;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.lordlothar99.random.api.Generator;
+import com.github.lordlothar99.random.api.GenericGenerator;
 
 public class RandomGeneratorsRegistryTest {
 
@@ -26,5 +30,11 @@ public class RandomGeneratorsRegistryTest {
 	public void should_return_foo_generator() {
 		Generator<Foo> generator = registry.getGenerator(Foo.class);
 		assertNotNull("generator not found for type '" + Foo.class.getName() + "'", generator);
+	}
+
+	@Test
+	public void should_return_list_generator() {
+		Generator<List> generator = registry.getGenerator(List.class);
+		assertNotNull("generator not found for type '" + List.class.getName() + "'", generator);
 	}
 }
