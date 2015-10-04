@@ -14,7 +14,7 @@ public final class RandomToolkit {
 
 	private static final RandomToolkit INSTANCE = new RandomToolkit();
 
-	private RandomGenerators registry = new RandomGenerators();
+	private RandomGeneratorsRegistry registry = new RandomGeneratorsRegistry();
 
 	public RandomToolkit() {
 	}
@@ -23,12 +23,12 @@ public final class RandomToolkit {
 		return INSTANCE;
 	}
 
-	public void setRegistry(RandomGenerators registry) {
+	public void setRegistry(RandomGeneratorsRegistry registry) {
 		this.registry = registry;
 	}
 
 	public <T> T generate(Class<T> type) {
-		Generator<T> generateur = registry.getInstance(type);
+		Generator<T> generateur = registry.getGenerator(type);
 		return generateur.create();
 	}
 
