@@ -3,22 +3,21 @@
  */
 package com.github.lordlothar99.random.impl.numeric;
 
-import org.apache.commons.lang.math.RandomUtils;
-
-import com.github.lordlothar99.random.api.Generator;
+import java.math.BigDecimal;
 
 /**
  * Random {@link Float} generator
  * 
  * @author Francois Lecomte
  */
-public class RandomFloatGenerator implements Generator<Float> {
+public class RandomFloatGenerator extends AbstractRandomNumericGenerator<Float> {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Float create() {
-        return RandomUtils.nextFloat();
-    }
+	public RandomFloatGenerator() {
+		super(0f, 1f);
+	}
 
+	@Override
+	protected Float fromBigDecimal(BigDecimal bigDecimal) {
+		return bigDecimal.floatValue();
+	}
 }
