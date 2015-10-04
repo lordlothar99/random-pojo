@@ -18,6 +18,7 @@ import org.apache.commons.lang.ClassUtils;
 
 import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.ObjectClassGenerator;
+import com.github.lordlothar99.random.impl.RandomBooleanGenerator;
 import com.github.lordlothar99.random.impl.RandomEnumGenerator;
 import com.github.lordlothar99.random.impl.RandomObjectGenerator;
 import com.github.lordlothar99.random.impl.RandomStringGenerator;
@@ -32,7 +33,6 @@ import com.github.lordlothar99.random.impl.date.RandomLocalDateTimeGenerator;
 import com.github.lordlothar99.random.impl.date.RandomXMLGregorianCalendarGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomBigDecimalGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomBigIntegerGenerator;
-import com.github.lordlothar99.random.impl.numeric.RandomBooleanGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomByteGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomDoubleGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomFloatGenerator;

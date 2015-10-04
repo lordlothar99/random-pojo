@@ -10,8 +10,6 @@ import org.junit.Test;
 import org.mockito.internal.matchers.GreaterOrEqual;
 import org.mockito.internal.matchers.LessOrEqual;
 
-import com.github.lordlothar99.random.RandomGeneratorsRegistry;
-
 /**
  * Test for {@link RandomBigIntegerGenerator}.
  * 

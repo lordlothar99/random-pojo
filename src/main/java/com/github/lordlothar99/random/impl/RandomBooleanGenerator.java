@@ -1,7 +1,7 @@
 /**
  * https://github.com/lordlothar99/random-pojo
  */
-package com.github.lordlothar99.random.impl.numeric;
+package com.github.lordlothar99.random.impl;
 
 import org.apache.commons.lang.math.RandomUtils;
 
@@ -14,18 +14,8 @@ import com.github.lordlothar99.random.api.Generator;
  */
 public class RandomBooleanGenerator implements Generator<Boolean> {
 
-    /**
-     * Constructeur
-     */
-    public RandomBooleanGenerator() {
-        super();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Boolean create() {
-        return RandomUtils.nextBoolean();
-    }
+	public Boolean create() {
+		return RandomUtils.nextBoolean();
+	}
 
 }
