@@ -38,20 +38,36 @@ public class RandomStringGenerator extends AbstractGenerator<String> {
 		this.chars = chars;
 	}
 
-	public int length() {
+	public int getLength() {
 		return length;
 	}
 
-	public boolean letters() {
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public boolean isLetters() {
 		return letters;
 	}
 
-	public boolean numbers() {
+	public void setLetters(boolean letters) {
+		this.letters = letters;
+	}
+
+	public boolean isNumbers() {
 		return numbers;
 	}
 
-	public char[] chars() {
+	public void setNumbers(boolean numbers) {
+		this.numbers = numbers;
+	}
+
+	public char[] getChars() {
 		return chars;
+	}
+
+	public void setChars(char[] chars) {
+		this.chars = chars;
 	}
 
 	public String create() {
