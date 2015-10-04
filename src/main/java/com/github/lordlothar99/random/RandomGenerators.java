@@ -2,6 +2,9 @@ package com.github.lordlothar99.random;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -9,10 +12,13 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
+import com.github.lordlothar99.random.api.ContainerGenerator;
+import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.RangedGenerator;
 import com.github.lordlothar99.random.impl.RandomObjectGenerator;
 import com.github.lordlothar99.random.impl.RandomStringGenerator;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class RandomGenerators {
 
 	private RandomGeneratorsRegistry registry;
@@ -161,5 +167,34 @@ public class RandomGenerators {
 
 	public <T> RandomObjectGenerator<T> objectGenerator(Class<T> objectClass) {
 		return (RandomObjectGenerator<T>) registry.getGenerator(objectClass);
+	}
+
+	public <T> ContainerGenerator<List<T>> listGenerator(Class<T> elementsType) {
+		ContainerGenerator<List> listGenerator = (ContainerGenerator<List>) registry.getGenerator(List.class);
+		listGenerator.setElementsTypes(elementsType);
+		return cast(listGenerator);
+	}
+
+	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Class<K> keyType, Class<V> valueType) {
+		ContainerGenerator<Map> listGenerator = (ContainerGenerator<Map>) registry.getGenerator(Map.class);
+		listGenerator.setElementsTypes(keyType, valueType);
+		return cast(listGenerator);
+	}
+
+	public <M, K, V> ContainerGenerator<M> mapGenerator(Class<M> class1, Class<K> keyType, Class<V> valueType3) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public <E extends Enum<E>> Generator<E> enumGenerator(Class<E> enumClass) {
+		return (Generator<E>) registry.getGenerator(enumClass);
+	}
+
+	public <T> Generator<T> arrayGenerator(Class<T> arrayClass) {
+		return (Generator<T>) registry.getGenerator(arrayClass);
+	}
+
+	private <T> T cast(Object object) {
+		return (T) object;
 	}
 }
