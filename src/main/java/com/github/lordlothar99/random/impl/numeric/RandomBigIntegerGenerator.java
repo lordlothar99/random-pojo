@@ -19,6 +19,10 @@ public class RandomBigIntegerGenerator extends AbstractRandomNumericGenerator<Bi
 		super(ZERO, new BigInteger("100"));
 	}
 
+	public RandomBigIntegerGenerator(BigInteger min, BigInteger max) {
+		super(min, max);
+	}
+
 	@Override
 	protected BigInteger fromBigDecimal(BigDecimal bigDecimal) {
 		return bigDecimal.toBigInteger();

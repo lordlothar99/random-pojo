@@ -18,6 +18,10 @@ public class RandomBigDecimalGenerator extends AbstractRandomNumericGenerator<Bi
 		super(ZERO, new BigDecimal("100"));
 	}
 
+	public RandomBigDecimalGenerator(BigDecimal min, BigDecimal max) {
+		super(min, max);
+	}
+
 	@Override
 	protected BigDecimal fromBigDecimal(BigDecimal bigDecimal) {
 		return bigDecimal;

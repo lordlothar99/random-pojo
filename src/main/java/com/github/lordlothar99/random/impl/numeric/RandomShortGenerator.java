@@ -16,6 +16,10 @@ public class RandomShortGenerator extends AbstractRandomNumericGenerator<Short> 
 		super((short) 0, (short) 100);
 	}
 
+	public RandomShortGenerator(Short min, Short max) {
+		super(min, max);
+	}
+
 	@Override
 	protected Short fromBigDecimal(BigDecimal bigDecimal) {
 		return bigDecimal.shortValue();

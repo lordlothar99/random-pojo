@@ -21,6 +21,7 @@ import com.github.lordlothar99.random.RandomGeneratorsRegistry;
 import com.github.lordlothar99.random.RandomToolkit;
 import com.github.lordlothar99.random.api.ContainerGenerator;
 import com.github.lordlothar99.random.api.Generator;
+import com.github.lordlothar99.random.impl.numeric.RandomLongGenerator;
 
 /**
  * Generateur aleatoire d'objets.
@@ -263,5 +264,9 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		} else {
 			return fields;
 		}
+	}
+
+	public void setFieldGenerator(String string, RandomLongGenerator longGenerator) {
+
 	}
 }

@@ -16,6 +16,10 @@ public class RandomDoubleGenerator extends AbstractRandomNumericGenerator<Double
 		super(0d, 1d);
 	}
 
+	public RandomDoubleGenerator(Double min, Double max) {
+		super(min, max);
+	}
+
 	@Override
 	protected Double fromBigDecimal(BigDecimal bigDecimal) {
 		return bigDecimal.doubleValue();

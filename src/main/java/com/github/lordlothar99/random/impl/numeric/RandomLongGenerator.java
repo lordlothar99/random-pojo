@@ -16,6 +16,10 @@ public class RandomLongGenerator extends AbstractRandomNumericGenerator<Long> {
 		super(0L, 100L);
 	}
 
+	public RandomLongGenerator(Long min, Long max) {
+		super(min, max);
+	}
+
 	@Override
 	protected Long fromBigDecimal(BigDecimal bigDecimal) {
 		return bigDecimal.longValue();

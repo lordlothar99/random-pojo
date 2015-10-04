@@ -16,6 +16,10 @@ public class RandomFloatGenerator extends AbstractRandomNumericGenerator<Float> 
 		super(0f, 1f);
 	}
 
+	public RandomFloatGenerator(Float min, Float max) {
+		super(min, max);
+	}
+
 	@Override
 	protected Float fromBigDecimal(BigDecimal bigDecimal) {
 		return bigDecimal.floatValue();

@@ -16,6 +16,10 @@ public class RandomIntegerGenerator extends AbstractRandomNumericGenerator<Integ
 		super(0, 100);
 	}
 
+	public RandomIntegerGenerator(Integer min, Integer max) {
+		super(min, max);
+	}
+
 	@Override
 	protected Integer fromBigDecimal(BigDecimal bigDecimal) {
 		return bigDecimal.intValue();

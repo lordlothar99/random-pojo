@@ -16,6 +16,10 @@ public class RandomByteGenerator extends AbstractRandomNumericGenerator<Byte> {
 		super((byte) 0, (byte) 100);
 	}
 
+	public RandomByteGenerator(Byte min, Byte max) {
+		super(min, max);
+	}
+
 	@Override
 	protected Byte fromBigDecimal(BigDecimal bigDecimal) {
 		return bigDecimal.byteValue();
