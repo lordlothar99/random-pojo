@@ -3,27 +3,22 @@
  */
 package com.github.lordlothar99.random.impl.date;
 
-import org.apache.commons.lang.math.RandomUtils;
 import org.joda.time.DateTime;
-
-import com.github.lordlothar99.random.api.Generator;
 
 /**
  * Random {@link DateTime} generator
  * 
  * @author Francois Lecomte
  */
-public class RandomDateTimeGenerator implements Generator<DateTime> {
+public class RandomDateTimeGenerator extends AbstractRandomDateGenerator<DateTime> {
 
-    /**
-     * {@inheritDoc}
-     */
-    public DateTime create() {
-        DateTime dateTime = new DateTime();
-        dateTime = dateTime.withDayOfYear(1 + RandomUtils.nextInt(365));
-        dateTime = dateTime.withYear(1990 + RandomUtils.nextInt(151));
-        final int millis = RandomUtils.nextInt(23 * 60 * 60 * 1000);
-        dateTime = dateTime.withMillisOfDay(millis);
-        return dateTime;
-    }
+	@Override
+	protected long asLong(DateTime date) {
+		return date.getMillis();
+	}
+
+	@Override
+	protected DateTime fromLong(long timeInMillis) {
+		return new DateTime(timeInMillis);
+	}
 }
