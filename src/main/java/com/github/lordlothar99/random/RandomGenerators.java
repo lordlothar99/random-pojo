@@ -1,6 +1,7 @@
 package com.github.lordlothar99.random;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,213 +34,307 @@ public class RandomGenerators {
 		this.registry = registry;
 	}
 
-	public RangedGenerator<Boolean> booleanGenerator() {
-		return (RangedGenerator<Boolean>) registry.getGenerator(Boolean.class);
+	public <G extends Generator<Boolean>> G booleanGenerator() {
+		return (G) registry.getGenerator(Boolean.class);
 	}
 
-	public RangedGenerator<Boolean> booleanGenerator(boolean min, boolean max) {
-		RangedGenerator<Boolean> generator = booleanGenerator();
-		initRange(generator, min, max);
-		return generator;
+	public <G extends RangedGenerator<Byte>> G byteGenerator() {
+		return (G) registry.getGenerator(Byte.class);
 	}
 
-	public RangedGenerator<Byte> byteGenerator() {
-		return (RangedGenerator<Byte>) registry.getGenerator(Byte.class);
+	public <G extends RangedGenerator<Byte>> G byteGenerator(byte min, byte max) {
+		return withRange(this.<G> byteGenerator(), min, max);
 	}
 
-	public RangedGenerator<Byte> byteGenerator(byte min, byte max) {
-		RangedGenerator<Byte> generator = byteGenerator();
-		initRange(generator, min, max);
-		return generator;
+	public <G extends RangedGenerator<Short>> G shortGenerator() {
+		return (G) registry.getGenerator(Short.class);
 	}
 
-	public RangedGenerator<Short> shortGenerator() {
-		return (RangedGenerator<Short>) registry.getGenerator(Short.class);
+	public <G extends RangedGenerator<Short>> G shortGenerator(short min, short max) {
+		return withRange(this.<G> shortGenerator(), min, max);
 	}
 
-	public RangedGenerator<Short> shortGenerator(short min, short max) {
-		RangedGenerator<Short> generator = shortGenerator();
-		initRange(generator, min, max);
-		return generator;
+	public <G extends RangedGenerator<Integer>> G integerGenerator() {
+		return (G) registry.getGenerator(Integer.class);
 	}
 
-	public RangedGenerator<Integer> integerGenerator() {
-		return (RangedGenerator<Integer>) registry.getGenerator(Integer.class);
+	public <G extends RangedGenerator<Integer>> G integerGenerator(int min, int max) {
+		return withRange(this.<G> integerGenerator(), min, max);
 	}
 
-	public RangedGenerator<Integer> integerGenerator(int min, int max) {
-		RangedGenerator<Integer> generator = integerGenerator();
-		initRange(generator, min, max);
-		return generator;
+	public <G extends RangedGenerator<Long>> G longGenerator() {
+		return (G) registry.getGenerator(Long.class);
 	}
 
-	public RangedGenerator<Long> longGenerator() {
-		return (RangedGenerator<Long>) registry.getGenerator(Long.class);
+	public <G extends RangedGenerator<Long>> G longGenerator(long min, long max) {
+		return withRange(this.<G> longGenerator(), min, max);
 	}
 
-	public RangedGenerator<Long> longGenerator(long min, long max) {
-		RangedGenerator<Long> generator = longGenerator();
-		return initRange(generator, min, max);
+	public <G extends RangedGenerator<Float>> G floatGenerator() {
+		return (G) registry.getGenerator(Float.class);
 	}
 
-	public RangedGenerator<Date> dateGenerator() {
-		return (RangedGenerator<Date>) registry.getGenerator(Date.class);
+	public <G extends RangedGenerator<Float>> G floatGenerator(float min, float max) {
+		return withRange(this.<G> floatGenerator(), min, max);
 	}
 
-	public RangedGenerator<Date> getDate(Date min, Date max) {
-		RangedGenerator<Date> generator = dateGenerator();
-		return initRange(generator, min, max);
+	public <G extends RangedGenerator<Double>> G doubleGenerator() {
+		return (G) registry.getGenerator(Double.class);
 	}
 
-	public RangedGenerator<Calendar> calendarGenerator() {
-		return (RangedGenerator<Calendar>) registry.getGenerator(Calendar.class);
+	public <G extends RangedGenerator<Double>> G doubleGenerator(double min, double max) {
+		return withRange(this.<G> doubleGenerator(), min, max);
 	}
 
-	public RangedGenerator<Calendar> getCalendar(Calendar min, Calendar max) {
-		RangedGenerator<Calendar> generator = calendarGenerator();
-		return initRange(generator, min, max);
+	// ---
+
+	public <G extends RangedGenerator<Date>> G dateGenerator() {
+		return (G) registry.getGenerator(Date.class);
 	}
 
-	public RangedGenerator<DateTime> dateTimeGenerator() {
-		return (RangedGenerator<DateTime>) registry.getGenerator(DateTime.class);
+	public <G extends RangedGenerator<Date>> G dateGenerator(Date min, Date max) {
+		return withRange(this.<G> dateGenerator(), min, max);
 	}
 
-	public RangedGenerator<DateTime> getCalendar(DateTime min, DateTime max) {
-		RangedGenerator<DateTime> generator = dateTimeGenerator();
-		return initRange(generator, min, max);
+	public <G extends RangedGenerator<Calendar>> G calendarGenerator() {
+		return (G) registry.getGenerator(Calendar.class);
 	}
 
-	public RangedGenerator<LocalDate> localDateGenerator() {
-		return (RangedGenerator<LocalDate>) registry.getGenerator(LocalDate.class);
+	public <G extends RangedGenerator<Calendar>> G calendarGenerator(Calendar min, Calendar max) {
+		return withRange(this.<G> calendarGenerator(), min, max);
 	}
 
-	public RangedGenerator<LocalDate> getCalendar(LocalDate min, LocalDate max) {
-		RangedGenerator<LocalDate> generator = localDateGenerator();
-		return initRange(generator, min, max);
+	public <G extends RangedGenerator<DateTime>> G dateTimeGenerator() {
+		return (G) registry.getGenerator(DateTime.class);
 	}
 
-	public RangedGenerator<LocalDateTime> localDateTimeGenerator() {
-		return (RangedGenerator<LocalDateTime>) registry.getGenerator(LocalDateTime.class);
+	public <G extends RangedGenerator<DateTime>> G dateTimeGenerator(DateTime min, DateTime max) {
+		return withRange(this.<G> dateTimeGenerator(), min, max);
 	}
 
-	public RangedGenerator<LocalDateTime> getCalendar(LocalDateTime min, LocalDateTime max) {
-		RangedGenerator<LocalDateTime> generator = localDateTimeGenerator();
-		return initRange(generator, min, max);
+	public <G extends RangedGenerator<LocalDate>> G localDateGenerator() {
+		return (G) registry.getGenerator(LocalDate.class);
 	}
 
-	public RangedGenerator<XMLGregorianCalendar> xmlGregorianCalendarGenerator() {
-		return (RangedGenerator<XMLGregorianCalendar>) registry.getGenerator(XMLGregorianCalendar.class);
+	public <G extends RangedGenerator<LocalDate>> G localDateGenerator(LocalDate min, LocalDate max) {
+		return withRange(this.<G> localDateGenerator(), min, max);
 	}
 
-	public RangedGenerator<XMLGregorianCalendar> xmlGregorianCalendarGenerator(XMLGregorianCalendar min,
+	public <G extends RangedGenerator<LocalDateTime>> G localDateTimeGenerator() {
+		return (G) registry.getGenerator(LocalDateTime.class);
+	}
+
+	public <G extends RangedGenerator<LocalDateTime>> G localDateTimeGenerator(LocalDateTime min, LocalDateTime max) {
+		return withRange(this.<G> localDateTimeGenerator(), min, max);
+	}
+
+	public <G extends RangedGenerator<XMLGregorianCalendar>> G xmlGregorianCalendarGenerator() {
+		return (G) registry.getGenerator(XMLGregorianCalendar.class);
+	}
+
+	public <G extends RangedGenerator<XMLGregorianCalendar>> G xmlGregorianCalendarGenerator(XMLGregorianCalendar min,
 			XMLGregorianCalendar max) {
-		RangedGenerator<XMLGregorianCalendar> generator = xmlGregorianCalendarGenerator();
-		return initRange(generator, min, max);
+		return withRange(this.<G> xmlGregorianCalendarGenerator(), min, max);
 	}
 
-	private <T> RangedGenerator<T> initRange(RangedGenerator<T> generator, T min, T max) {
+	public <T, G extends RangedGenerator<T>> G withRange(G generator, T min, T max) {
 		generator.setMin(min);
 		generator.setMax(max);
 		return generator;
 	}
 
-	public RandomStringGenerator stringGenerator() {
-		return (RandomStringGenerator) registry.getGenerator(String.class);
+	// ---
+
+	public <G extends RandomStringGenerator> G stringGenerator() {
+		return (G) registry.getGenerator(String.class);
 	}
 
-	public RandomStringGenerator stringGenerator(int length) {
-		RandomStringGenerator stringGenerator = stringGenerator();
+	public <G extends RandomStringGenerator> G stringGenerator(int length) {
+		G stringGenerator = stringGenerator();
 		stringGenerator.setLength(length);
 		return stringGenerator;
 	}
 
-	public RandomStringGenerator stringGenerator(int length, boolean letters, boolean numbers) {
-		RandomStringGenerator stringGenerator = stringGenerator(length);
+	public <G extends RandomStringGenerator> G stringGenerator(int length, boolean letters, boolean numbers) {
+		G stringGenerator = stringGenerator(length);
 		stringGenerator.setLetters(letters);
 		stringGenerator.setNumbers(numbers);
 		return stringGenerator;
 	}
 
-	public RandomStringGenerator stringGenerator(int length, char[] chars) {
-		RandomStringGenerator stringGenerator = stringGenerator(length);
+	public <G extends RandomStringGenerator> G stringGenerator(int length, char[] chars) {
+		G stringGenerator = stringGenerator(length);
 		stringGenerator.setChars(chars);
 		return stringGenerator;
 	}
 
-	public <T> RandomObjectGenerator<T> objectGenerator(Class<T> objectClass) {
-		return (RandomObjectGenerator<T>) registry.getGenerator(objectClass);
+	// ---
+
+	public <T, G extends RandomObjectGenerator<T>> G objectGenerator(Class<T> objectClass) {
+		return (G) registry.getGenerator(objectClass);
 	}
 
-	public <T> ContainerGenerator<List<T>> listGenerator(Class<T> elementsType) {
+	public <T, G extends RandomObjectGenerator<T>> G objectGenerator(Class<T> objectClass, String fieldName,
+			Generator<?> generator) {
+		return withFieldGenerator(this.<T, G> objectGenerator(objectClass), fieldName, generator);
+	}
+
+	public <T, G extends RandomObjectGenerator<T>> G withFieldGenerator(G objectGenerator, String fieldName,
+			Generator<?> generator) {
+		objectGenerator.setFieldGenerator(fieldName, generator);
+		return objectGenerator;
+	}
+
+	// ---
+
+	public <C, T, G extends ContainerGenerator<C>> G collectionGenerator(Class<C> collectionType, Class<T> elementsType) {
+		ContainerGenerator<Collection> collectionGenerator = (ContainerGenerator<Collection>) registry.getGenerator(collectionType);
+		collectionGenerator.setElementsTypes(elementsType);
+		return cast(collectionGenerator);
+	}
+
+	public <C, T, G extends ContainerGenerator<C>> G collectionGenerator(Class<C> collectionType, Class<T> elementsType, int size) {
+		G collectionGenerator = collectionGenerator(collectionType, elementsType);
+		collectionGenerator.setSize(size);
+		return collectionGenerator;
+	}
+
+	public <C, T, G extends ContainerGenerator<C>> G collectionGenerator(Class<C> collectionType, Class<T> elementsType, int minSize, int maxSize) {
+		G collectionGenerator = collectionGenerator(collectionType, elementsType);
+		collectionGenerator.setMinSize(minSize);
+		collectionGenerator.setMaxSize(maxSize);
+		return collectionGenerator;
+	}
+
+	// ---
+
+	public <T, G extends ContainerGenerator<List<T>>> G listGenerator(Class<T> elementsType) {
 		ContainerGenerator<List> listGenerator = (ContainerGenerator<List>) registry.getGenerator(List.class);
 		listGenerator.setElementsTypes(elementsType);
 		return cast(listGenerator);
 	}
 
-	public <T> ContainerGenerator<Set<Integer>> setGenerator(Class<T> elementsType) {
+	public <T, G extends ContainerGenerator<List<T>>> G listGenerator(Class<T> elementsType, int size) {
+		G listGenerator = listGenerator(elementsType);
+		listGenerator.setSize(size);
+		return listGenerator;
+	}
+
+	public <T, G extends ContainerGenerator<List<T>>> G listGenerator(Class<T> elementsType, int minSize, int maxSize) {
+		G listGenerator = listGenerator(elementsType);
+		listGenerator.setMinSize(minSize);
+		listGenerator.setMaxSize(maxSize);
+		return listGenerator;
+	}
+
+	// ---
+
+	public <T, G extends ContainerGenerator<Set<T>>> G setGenerator(Class<T> elementsType) {
 		ContainerGenerator<Set> setGenerator = (ContainerGenerator<Set>) registry.getGenerator(Set.class);
 		setGenerator.setElementsTypes(elementsType);
 		return cast(setGenerator);
 	}
 
-	public <T> ContainerGenerator<Set<Integer>> setGenerator(Class<T> elementsType, int size) {
-		ContainerGenerator<Set<Integer>> setGenerator = setGenerator(elementsType);
+	public <T, G extends ContainerGenerator<Set<T>>> G setGenerator(Class<T> elementsType, int size) {
+		G setGenerator = setGenerator(elementsType);
 		setGenerator.setSize(size);
 		return setGenerator;
 	}
 
-	public <T> ContainerGenerator<Set<Integer>> setGenerator(Class<T> elementsType, int minSize, int maxSize) {
-		ContainerGenerator<Set<Integer>> setGenerator = setGenerator(elementsType);
+	public <T, G extends ContainerGenerator<Set<T>>> G setGenerator(Class<T> elementsType, int minSize, int maxSize) {
+		G setGenerator = setGenerator(elementsType);
 		setGenerator.setMinSize(minSize);
 		setGenerator.setMaxSize(maxSize);
 		return setGenerator;
 	}
 
-	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Class<K> keyType, Class<V> valueType) {
+	// ---
+
+	public <K, V, G extends ContainerGenerator<Map<K, V>>> G mapGenerator(Class<K> keyType, Class<V> valueType) {
 		ContainerGenerator<Map> mapGenerator = (ContainerGenerator<Map>) registry.getGenerator(Map.class);
 		mapGenerator.setElementsTypes(keyType, valueType);
 		return cast(mapGenerator);
 	}
 
-	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Class<K> keyType, Class<V> valueType, int size) {
-		ContainerGenerator<Map<K, V>> mapGenerator = mapGenerator(keyType, valueType);
+	public <K, V, G extends ContainerGenerator<Map<K, V>>> G mapGenerator(Class<K> keyType, Class<V> valueType, int size) {
+		G mapGenerator = mapGenerator(keyType, valueType);
 		mapGenerator.setSize(size);
 		return mapGenerator;
 	}
 
-	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Class<K> keyType, Class<V> valueType, int minSize,
+	public <K, V, G extends ContainerGenerator<Map<K, V>>> G mapGenerator(Class<K> keyType, Class<V> valueType, int minSize,
 			int maxSize) {
-		ContainerGenerator<Map<K, V>> mapGenerator = mapGenerator(keyType, valueType);
+		G mapGenerator = mapGenerator(keyType, valueType);
 		mapGenerator.setMinSize(minSize);
 		mapGenerator.setMaxSize(maxSize);
-		return cast(mapGenerator);
+		return mapGenerator;
 	}
 
-	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator) {
+	public <K, V, G extends ContainerGenerator<Map<K, V>>> G mapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator) {
 		ContainerGenerator<Map> mapGenerator = (ContainerGenerator<Map>) registry.getGenerator(Map.class);
 		mapGenerator.setElementsGenerators(keyGenerator, valueGenerator);
 		return cast(mapGenerator);
 	}
 
-	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator, int size) {
-		ContainerGenerator<Map<K, V>> mapGenerator = mapGenerator(keyGenerator, valueGenerator);
+	public <K, V, G extends ContainerGenerator<Map<K, V>>> G mapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator,
+			int size) {
+		G mapGenerator = mapGenerator(keyGenerator, valueGenerator);
 		mapGenerator.setSize(size);
 		return mapGenerator;
 	}
 
-	public <K, V> ContainerGenerator<Map<K, V>> mapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator, int minSize,
-			int maxSize) {
-		ContainerGenerator<Map<K, V>> mapGenerator = mapGenerator(keyGenerator, valueGenerator);
+	public <K, V, G extends ContainerGenerator<Map<K, V>>> G mapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator,
+			int minSize, int maxSize) {
+		G mapGenerator = mapGenerator(keyGenerator, valueGenerator);
 		mapGenerator.setMinSize(minSize);
 		mapGenerator.setMaxSize(maxSize);
-		return cast(mapGenerator);
+		return mapGenerator;
 	}
 
-	public <K, V> ContainerGenerator<TreeMap<K, V>> treemapGenerator(Class<K> keyType, Class<V> valueType) {
-		ContainerGenerator<TreeMap> mapGenerator = (ContainerGenerator<TreeMap>) registry.getGenerator(TreeMap.class);
-		mapGenerator.setElementsTypes(keyType, valueType);
-		return cast(mapGenerator);
+	// ---
+
+	public <K, V, G extends ContainerGenerator<TreeMap<K, V>>> G treeMapGenerator(Class<K> keyType, Class<V> valueType) {
+		ContainerGenerator<TreeMap> treeMapGenerator = (ContainerGenerator<TreeMap>) registry.getGenerator(TreeMap.class);
+		treeMapGenerator.setElementsTypes(keyType, valueType);
+		return cast(treeMapGenerator);
 	}
+
+	public <K, V, G extends ContainerGenerator<TreeMap<K, V>>> G treeMapGenerator(Class<K> keyType, Class<V> valueType, int size) {
+		G treeMapGenerator = treeMapGenerator(keyType, valueType);
+		treeMapGenerator.setSize(size);
+		return treeMapGenerator;
+	}
+
+	public <K, V, G extends ContainerGenerator<TreeMap<K, V>>> G treeMapGenerator(Class<K> keyType, Class<V> valueType, int minSize,
+			int maxSize) {
+		G treeMapGenerator = treeMapGenerator(keyType, valueType);
+		treeMapGenerator.setMinSize(minSize);
+		treeMapGenerator.setMaxSize(maxSize);
+		return treeMapGenerator;
+	}
+
+	public <K, V, G extends ContainerGenerator<TreeMap<K, V>>> G treeMapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator) {
+		ContainerGenerator<TreeMap> treeMapGenerator = (ContainerGenerator<TreeMap>) registry.getGenerator(TreeMap.class);
+		treeMapGenerator.setElementsGenerators(keyGenerator, valueGenerator);
+		return cast(treeMapGenerator);
+	}
+
+	public <K, V, G extends ContainerGenerator<TreeMap<K, V>>> G treeMapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator,
+			int size) {
+		G treeMapGenerator = treeMapGenerator(keyGenerator, valueGenerator);
+		treeMapGenerator.setSize(size);
+		return treeMapGenerator;
+	}
+
+	public <K, V, G extends ContainerGenerator<TreeMap<K, V>>> G treeMapGenerator(Generator<K> keyGenerator, Generator<V> valueGenerator,
+			int minSize, int maxSize) {
+		G treeMapGenerator = treeMapGenerator(keyGenerator, valueGenerator);
+		treeMapGenerator.setMinSize(minSize);
+		treeMapGenerator.setMaxSize(maxSize);
+		return treeMapGenerator;
+	}
+
+	// ---
 
 	public <E extends Enum<E>> Generator<E> enumGenerator(Class<E> enumClass) {
 		return registry.getGenerator(enumClass);

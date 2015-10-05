@@ -232,7 +232,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		}
 	}
 
-	public void setFieldGenerator(String propertyName, Generator<?> longGenerator) {
-		fieldGenerators.put(propertyName, longGenerator);
+	public void setFieldGenerator(String propertyName, Generator<?> generator) {
+		fieldGenerators.put(propertyName, generator);
 	}
 }

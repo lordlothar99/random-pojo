@@ -7,7 +7,7 @@ import com.github.lordlothar99.random.api.Generator;
 
 /**
  * Toolkit for {@link Generator}.
- * 
+ *
  * @author Francois Lecomte
  */
 public final class RandomToolkit {

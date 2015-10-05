@@ -1,5 +1,6 @@
 package com.github.lordlothar99.random;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -9,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.lordlothar99.random.api.ContainerGenerator;
-import com.github.lordlothar99.random.api.Generator;
 
 public class RandomGeneratorsTest {
 
@@ -18,6 +18,11 @@ public class RandomGeneratorsTest {
 	@Test
 	public void should_return_integer_generator() {
 		Assert.assertNotNull(generators.integerGenerator());
+	}
+
+	@Test
+	public void should_return_boolean_generator() {
+		Assert.assertNotNull(generators.booleanGenerator());
 	}
 
 	@Test
@@ -31,8 +36,21 @@ public class RandomGeneratorsTest {
 	}
 
 	@Test
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void should_return_collection_generator() {
+		ContainerGenerator<LinkedList> generator = generators.collectionGenerator(LinkedList.class, Integer.class);
+		Assert.assertNotNull(generator);
+		LinkedList<Integer> list = generator.create();
+		Assert.assertTrue("wrong type", list instanceof LinkedList);
+		Assert.assertFalse("empty map", list.isEmpty());
+		for (Integer entry : list) {
+			Assert.assertTrue(entry instanceof Integer);
+		}
+	}
+
+	@Test
 	public void should_return_list_generator() {
-		Generator<List<Integer>> generator = generators.listGenerator(Integer.class);
+		ContainerGenerator<List<Integer>> generator = generators.listGenerator(Integer.class);
 		Assert.assertNotNull(generator);
 		List<Integer> list = generator.create();
 		Assert.assertTrue("wrong type", list instanceof List);
@@ -44,7 +62,7 @@ public class RandomGeneratorsTest {
 
 	@Test
 	public void should_return_set_generator() {
-		Generator<Set<Integer>> generator = generators.setGenerator(Integer.class);
+		ContainerGenerator<Set<Integer>> generator = generators.setGenerator(Integer.class);
 		Assert.assertNotNull(generator);
 		Set<Integer> set = generator.create();
 		Assert.assertTrue("wrong type", set instanceof Set);
@@ -79,7 +97,7 @@ public class RandomGeneratorsTest {
 
 	@Test
 	public void should_return_treemap_generator() {
-		ContainerGenerator<TreeMap<String, Integer>> generator = generators.treemapGenerator(String.class,
+		ContainerGenerator<TreeMap<String, Integer>> generator = generators.treeMapGenerator(String.class,
 				Integer.class);
 		Map<String, Integer> map = generator.create();
 		Assert.assertTrue("wrong type", map instanceof TreeMap);
