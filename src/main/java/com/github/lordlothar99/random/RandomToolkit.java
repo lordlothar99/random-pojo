@@ -3,6 +3,8 @@
  */
 package com.github.lordlothar99.random;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -119,6 +121,22 @@ public final class RandomToolkit {
 
 	public double doubleValue(double min, double max) {
 		return generators.doubleGenerator(min, max).create();
+	}
+
+	public BigDecimal bigDecimalValue() {
+		return generators.bigDecimalGenerator().create();
+	}
+
+	public BigDecimal bigDecimalValue(BigDecimal min, BigDecimal max) {
+		return generators.bigDecimalGenerator(min, max).create();
+	}
+
+	public BigInteger bigIntegerValue() {
+		return generators.bigIntegerGenerator().create();
+	}
+
+	public BigInteger bigIntegerValue(BigInteger min, BigInteger max) {
+		return generators.bigIntegerGenerator(min, max).create();
 	}
 
 	// ---

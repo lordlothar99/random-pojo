@@ -1,5 +1,7 @@
 package com.github.lordlothar99.random;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -84,6 +86,22 @@ public class RandomGenerators {
 
 	public <G extends RangedGenerator<Double>> G doubleGenerator(double min, double max) {
 		return withRange(this.<G> doubleGenerator(), min, max);
+	}
+
+	public <G extends RangedGenerator<BigDecimal>> G bigDecimalGenerator() {
+		return (G) registry.getGenerator(BigDecimal.class);
+	}
+
+	public <G extends RangedGenerator<BigDecimal>> G bigDecimalGenerator(BigDecimal min, BigDecimal max) {
+		return withRange(this.<G> bigDecimalGenerator(), min, max);
+	}
+
+	public <G extends RangedGenerator<BigInteger>> G bigIntegerGenerator() {
+		return (G) registry.getGenerator(BigInteger.class);
+	}
+
+	public <G extends RangedGenerator<BigInteger>> G bigIntegerGenerator(BigInteger min, BigInteger max) {
+		return withRange(this.<G> bigIntegerGenerator(), min, max);
 	}
 
 	// ---
