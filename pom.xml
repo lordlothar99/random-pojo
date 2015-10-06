@@ -12,6 +12,7 @@
 		<maven.compiler.target>1.5</maven.compiler.target>
 		<spring.version>4.1.7.RELEASE</spring.version>
 		<project.scm.id>github</project.scm.id>
+		<github.global.server>github</github.global.server>
 	</properties>
 
 	<scm>
