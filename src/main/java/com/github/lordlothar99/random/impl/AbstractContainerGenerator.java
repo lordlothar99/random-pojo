@@ -11,7 +11,7 @@ import com.github.lordlothar99.random.api.Generator;
 
 /**
  * Abstract {@link ContainerGenerator}.
- * 
+ *
  * @author Francois Lecomte
  * @param <T>
  *            generated object type
@@ -160,7 +160,7 @@ public abstract class AbstractContainerGenerator<T> extends AbstractGenerator<T>
 		if (minSize == maxSize) {
 			return minSize;
 		}
-		int size = toolkit().integerValue(minSize, maxSize);
+		int size = toolkit().intValue(minSize, maxSize);
 		return size;
 	}
 

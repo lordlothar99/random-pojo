@@ -3,6 +3,20 @@
  */
 package com.github.lordlothar99.random;
 
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+
 import com.github.lordlothar99.random.api.Generator;
 
 /**
@@ -53,11 +67,33 @@ public final class RandomToolkit {
 		return registry;
 	}
 
-	public int integerValue() {
+	// ---
+
+	public boolean booleanValue() {
+		return generators.booleanGenerator().create();
+	}
+
+	public byte byteValue() {
+		return generators.byteGenerator().create();
+	}
+
+	public byte byteValue(byte min, byte max) {
+		return generators.byteGenerator(min, max).create();
+	}
+
+	public short shortValue() {
+		return generators.shortGenerator().create();
+	}
+
+	public short shortValue(short min, short max) {
+		return generators.shortGenerator(min, max).create();
+	}
+
+	public int intValue() {
 		return generators.integerGenerator().create();
 	}
 
-	public int integerValue(int min, int max) {
+	public int intValue(int min, int max) {
 		return generators.integerGenerator(min, max).create();
 	}
 
@@ -67,5 +103,205 @@ public final class RandomToolkit {
 
 	public long longValue(long min, long max) {
 		return generators.longGenerator(min, max).create();
+	}
+
+	public float floatValue() {
+		return generators.floatGenerator().create();
+	}
+
+	public float floatValue(float min, float max) {
+		return generators.floatGenerator(min, max).create();
+	}
+
+	public double doubleValue() {
+		return generators.doubleGenerator().create();
+	}
+
+	public double doubleValue(double min, double max) {
+		return generators.doubleGenerator(min, max).create();
+	}
+
+	// ---
+
+	public Date dateValue() {
+		return generators.dateGenerator().create();
+	}
+
+	public Date dateValue(Date min, Date max) {
+		return generators.dateGenerator(min, max).create();
+	}
+
+	public Calendar calendarValue() {
+		return generators.calendarGenerator().create();
+	}
+
+	public Calendar calendarValue(Calendar min, Calendar max) {
+		return generators.calendarGenerator(min, max).create();
+	}
+
+	public DateTime dateTimeValue() {
+		return generators.dateTimeGenerator().create();
+	}
+
+	public DateTime dateTimeValue(DateTime min, DateTime max) {
+		return generators.dateTimeGenerator(min, max).create();
+	}
+
+	public LocalDate localDateValue() {
+		return generators.localDateGenerator().create();
+	}
+
+	public LocalDate localDateValue(LocalDate min, LocalDate max) {
+		return generators.localDateGenerator(min, max).create();
+	}
+
+	public LocalDateTime localDateTimeValue() {
+		return generators.localDateTimeGenerator().create();
+	}
+
+	public LocalDateTime localDateTimeValue(LocalDateTime min, LocalDateTime max) {
+		return generators.localDateTimeGenerator(min, max).create();
+	}
+
+	public XMLGregorianCalendar xmlGregorianCalendarValue() {
+		return generators.xmlGregorianCalendarGenerator().create();
+	}
+
+	public XMLGregorianCalendar xmlGregorianCalendarValue(XMLGregorianCalendar min, XMLGregorianCalendar max) {
+		return generators.xmlGregorianCalendarGenerator(min, max).create();
+	}
+
+	// ---
+
+	public String stringValue() {
+		return generators.stringGenerator().create();
+	}
+
+	public String stringValue(int length) {
+		return generators.stringGenerator(length).create();
+	}
+
+	public String stringValue(int length, boolean letters, boolean numbers) {
+		return generators.stringGenerator(length, letters, numbers).create();
+	}
+
+	public String stringValue(int length, char[] chars) {
+		return generators.stringGenerator(length, chars).create();
+	}
+
+	// ---
+
+	public <T> T object(Class<T> objectClass) {
+		return generators.objectGenerator(objectClass).create();
+	}
+
+	public <T> T object(Class<T> objectClass, String fieldName, Generator<?> generator) {
+		return generators.objectGenerator(objectClass, fieldName, generator).create();
+	}
+
+	// ---
+
+	public <C extends Collection<T>, T> C collection(Class<C> collectionType, Class<T> elementsType) {
+		return generators.collectionGenerator(collectionType, elementsType).create();
+	}
+
+	public <C extends Collection<T>, T> C collection(Class<C> collectionType, Class<T> elementsType, int size) {
+		return generators.collectionGenerator(collectionType, elementsType, size).create();
+	}
+
+	public <C extends Collection<T>, T> C collection(Class<C> collectionType, Class<T> elementsType, int minSize,
+			int maxSize) {
+		return generators.collectionGenerator(collectionType, elementsType, minSize, maxSize).create();
+	}
+
+	// ---
+
+	public <T> List<T> list(Class<T> elementsType) {
+		return generators.listGenerator(elementsType).create();
+	}
+
+	public <T> List<T> list(Class<T> elementsType, int size) {
+		return generators.listGenerator(elementsType, size).create();
+	}
+
+	public <T> List<T> list(Class<T> elementsType, int minSize, int maxSize) {
+		return generators.listGenerator(elementsType, minSize, maxSize).create();
+	}
+
+	// ---
+
+	public <T> Set<T> set(Class<T> elementsType) {
+		return generators.setGenerator(elementsType).create();
+	}
+
+	public <T> Set<T> set(Class<T> elementsType, int size) {
+		return generators.setGenerator(elementsType, size).create();
+	}
+
+	public <T> Set<T> set(Class<T> elementsType, int minSize, int maxSize) {
+		return generators.setGenerator(elementsType, minSize, maxSize).create();
+	}
+
+	// ---
+
+	public <K, V> Map<K, V> map(Class<K> keyType, Class<V> valueType) {
+		return generators.mapGenerator(keyType, valueType).create();
+	}
+
+	public <K, V> Map<K, V> map(Class<K> keyType, Class<V> valueType, int size) {
+		return generators.mapGenerator(keyType, valueType, size).create();
+	}
+
+	public <K, V> Map<K, V> map(Class<K> keyType, Class<V> valueType, int minSize, int maxSize) {
+		return generators.mapGenerator(keyType, valueType, minSize, maxSize).create();
+	}
+
+	public <K, V> Map<K, V> map(Generator<K> keyGenerator, Generator<V> valueGenerator) {
+		return generators.mapGenerator(keyGenerator, valueGenerator).create();
+	}
+
+	public <K, V> Map<K, V> map(Generator<K> keyGenerator, Generator<V> valueGenerator, int size) {
+		return generators.mapGenerator(keyGenerator, valueGenerator, size).create();
+	}
+
+	public <K, V> Map<K, V> map(Generator<K> keyGenerator, Generator<V> valueGenerator, int minSize, int maxSize) {
+		return generators.mapGenerator(keyGenerator, valueGenerator, minSize, maxSize).create();
+	}
+
+	// ---
+
+	public <K, V> TreeMap<K, V> treeMap(Class<K> keyType, Class<V> valueType) {
+		return generators.treeMapGenerator(keyType, valueType).create();
+	}
+
+	public <K, V> TreeMap<K, V> treeMap(Class<K> keyType, Class<V> valueType, int size) {
+		return generators.treeMapGenerator(keyType, valueType, size).create();
+	}
+
+	public <K, V> TreeMap<K, V> treeMap(Class<K> keyType, Class<V> valueType, int minSize, int maxSize) {
+		return generators.treeMapGenerator(keyType, valueType, minSize, maxSize).create();
+	}
+
+	public <K, V> TreeMap<K, V> treeMap(Generator<K> keyGenerator, Generator<V> valueGenerator) {
+		return generators.treeMapGenerator(keyGenerator, valueGenerator).create();
+	}
+
+	public <K, V> TreeMap<K, V> treeMap(Generator<K> keyGenerator, Generator<V> valueGenerator, int size) {
+		return generators.treeMapGenerator(keyGenerator, valueGenerator, size).create();
+	}
+
+	public <K, V> TreeMap<K, V> treeMap(Generator<K> keyGenerator, Generator<V> valueGenerator, int minSize,
+			int maxSize) {
+		return generators.treeMapGenerator(keyGenerator, valueGenerator, minSize, maxSize).create();
+	}
+
+	// ---
+
+	public <E extends Enum<E>> E enumValue(Class<E> enumClass) {
+		return generators.enumGenerator(enumClass).create();
+	}
+
+	public <T> T array(Class<T> arrayClass) {
+		return generators.arrayGenerator(arrayClass).create();
 	}
 }
