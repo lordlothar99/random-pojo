@@ -4,7 +4,7 @@
 
 	<groupId>com.github.lordlothar99.random-pojo</groupId>
 	<artifactId>random-pojo</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.2</version>
 	<description>Random POJO generator tool</description>
 
 	<properties>
@@ -17,7 +17,8 @@
 	<scm>
 		<url>https://github.com/lordlothar99/random-pojo.git</url>
 		<developerConnection>scm:git:https://github.com/lordlothar99/random-pojo.git</developerConnection>
-	</scm>
+	  <tag>random-pojo-1.0.2</tag>
+  </scm>
 
 	<developers>
 		<developer>
