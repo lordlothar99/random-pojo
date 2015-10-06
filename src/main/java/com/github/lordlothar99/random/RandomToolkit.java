@@ -123,69 +123,69 @@ public final class RandomToolkit {
 
 	// ---
 
-	public Date dateValue() {
+	public Date date() {
 		return generators.dateGenerator().create();
 	}
 
-	public Date dateValue(Date min, Date max) {
+	public Date date(Date min, Date max) {
 		return generators.dateGenerator(min, max).create();
 	}
 
-	public Calendar calendarValue() {
+	public Calendar calendar() {
 		return generators.calendarGenerator().create();
 	}
 
-	public Calendar calendarValue(Calendar min, Calendar max) {
+	public Calendar calendar(Calendar min, Calendar max) {
 		return generators.calendarGenerator(min, max).create();
 	}
 
-	public DateTime dateTimeValue() {
+	public DateTime dateTime() {
 		return generators.dateTimeGenerator().create();
 	}
 
-	public DateTime dateTimeValue(DateTime min, DateTime max) {
+	public DateTime dateTime(DateTime min, DateTime max) {
 		return generators.dateTimeGenerator(min, max).create();
 	}
 
-	public LocalDate localDateValue() {
+	public LocalDate localDate() {
 		return generators.localDateGenerator().create();
 	}
 
-	public LocalDate localDateValue(LocalDate min, LocalDate max) {
+	public LocalDate localDate(LocalDate min, LocalDate max) {
 		return generators.localDateGenerator(min, max).create();
 	}
 
-	public LocalDateTime localDateTimeValue() {
+	public LocalDateTime localDateTime() {
 		return generators.localDateTimeGenerator().create();
 	}
 
-	public LocalDateTime localDateTimeValue(LocalDateTime min, LocalDateTime max) {
+	public LocalDateTime localDateTime(LocalDateTime min, LocalDateTime max) {
 		return generators.localDateTimeGenerator(min, max).create();
 	}
 
-	public XMLGregorianCalendar xmlGregorianCalendarValue() {
+	public XMLGregorianCalendar xmlGregorianCalendar() {
 		return generators.xmlGregorianCalendarGenerator().create();
 	}
 
-	public XMLGregorianCalendar xmlGregorianCalendarValue(XMLGregorianCalendar min, XMLGregorianCalendar max) {
+	public XMLGregorianCalendar xmlGregorianCalendar(XMLGregorianCalendar min, XMLGregorianCalendar max) {
 		return generators.xmlGregorianCalendarGenerator(min, max).create();
 	}
 
 	// ---
 
-	public String stringValue() {
+	public String string() {
 		return generators.stringGenerator().create();
 	}
 
-	public String stringValue(int length) {
+	public String string(int length) {
 		return generators.stringGenerator(length).create();
 	}
 
-	public String stringValue(int length, boolean letters, boolean numbers) {
+	public String string(int length, boolean letters, boolean numbers) {
 		return generators.stringGenerator(length, letters, numbers).create();
 	}
 
-	public String stringValue(int length, char[] chars) {
+	public String string(int length, char[] chars) {
 		return generators.stringGenerator(length, chars).create();
 	}
 
