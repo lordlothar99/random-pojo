@@ -3,6 +3,7 @@
  */
 package com.github.lordlothar99.random.impl.numeric;
 
+import static java.math.BigDecimal.ROUND_HALF_EVEN;
 import static java.math.BigInteger.ZERO;
 
 import java.math.BigDecimal;
@@ -10,7 +11,7 @@ import java.math.BigInteger;
 
 /**
  * Random {@link BigInteger} generator
- * 
+ *
  * @author Francois Lecomte
  */
 public class RandomBigIntegerGenerator extends AbstractRandomNumericGenerator<BigInteger> {
@@ -25,6 +26,7 @@ public class RandomBigIntegerGenerator extends AbstractRandomNumericGenerator<Bi
 
 	@Override
 	protected BigInteger fromBigDecimal(BigDecimal bigDecimal) {
+		bigDecimal = bigDecimal.setScale(0, ROUND_HALF_EVEN);
 		return bigDecimal.toBigInteger();
 	}
 

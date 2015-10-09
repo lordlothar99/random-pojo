@@ -3,11 +3,13 @@
  */
 package com.github.lordlothar99.random.impl.numeric;
 
+import static java.math.BigDecimal.ROUND_HALF_EVEN;
+
 import java.math.BigDecimal;
 
 /**
  * Random {@link Short} generator
- * 
+ *
  * @author Francois Lecomte
  */
 public class RandomShortGenerator extends AbstractRandomNumericGenerator<Short> {
@@ -22,6 +24,7 @@ public class RandomShortGenerator extends AbstractRandomNumericGenerator<Short> 
 
 	@Override
 	protected Short fromBigDecimal(BigDecimal bigDecimal) {
+		bigDecimal = bigDecimal.setScale(0, ROUND_HALF_EVEN);
 		return bigDecimal.shortValue();
 	}
 }

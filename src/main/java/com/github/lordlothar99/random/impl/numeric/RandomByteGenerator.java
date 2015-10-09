@@ -3,11 +3,13 @@
  */
 package com.github.lordlothar99.random.impl.numeric;
 
+import static java.math.BigDecimal.ROUND_HALF_EVEN;
+
 import java.math.BigDecimal;
 
 /**
  * Random {@link Byte} generator
- * 
+ *
  * @author Francois Lecomte
  */
 public class RandomByteGenerator extends AbstractRandomNumericGenerator<Byte> {
@@ -22,6 +24,7 @@ public class RandomByteGenerator extends AbstractRandomNumericGenerator<Byte> {
 
 	@Override
 	protected Byte fromBigDecimal(BigDecimal bigDecimal) {
+		bigDecimal = bigDecimal.setScale(0, ROUND_HALF_EVEN);
 		return bigDecimal.byteValue();
 	}
 
