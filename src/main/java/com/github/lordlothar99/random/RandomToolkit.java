@@ -3,6 +3,8 @@
  */
 package com.github.lordlothar99.random;
 
+import static org.apache.commons.collections.CollectionUtils.size;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -15,6 +17,7 @@ import java.util.TreeMap;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -345,5 +348,48 @@ public class RandomToolkit {
 
 	public <T> T array(Class<T> arrayClass) {
 		return generators.arrayGenerator(arrayClass).create();
+	}
+
+	public <E> E element(Collection<E> collection) {
+		return elementFrom(collection);
+	}
+
+	public <K, V> Map.Entry<K, V> element(Map<K, V> map) {
+		return elementFrom(map);
+	}
+
+	public <E> E element(E[] array) {
+		return elementFrom(array);
+	}
+
+	public byte element(byte[] array) {
+		return elementFrom(array);
+	}
+
+	public short element(short[] array) {
+		return elementFrom(array);
+	}
+
+	public int element(int[] array) {
+		return elementFrom(array);
+	}
+
+	public long element(long[] array) {
+		return elementFrom(array);
+	}
+
+	public float element(float[] array) {
+		return elementFrom(array);
+	}
+
+	public double element(double[] array) {
+		return elementFrom(array);
+	}
+
+	@SuppressWarnings("unchecked")
+	protected <E> E elementFrom(Object container) {
+		int size = size(container);
+		int index = intValue(0, size - 1);
+		return (E) CollectionUtils.get(container, index);
 	}
 }
