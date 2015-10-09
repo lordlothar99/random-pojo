@@ -389,4 +389,8 @@ public class RandomGenerators {
 	private <T> T cast(Object object) {
 		return (T) object;
 	}
+
+	public RandomGeneratorsRegistry getRegistry() {
+		return registry;
+	}
 }
