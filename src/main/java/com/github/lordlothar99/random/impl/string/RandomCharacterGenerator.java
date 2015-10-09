@@ -22,6 +22,18 @@ public class RandomCharacterGenerator extends AbstractRandomCharactersGenerator<
 		super(Character.class, letters, numbers);
 	}
 
+	public RandomCharacterGenerator(Case letterCase) {
+		super(Character.class, letterCase);
+	}
+
+	public RandomCharacterGenerator(char[] chars, Case letterCase) {
+		super(Character.class, chars, letterCase);
+	}
+
+	public RandomCharacterGenerator(boolean letters, boolean numbers, Case letterCase) {
+		super(Character.class, letters, numbers, letterCase);
+	}
+
 	public Character create() {
 		String randomString = createString();
 		return randomString.charAt(0);

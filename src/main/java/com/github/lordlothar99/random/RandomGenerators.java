@@ -21,7 +21,9 @@ import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.RangedGenerator;
 import com.github.lordlothar99.random.impl.RandomObjectGenerator;
 import com.github.lordlothar99.random.impl.element.RandomElementGenerator;
+import com.github.lordlothar99.random.impl.string.AbstractRandomCharactersGenerator.Case;
 import com.github.lordlothar99.random.impl.string.RandomCharacterGenerator;
+import com.github.lordlothar99.random.impl.string.RandomEmailGenerator;
 import com.github.lordlothar99.random.impl.string.RandomStringGenerator;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -188,6 +190,30 @@ public class RandomGenerators {
 		return stringGenerator;
 	}
 
+	public <G extends RandomStringGenerator> G stringGenerator(Case letterCase) {
+		G stringGenerator = stringGenerator();
+		stringGenerator.setCase(letterCase);
+		return stringGenerator;
+	}
+
+	public <G extends RandomStringGenerator> G stringGenerator(int length, Case letterCase) {
+		G stringGenerator = stringGenerator(length);
+		stringGenerator.setCase(letterCase);
+		return stringGenerator;
+	}
+
+	public <G extends RandomStringGenerator> G stringGenerator(int length, boolean letters, boolean numbers, Case letterCase) {
+		G stringGenerator = stringGenerator(length, letters, numbers);
+		stringGenerator.setCase(letterCase);
+		return stringGenerator;
+	}
+
+	public <G extends RandomStringGenerator> G stringGenerator(int length, char[] chars, Case letterCase) {
+		G stringGenerator = stringGenerator(length, chars);
+		stringGenerator.setCase(letterCase);
+		return stringGenerator;
+	}
+
 	public <G extends RandomCharacterGenerator> G charGenerator() {
 		return (G) registry.getGenerator(Character.class);
 	}
@@ -201,6 +227,47 @@ public class RandomGenerators {
 
 	public <G extends RandomCharacterGenerator> G charGenerator(char[] chars) {
 		G stringGenerator = charGenerator();
+		stringGenerator.setChars(chars);
+		return stringGenerator;
+	}
+
+	public <G extends RandomCharacterGenerator> G charGenerator(Case letterCase) {
+		G charGenerator = charGenerator();
+		charGenerator.setCase(letterCase);
+		return charGenerator;
+	}
+
+	public <G extends RandomCharacterGenerator> G charGenerator(boolean letters, boolean numbers, Case letterCase) {
+		G charGenerator = charGenerator(letters, numbers);
+		charGenerator.setCase(letterCase);
+		return charGenerator;
+	}
+
+	public <G extends RandomCharacterGenerator> G charGenerator(char[] chars, Case letterCase) {
+		G charGenerator = charGenerator(chars);
+		charGenerator.setCase(letterCase);
+		return charGenerator;
+	}
+
+	public RandomEmailGenerator emailGenerator() {
+		return new RandomEmailGenerator();
+	}
+
+	public RandomEmailGenerator emailGenerator(int length) {
+		RandomEmailGenerator stringGenerator = emailGenerator();
+		stringGenerator.setLength(length);
+		return stringGenerator;
+	}
+
+	public RandomEmailGenerator emailGenerator(int length, boolean letters, boolean numbers) {
+		RandomEmailGenerator stringGenerator = emailGenerator(length);
+		stringGenerator.setLetters(letters);
+		stringGenerator.setNumbers(numbers);
+		return stringGenerator;
+	}
+
+	public RandomEmailGenerator emailGenerator(int length, char[] chars) {
+		RandomEmailGenerator stringGenerator = emailGenerator(length);
 		stringGenerator.setChars(chars);
 		return stringGenerator;
 	}

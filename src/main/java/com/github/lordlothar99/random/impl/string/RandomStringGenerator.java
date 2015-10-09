@@ -39,6 +39,33 @@ public class RandomStringGenerator extends AbstractRandomCharactersGenerator<Str
 		this.length = length;
 	}
 
+	public RandomStringGenerator(Case letterCase) {
+		super(String.class, letterCase);
+	}
+
+	public RandomStringGenerator(int length, Case letterCase) {
+		super(String.class, letterCase);
+		this.length = length;
+	}
+
+	public RandomStringGenerator(char[] chars, Case letterCase) {
+		super(String.class, chars, letterCase);
+	}
+
+	public RandomStringGenerator(int length, char[] chars, Case letterCase) {
+		super(String.class, chars, letterCase);
+		this.length = length;
+	}
+
+	public RandomStringGenerator(boolean letters, boolean numbers, Case letterCase) {
+		super(String.class, letters, numbers, letterCase);
+	}
+
+	public RandomStringGenerator(int length, boolean letters, boolean numbers, Case letterCase) {
+		super(String.class, letters, numbers, letterCase);
+		this.length = length;
+	}
+
 	@Override
 	public int getLength() {
 		return length;

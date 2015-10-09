@@ -19,6 +19,7 @@ public abstract class AbstractRandomCharactersGenerator<T> extends AbstractGener
 	private boolean letters;
 	private boolean numbers;
 	private char[] chars;
+	private Case letterCase = Case.BOTH;
 
 	public AbstractRandomCharactersGenerator(Class<T> type) {
 		this(type, true, true);
@@ -33,6 +34,24 @@ public abstract class AbstractRandomCharactersGenerator<T> extends AbstractGener
 		super(type);
 		this.letters = letters;
 		this.numbers = numbers;
+	}
+
+	public AbstractRandomCharactersGenerator(Class<T> type, Case letterCase) {
+		this(type, true, true);
+		this.letterCase = letterCase;
+	}
+
+	public AbstractRandomCharactersGenerator(Class<T> type, char[] chars, Case letterCase) {
+		this(type, true, true);
+		this.chars = chars;
+		this.letterCase = letterCase;
+	}
+
+	public AbstractRandomCharactersGenerator(Class<T> type, boolean letters, boolean numbers, Case letterCase) {
+		super(type);
+		this.letters = letters;
+		this.numbers = numbers;
+		this.letterCase = letterCase;
 	}
 
 	public boolean isLetters() {
@@ -59,19 +78,43 @@ public abstract class AbstractRandomCharactersGenerator<T> extends AbstractGener
 		this.chars = chars;
 	}
 
+	public Case getCase() {
+		return letterCase;
+	}
+
+	public void setCase(Case letterCase) {
+		this.letterCase = letterCase;
+	}
+
 	protected String createString() {
-		String randomChar = random(getLength(), 0, chars == null ? 0 : chars.length, letters, numbers, chars);
-		logger.info("Generated string '{}' under constraints : {}", randomChar, constraints());
-		return randomChar;
+		String randomChars = random(getLength(), 0, chars == null ? 0 : chars.length, letters, numbers, chars);
+		switch (letterCase) {
+		case LOWER:
+			randomChars = randomChars.toLowerCase();
+			break;
+		case UPPER:
+			randomChars = randomChars.toUpperCase();
+			break;
+		case BOTH:
+			break;
+		}
+		logger.info("Generated string '{}' under constraints : {}", randomChars, constraints());
+		return randomChars;
 	}
 
 	protected abstract int getLength();
 
 	protected String constraints() {
-		String string = "letters=" + letters + " ; numbers=" + numbers;
+		String string = "letters=" + letters;
+		string += " ; numbers=" + numbers;
+		string += " ; case=" + letterCase;
 		if (chars != null) {
 			string += " ; chars=" + ArrayUtils.toString(chars);
 		}
 		return string;
+	}
+
+	public static enum Case {
+		LOWER, UPPER, BOTH
 	}
 }

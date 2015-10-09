@@ -20,6 +20,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 import com.github.lordlothar99.random.api.Generator;
+import com.github.lordlothar99.random.impl.string.AbstractRandomCharactersGenerator.Case;
 
 /**
  * Toolkit for {@link Generator}.
@@ -215,6 +216,22 @@ public class RandomToolkit {
 		return generators.stringGenerator(length, chars).create();
 	}
 
+	public String string(Case letterCase) {
+		return generators.stringGenerator(letterCase).create();
+	}
+
+	public String string(int length, Case letterCase) {
+		return generators.stringGenerator(length, letterCase).create();
+	}
+
+	public String string(int length, boolean letters, boolean numbers, Case letterCase) {
+		return generators.stringGenerator(length, letters, numbers, letterCase).create();
+	}
+
+	public String string(int length, char[] chars, Case letterCase) {
+		return generators.stringGenerator(length, chars, letterCase).create();
+	}
+
 	public char character() {
 		return generators.charGenerator().create();
 	}
@@ -225,6 +242,18 @@ public class RandomToolkit {
 
 	public char character(char[] chars) {
 		return generators.charGenerator(chars).create();
+	}
+
+	public char character(Case letterCase) {
+		return generators.charGenerator(letterCase).create();
+	}
+
+	public char character(boolean letters, boolean numbers, Case letterCase) {
+		return generators.charGenerator(letters, numbers, letterCase).create();
+	}
+
+	public char character(char[] chars, Case letterCase) {
+		return generators.charGenerator(chars, letterCase).create();
 	}
 
 	// ---
