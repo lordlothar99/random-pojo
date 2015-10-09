@@ -1,4 +1,4 @@
-package com.github.lordlothar99.random.impl;
+package com.github.lordlothar99.random.impl.string;
 
 import static org.apache.commons.lang.StringUtils.containsAny;
 import static org.apache.commons.lang.StringUtils.containsOnly;
@@ -8,6 +8,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import com.github.lordlothar99.random.impl.string.RandomStringGenerator;
 
 public class RandomStringGeneratorTest {
 

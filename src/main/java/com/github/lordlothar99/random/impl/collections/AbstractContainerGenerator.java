@@ -1,13 +1,14 @@
 /**
  * https://github.com/lordlothar99/random-pojo
  */
-package com.github.lordlothar99.random.impl;
+package com.github.lordlothar99.random.impl.collections;
 
 import static org.apache.commons.lang.ArrayUtils.getLength;
 import static org.apache.commons.lang.ArrayUtils.isEmpty;
 
 import com.github.lordlothar99.random.api.ContainerGenerator;
 import com.github.lordlothar99.random.api.Generator;
+import com.github.lordlothar99.random.impl.AbstractGenerator;
 
 /**
  * Abstract {@link ContainerGenerator}.

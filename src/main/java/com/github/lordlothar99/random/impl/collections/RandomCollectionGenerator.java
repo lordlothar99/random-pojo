@@ -14,7 +14,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import com.github.lordlothar99.random.api.Generator;
-import com.github.lordlothar99.random.impl.AbstractContainerGenerator;
 
 /**
  * Random {@link Collection} generator

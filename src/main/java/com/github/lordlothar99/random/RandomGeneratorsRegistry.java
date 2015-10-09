@@ -21,7 +21,6 @@ import com.github.lordlothar99.random.api.RegistryAware;
 import com.github.lordlothar99.random.impl.RandomBooleanGenerator;
 import com.github.lordlothar99.random.impl.RandomEnumGenerator;
 import com.github.lordlothar99.random.impl.RandomObjectGenerator;
-import com.github.lordlothar99.random.impl.RandomStringGenerator;
 import com.github.lordlothar99.random.impl.collections.RandomArrayGenerator;
 import com.github.lordlothar99.random.impl.collections.RandomCollectionGenerator;
 import com.github.lordlothar99.random.impl.collections.RandomMapGenerator;
@@ -39,6 +38,8 @@ import com.github.lordlothar99.random.impl.numeric.RandomFloatGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomLongGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomShortGenerator;
+import com.github.lordlothar99.random.impl.string.RandomCharacterGenerator;
+import com.github.lordlothar99.random.impl.string.RandomStringGenerator;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class RandomGeneratorsRegistry {
@@ -65,6 +66,8 @@ public class RandomGeneratorsRegistry {
 		registry.put(Float.class, RandomFloatGenerator.class);
 		registry.put(float.class, RandomFloatGenerator.class);
 		registry.put(String.class, RandomStringGenerator.class);
+		registry.put(char.class, RandomCharacterGenerator.class);
+		registry.put(Character.class, RandomCharacterGenerator.class);
 		try {
 			registry.put(Class.forName("org.joda.time.LocalDate"), RandomLocalDateGenerator.class);
 			registry.put(Class.forName("org.joda.time.LocalDateTime"), RandomLocalDateTimeGenerator.class);

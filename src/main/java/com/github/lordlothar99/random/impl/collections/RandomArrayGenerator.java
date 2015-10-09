@@ -6,8 +6,6 @@ package com.github.lordlothar99.random.impl.collections;
 import java.lang.reflect.Array;
 import java.util.Collection;
 
-import com.github.lordlothar99.random.impl.AbstractContainerGenerator;
-
 /**
  * Random {@link Collection} generator
  * 

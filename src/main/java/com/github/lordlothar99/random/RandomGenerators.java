@@ -20,7 +20,7 @@ import com.github.lordlothar99.random.api.ContainerGenerator;
 import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.RangedGenerator;
 import com.github.lordlothar99.random.impl.RandomObjectGenerator;
-import com.github.lordlothar99.random.impl.RandomStringGenerator;
+import com.github.lordlothar99.random.impl.string.RandomStringGenerator;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class RandomGenerators {

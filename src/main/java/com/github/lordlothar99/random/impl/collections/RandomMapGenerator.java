@@ -12,7 +12,6 @@ import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.map.LinkedMap;
 
 import com.github.lordlothar99.random.api.Generator;
-import com.github.lordlothar99.random.impl.AbstractContainerGenerator;
 
 /**
  * Random {@link Map} generator
