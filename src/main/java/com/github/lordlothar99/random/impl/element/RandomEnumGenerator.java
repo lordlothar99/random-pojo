@@ -1,9 +1,11 @@
 /**
  * https://github.com/lordlothar99/random-pojo
  */
-package com.github.lordlothar99.random.impl;
+package com.github.lordlothar99.random.impl.element;
 
 import org.apache.commons.lang.math.RandomUtils;
+
+import com.github.lordlothar99.random.impl.AbstractGenerator;
 
 /**
  * Random {@link Enum} generator

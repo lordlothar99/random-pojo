@@ -3,8 +3,6 @@
  */
 package com.github.lordlothar99.random;
 
-import static org.apache.commons.collections.CollectionUtils.size;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -17,7 +15,6 @@ import java.util.TreeMap;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -388,8 +385,6 @@ public class RandomToolkit {
 
 	@SuppressWarnings("unchecked")
 	protected <E> E elementFrom(Object container) {
-		int size = size(container);
-		int index = intValue(0, size - 1);
-		return (E) CollectionUtils.get(container, index);
+		return (E) generators.elementGenerator(container).create();
 	}
 }

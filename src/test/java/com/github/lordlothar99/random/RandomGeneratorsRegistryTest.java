@@ -8,10 +8,10 @@ import java.util.List;
 import org.junit.Test;
 
 import com.github.lordlothar99.random.api.Generator;
-import com.github.lordlothar99.random.impl.RandomEnumGenerator;
 import com.github.lordlothar99.random.impl.RandomObjectGenerator;
 import com.github.lordlothar99.random.impl.collections.RandomArrayGenerator;
 import com.github.lordlothar99.random.impl.collections.RandomCollectionGenerator;
+import com.github.lordlothar99.random.impl.element.RandomEnumGenerator;
 import com.github.lordlothar99.random.impl.numeric.RandomIntegerGenerator;
 import com.github.lordlothar99.random.impl.string.RandomStringGenerator;
 

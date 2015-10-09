@@ -20,6 +20,7 @@ import com.github.lordlothar99.random.api.ContainerGenerator;
 import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.RangedGenerator;
 import com.github.lordlothar99.random.impl.RandomObjectGenerator;
+import com.github.lordlothar99.random.impl.element.RandomElementGenerator;
 import com.github.lordlothar99.random.impl.string.RandomCharacterGenerator;
 import com.github.lordlothar99.random.impl.string.RandomStringGenerator;
 
@@ -384,6 +385,10 @@ public class RandomGenerators {
 
 	public <T> Generator<T> arrayGenerator(Class<T> arrayClass) {
 		return registry.getGenerator(arrayClass);
+	}
+
+	public <T> Generator<T> elementGenerator(Object container) {
+		return new RandomElementGenerator(container);
 	}
 
 	private <T> T cast(Object object) {

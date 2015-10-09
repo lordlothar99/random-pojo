@@ -1,4 +1,4 @@
-package com.github.lordlothar99.random.impl;
+package com.github.lordlothar99.random.impl.element;
 
 import static org.apache.commons.lang.ArrayUtils.contains;
 import static org.junit.Assert.assertEquals;
