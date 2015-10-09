@@ -22,7 +22,7 @@ import com.github.lordlothar99.random.api.Generator;
 
 /**
  * Random {@link Object} generator
- * 
+ *
  * @author Francois Lecomte
  * @param <T>
  *            {@link Object}
@@ -40,6 +40,8 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 	private static final ThreadLocal<Map<Class<?>, Object>> GENERATED_OBJECTS = new ThreadLocal<Map<Class<?>, Object>>();
 
 	private Map<String, Generator<?>> fieldGenerators = new HashMap<String, Generator<?>>();
+
+	private String[] skippedFields;
 
 	public RandomObjectGenerator(Class<T> objectClass) {
 		this(objectClass, true);
@@ -81,6 +83,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 				// pour eviter les boucles infinies : on n'initialise pas les
 				// proprietes du meme type que le parent
 				if (ObjectUtils.equals(propertyClass, objectClass)) {
+					logger.debug("Field '{}' skipped because of parent-child identical class : {}", field.getName(), propertyClass.getName());
 					continue;
 				}
 
@@ -99,8 +102,14 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 	}
 
 	protected void generateFieldValue(Object object, Field field) {
+
+		if (ArrayUtils.contains(skippedFields, field.getName())) {
+			logger.debug("Field '{}' skipped", field.getName());
+			return;
+		}
+
 		if (Modifier.isFinal(field.getModifiers())) {
-			// impossible d'initialiser un champ final
+			logger.debug("Unable to generate field '{}' cause it is final", field.getName());
 			return;
 		}
 
@@ -108,12 +117,14 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		final Generator<?> generator = getGenerator(field);
 
 		if (!generateObjectFields && generator instanceof RandomObjectGenerator<?>) {
-			logger.info("Skipping field '{}' cause generateObjectFields is true", field.getName());
+			logger.debug("Skipping field '{}' cause generateObjectFields is deactivated", field.getName());
 			return;
 		}
+		logger.debug("Generating a value for field '{}' with generator {}", field.getName(), generator);
 
 		// random value generation
 		final Object propertyValue = generator.create();
+		logger.info("Field '{}' generated value : {}", field.getName(), propertyValue);
 
 		Exception exception = null;
 		try {
@@ -234,5 +245,9 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 
 	public void setFieldGenerator(String propertyName, Generator<?> generator) {
 		fieldGenerators.put(propertyName, generator);
+	}
+
+	public void setSkippedFields(String... field) {
+		skippedFields = field;
 	}
 }

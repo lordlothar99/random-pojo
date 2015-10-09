@@ -203,6 +203,12 @@ public class RandomGenerators {
 		return objectGenerator;
 	}
 
+	public <T, G extends RandomObjectGenerator<T>> G objectGenerator(Class<T> objectClass, String... skippedField) {
+		G objectGenerator = this.<T, G> objectGenerator(objectClass);
+		objectGenerator.setSkippedFields(skippedField);
+		return objectGenerator;
+	}
+
 	// ---
 
 	public <C, T, G extends ContainerGenerator<C>> G collectionGenerator(Class<C> collectionType, Class<T> elementsType) {

@@ -217,6 +217,10 @@ public final class RandomToolkit {
 		return generators.objectGenerator(objectClass, fieldName, generator).create();
 	}
 
+	public <T> T object(Class<T> objectClass, String... skippedField) {
+		return generators.objectGenerator(objectClass, skippedField).create();
+	}
+
 	// ---
 
 	public <C extends Collection<T>, T> C collection(Class<C> collectionType, Class<T> elementsType) {

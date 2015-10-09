@@ -22,10 +22,7 @@ public class Foo {
 
 	private MyEnum myEnum;
 
-	public Foo(long id, String name, String surname) {
-		this.id = id;
-		this.name = name;
-		this.surname = surname;
+	public Foo() {
 	}
 
 	public List<String> getBars() {

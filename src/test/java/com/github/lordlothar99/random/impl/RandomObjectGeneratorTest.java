@@ -11,6 +11,7 @@ import org.mockito.internal.matchers.GreaterOrEqual;
 import org.mockito.internal.matchers.LessOrEqual;
 
 import com.github.lordlothar99.random.Foo;
+import com.github.lordlothar99.random.Foo2;
 import com.github.lordlothar99.random.RandomGenerators;
 import com.github.lordlothar99.random.api.RangedGenerator;
 
@@ -59,5 +60,22 @@ public class RandomObjectGeneratorTest {
 		Foo foo2 = generator.create();
 		Assert.assertNotNull("null objet", foo1);
 		Assert.assertNotEquals("objects shouldn't be equal", foo1, foo2);
+	}
+
+	@Test
+	public void should_generated_object_skipped_fields_be_uninitialized() {
+		RandomObjectGenerator<Foo> generator = new RandomObjectGenerator<Foo>(Foo.class);
+		generator.setSkippedFields("id");
+		Foo foo = generator.create();
+		Assert.assertNotNull("null objet", foo);
+		Assert.assertEquals(0, foo.getId());
+	}
+
+	@Test
+	public void should_generated_object_be_instantiated_with_constructor() {
+		RandomObjectGenerator<Foo2> generator = new RandomObjectGenerator<Foo2>(Foo2.class);
+		Foo2 foo = generator.create();
+		Assert.assertNotNull("null objet", foo);
+		Assert.assertNotEquals(0, foo.getId());
 	}
 }
