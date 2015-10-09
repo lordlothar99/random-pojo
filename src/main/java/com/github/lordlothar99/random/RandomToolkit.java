@@ -207,6 +207,18 @@ public final class RandomToolkit {
 		return generators.stringGenerator(length, chars).create();
 	}
 
+	public char character() {
+		return generators.charGenerator().create();
+	}
+
+	public char character(boolean letters, boolean numbers) {
+		return generators.charGenerator(letters, numbers).create();
+	}
+
+	public char character(char[] chars) {
+		return generators.charGenerator(chars).create();
+	}
+
 	// ---
 
 	public <T> T object(Class<T> objectClass) {

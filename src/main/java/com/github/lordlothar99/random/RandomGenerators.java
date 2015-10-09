@@ -20,6 +20,7 @@ import com.github.lordlothar99.random.api.ContainerGenerator;
 import com.github.lordlothar99.random.api.Generator;
 import com.github.lordlothar99.random.api.RangedGenerator;
 import com.github.lordlothar99.random.impl.RandomObjectGenerator;
+import com.github.lordlothar99.random.impl.string.RandomCharacterGenerator;
 import com.github.lordlothar99.random.impl.string.RandomStringGenerator;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -182,6 +183,23 @@ public class RandomGenerators {
 
 	public <G extends RandomStringGenerator> G stringGenerator(int length, char[] chars) {
 		G stringGenerator = stringGenerator(length);
+		stringGenerator.setChars(chars);
+		return stringGenerator;
+	}
+
+	public <G extends RandomCharacterGenerator> G charGenerator() {
+		return (G) registry.getGenerator(Character.class);
+	}
+
+	public <G extends RandomCharacterGenerator> G charGenerator(boolean letters, boolean numbers) {
+		G stringGenerator = charGenerator();
+		stringGenerator.setLetters(letters);
+		stringGenerator.setNumbers(numbers);
+		return stringGenerator;
+	}
+
+	public <G extends RandomCharacterGenerator> G charGenerator(char[] chars) {
+		G stringGenerator = charGenerator();
 		stringGenerator.setChars(chars);
 		return stringGenerator;
 	}
