@@ -390,7 +390,7 @@ public class RandomGenerators {
 		return (T) object;
 	}
 
-	public RandomGeneratorsRegistry getRegistry() {
+	public RandomGeneratorsRegistry registry() {
 		return registry;
 	}
 }

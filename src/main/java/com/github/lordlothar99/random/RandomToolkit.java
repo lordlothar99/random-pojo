@@ -26,7 +26,7 @@ import com.github.lordlothar99.random.api.Generator;
  *
  * @author Francois Lecomte
  */
-public final class RandomToolkit {
+public class RandomToolkit {
 
 	private static final RandomToolkit INSTANCE = new RandomToolkit();
 
@@ -34,7 +34,13 @@ public final class RandomToolkit {
 	private RandomGenerators generators;
 
 	public RandomToolkit() {
-		this(new RandomGeneratorsRegistry());
+		this(new RandomGenerators());
+	}
+
+	public RandomToolkit(RandomGenerators generators) {
+		super();
+		this.generators = generators;
+		this.registry = generators.registry();
 	}
 
 	public RandomToolkit(RandomGeneratorsRegistry registry) {
@@ -46,6 +52,16 @@ public final class RandomToolkit {
 	public static RandomToolkit get() {
 		return INSTANCE;
 	}
+
+	public RandomGenerators generators() {
+		return generators;
+	}
+
+	public RandomGeneratorsRegistry registry() {
+		return registry;
+	}
+
+	// ---
 
 	public <T> T generate(Class<T> type) {
 		Generator<T> generateur = registry.getGenerator(type);
@@ -59,14 +75,6 @@ public final class RandomToolkit {
 			values[i] = generate(type);
 		}
 		return values;
-	}
-
-	public RandomGenerators generators() {
-		return generators;
-	}
-
-	public RandomGeneratorsRegistry registry() {
-		return registry;
 	}
 
 	// ---
