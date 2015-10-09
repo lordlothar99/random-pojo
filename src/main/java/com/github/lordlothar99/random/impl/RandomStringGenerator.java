@@ -9,7 +9,7 @@ import org.apache.commons.lang.ArrayUtils;
 
 /**
  * Random {@link String} generator
- * 
+ *
  * @author Francois Lecomte
  */
 public class RandomStringGenerator extends AbstractGenerator<String> {
@@ -73,7 +73,7 @@ public class RandomStringGenerator extends AbstractGenerator<String> {
 
 	public String create() {
 		String randomString = random(length, 0, chars == null ? 0 : chars.length, letters, numbers, chars);
-		logger.info("Generated string '{}' under constraints : ", randomString, constraints());
+		logger.info("Generated string '{}' under constraints : {}", randomString, constraints());
 		return randomString;
 	}
 
