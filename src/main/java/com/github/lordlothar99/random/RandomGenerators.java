@@ -289,10 +289,18 @@ public class RandomGenerators {
 		return objectGenerator;
 	}
 
-	public <T, G extends RandomObjectGenerator<T>> G objectGenerator(Class<T> objectClass, String... skippedField) {
-		G objectGenerator = this.<T, G> objectGenerator(objectClass);
-		objectGenerator.setSkippedFields(skippedField);
+	public <T, G extends RandomObjectGenerator<T>> G withSkippedField(G objectGenerator, String fieldName) {
+		objectGenerator.addSkippedField(fieldName);
 		return objectGenerator;
+	}
+
+	public <T, G extends RandomObjectGenerator<T>> G withSkippedFields(G objectGenerator, String... fieldName) {
+		objectGenerator.setSkippedFields(fieldName);
+		return objectGenerator;
+	}
+
+	public <T, G extends RandomObjectGenerator<T>> G objectGenerator(Class<T> objectClass, String... skippedField) {
+		return withSkippedFields(this.<T, G> objectGenerator(objectClass), skippedField);
 	}
 
 	// ---

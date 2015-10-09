@@ -15,10 +15,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
+
 import com.github.lordlothar99.random.api.ContainerGenerator;
 import com.github.lordlothar99.random.api.Generator;
 
@@ -43,7 +47,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 
 	private Map<String, Generator<?>> fieldGenerators = new HashMap<String, Generator<?>>();
 
-	private String[] skippedFields;
+	private List<String> skippedFields = new ArrayList<String>();
 
 	private String[] forcedFields;
 
@@ -108,7 +112,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 
 	protected void generateFieldValue(Object object, Field field) {
 
-		if (contains(skippedFields, field.getName())) {
+		if (skippedFields.contains(field.getName())) {
 			logger.debug("Field '{}' skipped", field.getName());
 			return;
 		}
@@ -268,7 +272,11 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 	}
 
 	public void setSkippedFields(String... field) {
-		skippedFields = field;
+		skippedFields = Arrays.asList(field);
+	}
+
+	public void addSkippedField(String field) {
+		skippedFields.add(field);
 	}
 
 	public void setForcedFields(String... field) {
