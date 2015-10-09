@@ -83,7 +83,8 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 				// pour eviter les boucles infinies : on n'initialise pas les
 				// proprietes du meme type que le parent
 				if (ObjectUtils.equals(propertyClass, objectClass)) {
-					logger.debug("Field '{}' skipped because of parent-child identical class : {}", field.getName(), propertyClass.getName());
+					logger.debug("Field '{}' skipped because of parent-child identical class : {}", field.getName(),
+							propertyClass.getName());
 					continue;
 				}
 
@@ -111,6 +112,15 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		if (Modifier.isFinal(field.getModifiers())) {
 			logger.debug("Unable to generate field '{}' cause it is final", field.getName());
 			return;
+		}
+
+		try {
+			Object fieldValue = FieldUtils.readField(field, object, true);
+			if (fieldValue != null) {
+				logger.debug("Skipping field '{}' cause it already has a value", field.getName());
+				return;
+			}
+		} catch (IllegalAccessException e) {
 		}
 
 		// on recupere un generateur pour la propriete
@@ -183,11 +193,11 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 			final Constructor[] constructors = this.getObjectClass().getConstructors();
 			for (final Constructor constructor : constructors) {
 
-				final Class<?>[] parametreTypes = constructor.getParameterTypes();
-				final Object[] parametres = toolkit().generate(parametreTypes);
+				final Class<?>[] parameterTypes = constructor.getParameterTypes();
+				final Object[] parameters = toolkit().generate(parameterTypes);
 
 				try {
-					instance = (T) constructor.newInstance(parametres);
+					instance = (T) constructor.newInstance(parameters);
 					break;
 				} catch (final IllegalArgumentException e) {
 					// no op
