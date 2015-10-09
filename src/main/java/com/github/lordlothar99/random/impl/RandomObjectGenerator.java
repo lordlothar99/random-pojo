@@ -3,20 +3,22 @@
  */
 package com.github.lordlothar99.random.impl;
 
+import static java.lang.reflect.Modifier.isFinal;
+import static org.apache.commons.beanutils.PropertyUtils.setProperty;
+import static org.apache.commons.lang.ArrayUtils.addAll;
+import static org.apache.commons.lang.ArrayUtils.contains;
+import static org.apache.commons.lang.reflect.FieldUtils.readField;
+import static org.apache.commons.lang.reflect.FieldUtils.writeField;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.reflect.FieldUtils;
-
 import com.github.lordlothar99.random.api.ContainerGenerator;
 import com.github.lordlothar99.random.api.Generator;
 
@@ -42,6 +44,8 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 	private Map<String, Generator<?>> fieldGenerators = new HashMap<String, Generator<?>>();
 
 	private String[] skippedFields;
+
+	private String[] forcedFields;
 
 	public RandomObjectGenerator(Class<T> objectClass) {
 		this(objectClass, true);
@@ -104,27 +108,33 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 
 	protected void generateFieldValue(Object object, Field field) {
 
-		if (ArrayUtils.contains(skippedFields, field.getName())) {
+		if (contains(skippedFields, field.getName())) {
 			logger.debug("Field '{}' skipped", field.getName());
 			return;
 		}
 
-		if (Modifier.isFinal(field.getModifiers())) {
+		if (isFinal(field.getModifiers())) {
 			logger.debug("Unable to generate field '{}' cause it is final", field.getName());
 			return;
 		}
 
-		try {
-			Object fieldValue = FieldUtils.readField(field, object, true);
-			if (fieldValue != null) {
-				logger.debug("Skipping field '{}' cause it already has a value", field.getName());
-				return;
+		if (!contains(forcedFields, field.getName())) {
+			try {
+				Object fieldValue = readField(field, object, true);
+				if (fieldValue != null) {
+					logger.debug("Skipping field '{}' cause it already has a value", field.getName());
+					return;
+				}
+			} catch (IllegalAccessException e) {
 			}
-		} catch (IllegalAccessException e) {
 		}
-
 		// on recupere un generateur pour la propriete
 		final Generator<?> generator = getGenerator(field);
+
+		if (generator == null) {
+			logger.debug("Skipping field '{}' cause no generator found", field.getName());
+			return;
+		}
 
 		if (!generateObjectFields && generator instanceof RandomObjectGenerator<?>) {
 			logger.debug("Skipping field '{}' cause generateObjectFields is deactivated", field.getName());
@@ -139,7 +149,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		Exception exception = null;
 		try {
 			// on initialise le champ
-			FieldUtils.writeField(field, object, propertyValue, true);
+			writeField(field, object, propertyValue, true);
 		} catch (final IllegalAccessException e) {
 			exception = e;
 		} catch (final IllegalArgumentException e) {
@@ -149,7 +159,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		if (exception != null) {
 			// on essaie par le writer s'il existe
 			try {
-				PropertyUtils.setProperty(object, field.getName(), propertyValue);
+				setProperty(object, field.getName(), propertyValue);
 			} catch (final IllegalAccessException e1) {
 				throw new RuntimeException(exception.getMessage(), e1);
 			} catch (final InvocationTargetException e1) {
@@ -247,17 +257,21 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 		final Field[] fields = beanClass.getDeclaredFields();
 		final Class<?> superclass = beanClass.getSuperclass();
 		if (superclass != null) {
-			return (Field[]) ArrayUtils.addAll(fields, getAllFields(superclass));
+			return (Field[]) addAll(fields, getAllFields(superclass));
 		} else {
 			return fields;
 		}
 	}
 
-	public void setFieldGenerator(String propertyName, Generator<?> generator) {
-		fieldGenerators.put(propertyName, generator);
+	public void setFieldGenerator(String field, Generator<?> generator) {
+		fieldGenerators.put(field, generator);
 	}
 
 	public void setSkippedFields(String... field) {
 		skippedFields = field;
+	}
+
+	public void setForcedFields(String... field) {
+		forcedFields = field;
 	}
 }

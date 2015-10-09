@@ -3,8 +3,9 @@
  */
 package com.github.lordlothar99.random;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -18,18 +19,21 @@ public class Foo {
 
 	private String surname;
 
-	private List<String> bars = new ArrayList<String>();
+	private List<Boolean> bars;
+	private Set<String> qixs = new HashSet<String>();
 
 	private MyEnum myEnum;
+
+	private char aCharacter = 'a';
 
 	public Foo() {
 	}
 
-	public List<String> getBars() {
+	public List<Boolean> getBars() {
 		return bars;
 	}
 
-	public void setBars(List<String> bars) {
+	public void setBars(List<Boolean> bars) {
 		this.bars = bars;
 	}
 
@@ -79,4 +83,21 @@ public class Foo {
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
+
+	public Set<String> getQixs() {
+		return qixs;
+	}
+
+	public void setQixs(Set<String> qixs) {
+		this.qixs = qixs;
+	}
+
+	public char getaCharacter() {
+		return aCharacter;
+	}
+
+	public void setaCharacter(char aCharacter) {
+		this.aCharacter = aCharacter;
+	}
+
 }
