@@ -98,7 +98,7 @@ public abstract class AbstractRandomCharactersGenerator<T> extends AbstractGener
 		case BOTH:
 			break;
 		}
-		logger.info("Generated string '{}' under constraints : {}", randomChars, constraints());
+		logger.debug("Generated string '{}' under constraints : {}", randomChars, constraints());
 		return randomChars;
 	}
 

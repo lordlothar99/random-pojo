@@ -22,7 +22,7 @@ public abstract class AbstractRandomNumericGenerator<T> extends AbstractRangedGe
 		T randomNumber = fromBigDecimal(randomBigDecimal);
 		T min = getMin();
 		T max = getMax();
-		logger.info("Generated value between {} and {} : {}", min, max, randomNumber);
+		logger.debug("Generated value between {} and {} : {}", min, max, randomNumber);
 		return randomNumber;
 	}
 

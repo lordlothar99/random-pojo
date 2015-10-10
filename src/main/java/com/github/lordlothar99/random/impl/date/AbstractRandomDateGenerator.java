@@ -20,7 +20,7 @@ public abstract class AbstractRandomDateGenerator<D> extends AbstractRangedGener
 
 		long randomLong = toolkit().longValue(min, max);
 		D randomDate = fromLong(randomLong);
-		logger.info("Generated value between {} and {} : {}", min, max, randomDate);
+		logger.debug("Generated value between {} and {} : {}", min, max, randomDate);
 		return randomDate;
 	}
 

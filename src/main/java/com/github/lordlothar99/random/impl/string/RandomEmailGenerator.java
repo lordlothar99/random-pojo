@@ -50,7 +50,7 @@ public class RandomEmailGenerator extends RandomStringGenerator {
 		String domain = string.substring(half + 1);
 
 		String email = username + "@" + domain + "." + extension;
-		logger.info("Generated email : {}", email);
+		logger.debug("Generated email : {}", email);
 		return email;
 	}
 }

@@ -148,7 +148,7 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 
 		// random value generation
 		final Object propertyValue = generator.create();
-		logger.info("Field '{}' generated value : {}", field.getName(), propertyValue);
+		logger.debug("Field '{}' generated value : {}", field.getName(), propertyValue);
 
 		Exception exception = null;
 		try {
