@@ -66,7 +66,7 @@ public class RandomObjectGeneratorTest {
 		generator.setForcedFields("aCharacter");
 		Foo result = generator.create();
 		assertNotNull("null objet", result);
-		assertNotEquals('a', result.getaCharacter());
+		assertNotEquals('_', result.getaCharacter());
 	}
 
 	@Test

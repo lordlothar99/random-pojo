@@ -324,6 +324,25 @@ public class RandomGenerators {
 		return collectionGenerator;
 	}
 
+	public <C, T, G extends ContainerGenerator<C>> G collectionGenerator(Class<C> collectionType, Generator<T> generator) {
+		ContainerGenerator<Collection> collectionGenerator = (ContainerGenerator<Collection>) registry.getGenerator(collectionType);
+		collectionGenerator.setElementsGenerators(generator);
+		return cast(collectionGenerator);
+	}
+
+	public <C, T, G extends ContainerGenerator<C>> G collectionGenerator(Class<C> collectionType, Generator<T> generator, int size) {
+		G collectionGenerator = collectionGenerator(collectionType, generator);
+		collectionGenerator.setSize(size);
+		return collectionGenerator;
+	}
+
+	public <C, T, G extends ContainerGenerator<C>> G collectionGenerator(Class<C> collectionType, Generator<T> generator, int minSize, int maxSize) {
+		G collectionGenerator = collectionGenerator(collectionType, generator);
+		collectionGenerator.setMinSize(minSize);
+		collectionGenerator.setMaxSize(maxSize);
+		return collectionGenerator;
+	}
+
 	// ---
 
 	public <T, G extends ContainerGenerator<List<T>>> G listGenerator(Class<T> elementsType) {
@@ -345,6 +364,25 @@ public class RandomGenerators {
 		return listGenerator;
 	}
 
+	public <T, G extends ContainerGenerator<List<T>>> G listGenerator(Generator<T> generator) {
+		ContainerGenerator<List> listGenerator = (ContainerGenerator<List>) registry.getGenerator(List.class);
+		listGenerator.setElementsGenerators(generator);
+		return cast(listGenerator);
+	}
+
+	public <T, G extends ContainerGenerator<List<T>>> G listGenerator(Generator<T> generator, int size) {
+		G listGenerator = listGenerator(generator);
+		listGenerator.setSize(size);
+		return listGenerator;
+	}
+
+	public <T, G extends ContainerGenerator<List<T>>> G listGenerator(Generator<T> generator, int minSize, int maxSize) {
+		G listGenerator = listGenerator(generator);
+		listGenerator.setMinSize(minSize);
+		listGenerator.setMaxSize(maxSize);
+		return listGenerator;
+	}
+
 	// ---
 
 	public <T, G extends ContainerGenerator<Set<T>>> G setGenerator(Class<T> elementsType) {
@@ -361,6 +399,25 @@ public class RandomGenerators {
 
 	public <T, G extends ContainerGenerator<Set<T>>> G setGenerator(Class<T> elementsType, int minSize, int maxSize) {
 		G setGenerator = setGenerator(elementsType);
+		setGenerator.setMinSize(minSize);
+		setGenerator.setMaxSize(maxSize);
+		return setGenerator;
+	}
+
+	public <T, G extends ContainerGenerator<Set<T>>> G setGenerator(Generator<T> generator) {
+		ContainerGenerator<Set> setGenerator = (ContainerGenerator<Set>) registry.getGenerator(Set.class);
+		setGenerator.setElementsGenerators(generator);
+		return cast(setGenerator);
+	}
+
+	public <T, G extends ContainerGenerator<Set<T>>> G setGenerator(Generator<T> generator, int size) {
+		G setGenerator = setGenerator(generator);
+		setGenerator.setSize(size);
+		return setGenerator;
+	}
+
+	public <T, G extends ContainerGenerator<Set<T>>> G setGenerator(Generator<T> generator, int minSize, int maxSize) {
+		G setGenerator = setGenerator(generator);
 		setGenerator.setMinSize(minSize);
 		setGenerator.setMaxSize(maxSize);
 		return setGenerator;

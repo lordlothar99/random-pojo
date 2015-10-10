@@ -285,6 +285,19 @@ public class RandomToolkit {
 		return generators.collectionGenerator(collectionType, elementsType, minSize, maxSize).create();
 	}
 
+	public <C extends Collection<T>, T> C collection(Class<C> collectionType, Generator<T> generator) {
+		return generators.collectionGenerator(collectionType, generator).create();
+	}
+
+	public <C extends Collection<T>, T> C collection(Class<C> collectionType, Generator<T> generator, int size) {
+		return generators.collectionGenerator(collectionType, generator, size).create();
+	}
+
+	public <C extends Collection<T>, T> C collection(Class<C> collectionType, Generator<T> generator, int minSize,
+			int maxSize) {
+		return generators.collectionGenerator(collectionType, generator, minSize, maxSize).create();
+	}
+
 	// ---
 
 	public <T> List<T> list(Class<T> elementsType) {
@@ -299,6 +312,18 @@ public class RandomToolkit {
 		return generators.listGenerator(elementsType, minSize, maxSize).create();
 	}
 
+	public <T> List<T> list(Generator<T> generator) {
+		return generators.listGenerator(generator).create();
+	}
+
+	public <T> List<T> list(Generator<T> generator, int size) {
+		return generators.listGenerator(generator, size).create();
+	}
+
+	public <T> List<T> list(Generator<T> generator, int minSize, int maxSize) {
+		return generators.listGenerator(generator, minSize, maxSize).create();
+	}
+
 	// ---
 
 	public <T> Set<T> set(Class<T> elementsType) {
@@ -311,6 +336,18 @@ public class RandomToolkit {
 
 	public <T> Set<T> set(Class<T> elementsType, int minSize, int maxSize) {
 		return generators.setGenerator(elementsType, minSize, maxSize).create();
+	}
+
+	public <T> Set<T> set(Generator<T> generator) {
+		return generators.setGenerator(generator).create();
+	}
+
+	public <T> Set<T> set(Generator<T> generator, int size) {
+		return generators.setGenerator(generator, size).create();
+	}
+
+	public <T> Set<T> set(Generator<T> generator, int minSize, int maxSize) {
+		return generators.setGenerator(generator, minSize, maxSize).create();
 	}
 
 	// ---
