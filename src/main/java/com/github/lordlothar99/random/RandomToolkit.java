@@ -414,43 +414,43 @@ public class RandomToolkit {
 	}
 
 	public <E> E element(Collection<E> collection) {
-		return elementFrom(collection);
+		return cast(elementFrom(collection));
 	}
 
 	public <K, V> Map.Entry<K, V> element(Map<K, V> map) {
-		return elementFrom(map);
+		return cast(elementFrom(map));
 	}
 
 	public <E> E element(E[] array) {
-		return elementFrom(array);
+		return cast(elementFrom(array));
 	}
 
 	public byte element(byte[] array) {
-		return elementFrom(array);
+		return cast(elementFrom(array));
 	}
 
 	public short element(short[] array) {
-		return elementFrom(array);
+		return cast(elementFrom(array));
 	}
 
 	public int element(int[] array) {
-		return elementFrom(array);
+		return cast(elementFrom(array));
 	}
 
 	public long element(long[] array) {
-		return elementFrom(array);
+		return cast(elementFrom(array));
 	}
 
 	public float element(float[] array) {
-		return elementFrom(array);
+		return cast(elementFrom(array));
 	}
 
 	public double element(double[] array) {
-		return elementFrom(array);
+		return cast(elementFrom(array));
 	}
 
-	protected <E> E elementFrom(Object container) {
-		return cast(generators.elementGenerator(container).create());
+	protected Object elementFrom(Object container) {
+		return generators.elementGenerator(container).create();
 	}
 
 	@SuppressWarnings("unchecked")
