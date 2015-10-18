@@ -4,15 +4,12 @@
 package com.github.lordlothar99.random.impl.numeric;
 
 import static java.lang.String.valueOf;
-import static org.apache.commons.collections.ComparatorUtils.naturalComparator;
+import static org.apache.commons.collections.ComparatorUtils.NATURAL_COMPARATOR;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.function.ToDoubleFunction;
 
 import org.apache.commons.lang.math.NumberUtils;
 import org.junit.Test;
@@ -31,6 +28,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractRandomNumericGeneratorTest<T extends Comparable<T>, G extends AbstractRandomNumericGenerator<T>> {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
+	private ToDoubleFunction<T> toDoubleFunction;
 
 	@Test
 	public void should_random_numeric_be_not_null() {
@@ -67,31 +65,55 @@ public abstract class AbstractRandomNumericGeneratorTest<T extends Comparable<T>
 		}
 
 		// check min/max
-		Optional<T> computedMin = values.stream().min(naturalComparator());
-		Optional<T> computedMax = values.stream().max(naturalComparator());
-		assertThat("More than " + min, computedMin.get(), new GreaterOrEqual<T>(min));
-		assertThat("Less than " + max, computedMax.get(), new LessOrEqual<T>(max));
+		T computedMin = min(values);
+		T computedMax = max(values);
+		assertThat("More than " + min, computedMin, new GreaterOrEqual<T>(min));
+		assertThat("Less than " + max, computedMax, new LessOrEqual<T>(max));
 
 		// check average
-		OptionalDouble avg = values.stream().mapToDouble(toDoubleFunction()).average();
+		double avg = avg(values);
 		double expectedAvg = avg(min, max);
 		double delta = delta(min, max);
 		logger.info("Expecting an average of {} (+/- {})", expectedAvg, delta);
-		assertThat("Average is ", avg.getAsDouble(), new EqualsWithDelta(expectedAvg, delta));
+		assertThat("Average is ", avg, new EqualsWithDelta(expectedAvg, delta));
 		logger.info("Average is {}", avg);
 	}
 
-	private ToDoubleFunction<T> toDoubleFunction() {
-		return new ToDoubleFunction<T>() {
-			public double applyAsDouble(T value) {
-				if (value instanceof Number) {
-					Number number = (Number) value;
-					return number.doubleValue();
-				} else {
-					return NumberUtils.toDouble(valueOf(value));
-				}
+	private T min(List<T> values) {
+		T min = null;
+		for (T value : values) {
+			if (min == null || NATURAL_COMPARATOR.compare(min, value) > 0) {
+				min = value;
 			}
-		};
+		}
+		return min;
+	}
+
+	private T max(List<T> values) {
+		T max = null;
+		for (T value : values) {
+			if (max == null || NATURAL_COMPARATOR.compare(max, value) < 0) {
+				max = value;
+			}
+		}
+		return max;
+	}
+
+	private double avg(List<T> values) {
+		if (values.isEmpty()) {
+			return 0d;
+		}
+		double sum = sum(values);
+		double avg = sum / values.size();
+		return avg;
+	}
+
+	private double sum(List<T> values) {
+		double sum = 0d;
+		for (T value : values) {
+			sum += toDoubleFunction().applyAsDouble(value);
+		}
+		return sum;
 	}
 
 	private double avg(T min, T max) {
@@ -108,9 +130,29 @@ public abstract class AbstractRandomNumericGeneratorTest<T extends Comparable<T>
 		return delta;
 	}
 
+	private ToDoubleFunction<T> toDoubleFunction() {
+		if (toDoubleFunction == null) {
+			toDoubleFunction = new ToDoubleFunction<T>() {
+				public double applyAsDouble(T value) {
+					if (value instanceof Number) {
+						Number number = (Number) value;
+						return number.doubleValue();
+					} else {
+						return NumberUtils.toDouble(valueOf(value));
+					}
+				}
+			};
+		}
+		return toDoubleFunction;
+	}
+
 	protected abstract G newGenerator();
 
 	protected abstract T min();
 
 	protected abstract T max();
+
+	private static interface ToDoubleFunction<T> {
+		double applyAsDouble(T value);
+	}
 }
