@@ -1,5 +1,7 @@
 package com.github.lordlothar99.random;
 
+import static com.github.lordlothar99.random.RandomToolkit.cast;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -521,10 +523,6 @@ public class RandomGenerators {
 
 	public <T> Generator<T> elementGenerator(Object container) {
 		return new RandomElementGenerator(container);
-	}
-
-	private <T> T cast(Object object) {
-		return (T) object;
 	}
 
 	public RandomGeneratorsRegistry registry() {

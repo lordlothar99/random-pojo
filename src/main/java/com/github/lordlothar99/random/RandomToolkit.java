@@ -449,8 +449,12 @@ public class RandomToolkit {
 		return elementFrom(array);
 	}
 
-	@SuppressWarnings("unchecked")
 	protected <E> E elementFrom(Object container) {
-		return (E) generators.elementGenerator(container).create();
+		return cast(generators.elementGenerator(container).create());
+	}
+
+	@SuppressWarnings("unchecked")
+	static <T> T cast(Object object) {
+		return (T) object;
 	}
 }
