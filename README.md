@@ -1,4 +1,4 @@
-# random-pojo
+# random-pojo [![Build Status](https://travis-ci.org/lordlothar99/random-pojo.svg?branch=master)](https://travis-ci.org/lordlothar99/random-pojo)
 
 A simple random POJO generator tool
 
