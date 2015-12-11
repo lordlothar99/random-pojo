@@ -128,12 +128,9 @@ public class RandomGeneratorsRegistry {
 		if (classInRegistry.isArray()) {
 			classInRegistry = Array.class;
 		}
-		Object registeredObject = registry.get(classInRegistry);
+		Class<?> generatorClass = registry.get(classInRegistry);
 		Generator<T> generator = null;
-		if (registeredObject instanceof Generator) {
-			generator = (Generator<T>) registeredObject;
-		} else if (registeredObject != null) {
-			Class<T> generatorClass = (Class<T>) registeredObject;
+		if (generatorClass != null) {
 			try {
 				try {
 					generator = (Generator<T>) invokeConstructor(generatorClass, type);
