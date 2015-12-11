@@ -31,22 +31,19 @@ public class RandomToolkit {
 
 	private static final RandomToolkit INSTANCE = new RandomToolkit();
 
-	private RandomGeneratorsRegistry registry;
-	private RandomGenerators generators;
+	private IRandomGenerators generators;
 
 	public RandomToolkit() {
 		this(new RandomGenerators());
 	}
 
-	public RandomToolkit(RandomGenerators generators) {
+	public RandomToolkit(IRandomGenerators generators) {
 		super();
 		this.generators = generators;
-		this.registry = generators.registry();
 	}
 
 	public RandomToolkit(RandomGeneratorsRegistry registry) {
 		super();
-		this.registry = registry;
 		this.generators = new RandomGenerators(registry);
 	}
 
@@ -54,18 +51,18 @@ public class RandomToolkit {
 		return INSTANCE;
 	}
 
-	public RandomGenerators generators() {
+	public IRandomGenerators generators() {
 		return generators;
 	}
 
 	public RandomGeneratorsRegistry registry() {
-		return registry;
+		return generators.registry();
 	}
 
 	// ---
 
 	public <T> T generate(Class<T> type) {
-		Generator<T> generateur = registry.getGenerator(type);
+		Generator<T> generateur = registry().getGenerator(type);
 		return generateur.create();
 	}
 
