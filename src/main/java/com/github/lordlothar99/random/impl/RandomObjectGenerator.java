@@ -176,7 +176,11 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
           return false;
         }
         
-        return field.getType().isPrimitive() && !isPrimitiveDefaultValue(field.getType(), fieldValue);
+        if (field.getType().isPrimitive()) {
+          return !isPrimitiveDefaultValue(field.getType(), fieldValue);
+        }
+
+        return true;
         
       } catch (IllegalAccessException e) {
       }
