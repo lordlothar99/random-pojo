@@ -18,6 +18,7 @@ import com.github.lordlothar99.random.Foo;
 import com.github.lordlothar99.random.Foo2;
 import com.github.lordlothar99.random.RandomGenerators;
 import com.github.lordlothar99.random.api.RangedGenerator;
+import com.github.lordlothar99.random.impl.numeric.RandomFloatGenerator;
 
 /**
  * @author Francois Lecomte
@@ -115,6 +116,15 @@ public class RandomObjectGeneratorTest {
 		RandomObjectGenerator<Foo2> generator = new RandomObjectGenerator<Foo2>(Foo2.class);
 		Foo2 foo = generator.create();
 		assertNotNull("null objet", foo);
-		assertNotEquals(0, foo.getId());
+        assertNotEquals(0, foo.getId());
 	}
+
+    @Test
+    public void should_primitive_fields_be_initialized_if_default() {
+        RandomObjectGenerator<Foo> generator = new RandomObjectGenerator<Foo>(Foo.class);
+        generator.setFieldGenerator("myFloat", new RandomFloatGenerator(1f, 5f));
+        Foo foo = generator.create();
+        assertNotNull("null objet", foo);
+        assertNotEquals("should be initialized", 0f, foo.getMyFloat());
+    }
 }

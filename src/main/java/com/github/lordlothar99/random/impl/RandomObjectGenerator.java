@@ -122,16 +122,11 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 			return;
 		}
 
-		if (!contains(forcedFields, field.getName())) {
-			try {
-				Object fieldValue = readField(field, object, true);
-				if (fieldValue != null) {
-					logger.debug("Skipping field '{}' cause it already has a value", field.getName());
-					return;
-				}
-			} catch (IllegalAccessException e) {
-			}
-		}
+		if (!contains(forcedFields, field.getName()) && shouldSkipField(field, object)) {
+            logger.debug("Skipping field '{}' cause it already has a value and it's not forced", field.getName());
+            return;
+        }
+
 		// on recupere un generateur pour la propriete
 		final Generator<?> generator = getGenerator(field);
 
@@ -173,6 +168,30 @@ public class RandomObjectGenerator<T> extends AbstractGenerator<T> {
 			}
 		}
 	}
+
+    private boolean shouldSkipField(Field field, Object object) {
+      try {
+        Object fieldValue = readField(field, object, true);
+        if (fieldValue == null) {
+          return false;
+        }
+        
+        return field.getType().isPrimitive() && !isPrimitiveDefaultValue(field.getType(), fieldValue);
+        
+      } catch (IllegalAccessException e) {
+      }
+      return false;
+    }
+
+    private boolean isPrimitiveDefaultValue(Class<?> fieldType, Object fieldValue) {
+      if (boolean.class.equals(fieldType)) {
+        return fieldValue.equals(false);
+      } else if (float.class.equals(fieldType) || double.class.equals(fieldType)) {
+        return String.valueOf(fieldValue).equals("0.0");
+      } else {
+        return String.valueOf(fieldValue).equals("0");
+      }
+    }
 
 	protected Generator<?> getGenerator(Field field) {
 		Generator<?> generator = fieldGenerators.get(field.getName());

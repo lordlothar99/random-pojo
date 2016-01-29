@@ -25,6 +25,9 @@ public class Foo {
 	private MyEnum myEnum;
 
 	private char aCharacter = 'a';
+	
+	private boolean myBool;
+	private float myFloat;
 
 	public Foo() {
 	}
@@ -99,5 +102,21 @@ public class Foo {
 	public void setaCharacter(char aCharacter) {
 		this.aCharacter = aCharacter;
 	}
+
+    public boolean isMyBool() {
+        return myBool;
+    }
+  
+    public void setMyBool(boolean myBool) {
+        this.myBool = myBool;
+    }
+  
+    public float getMyFloat() {
+        return myFloat;
+    }
+  
+    public void setMyFloat(float myFloat) {
+        this.myFloat = myFloat;
+    }
 
 }

@@ -3,6 +3,9 @@
  */
 package com.github.lordlothar99.random.impl;
 
+import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,4 +59,9 @@ public abstract class AbstractGenerator<T> implements Generator<T>, RegistryAwar
 		}
 		return toolkit;
 	}
+
+    @Override
+    public String toString() {
+      return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
+    }
 }
